@@ -1,28 +1,71 @@
+/*
+  Блок электроники для крутого моддинга вашего ПК, возможности:
+  - Вывод основных параметров железа на внешний LCD дисплей
+  - Температура: CPU, GPU, материнская плата, самый горячий HDD
+  - Уровень загрузки: CPU, GPU, RAM, видеопамять
+  - Графики изменения вышеперечисленных параметров по времени
+  - Температура с внешних датчиков (DS18B20)
+  - Текущий уровень скорости внешних вентиляторов
+  - Управление большим количеством 12 вольтовых 2, 3, 4 проводных вентиляторов
+  - Автоматическое управление скоростью пропорционально температуре
+  - Ручное управление скоростью из интерфейса программы
+  - Управление RGB светодиодной лентой
+  - Управление цветом пропорционально температуре (синий - зелёный - жёлтый - красный)
+  - Ручное управление цветом из интерфейса программы
+
+  Программа HardwareMonitorPlus
+  - Запустить OpenHardwareMonitor.exe
+  - Options/Serial/Run - запуск соединения с Ардуиной
+  - Options/Serial/Config - настройка параметров работы
+    - PORT address - адрес порта, куда подключена Ардуина
+    - TEMP source - источник показаний температуры (процессор, видеокарта, максимум проц+видео, датчик 1, датчик 2)
+    - FAN min, FAN max - минимальные и максимальные обороты вентиляторов, в %
+    - TEMP min, TEMP max - минимальная и максимальная температура, в градусах Цельсия
+    - Manual FAN - ручное управление скоростью вентилятора в %
+    - Manual COLOR - ручное управление цветом ленты
+    - LED brightness - управление яркостью ленты
+    - CHART interval - интервал обновления графиков
+
+   Что идёт в порт: 0-CPU temp, 1-GPU temp, 2-mother temp, 3-HDD temp, 4-CPU load, 5-GPU load, 6-RAM load, 7-GPU memory
+  // 8-maxFAN, 9-minFAN, 10-maxTEMP, 11-minTEMP, 12-mnlFAN, 13-mnlCOLOR, 14-fanCtrl, 15-colorCtrl, 16-brightCtrl, 17-LOGinterval, 18-tempSource
+*/
 byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
-#define FAN_PIN 9
-#define R_PIN 5
-#define G_PIN 3
-#define B_PIN 6
-#define BTN1 A3
-#define BTN2 A2
-#define SENSOR_PIN 14
+// 0 - маркировка драйвера кончается на 4АТ, 1 - на 4Т
+#define DRIVER_VERSION 0
+
+#define FAN_PIN 9              // на мосфет вентиляторов
+#define R_PIN 5                // на мосфет ленты, красный
+#define G_PIN 3                // на мосфет ленты, зелёный
+#define B_PIN 6                // на мосфет ленты, синий
+#define BTN1 A3                // первая кнопка
+#define BTN2 A2                // вторая кнопка
+#define SENSOR_PIN 14          // датчик температуры
 #define TEMPERATURE_PRECISION 9
 
-#include <OneWire.h>
-#include <DallasTemperature.h>
+// -------------------- БИБЛИОТЕКИ ---------------------
+#include <OneWire.h>            // библиотека протокола датчиков
+#include <DallasTemperature.h>  // библиотека датчика
 #include <string.h>             // библиотека расширенной работы со строками
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+#include <Wire.h>               // библиотека для соединения
+#include <LiquidCrystal_I2C.h>  // библтотека дислея
 #include <TimerOne.h>           // библиотека таймера
+// -------------------- БИБЛИОТЕКИ ---------------------
 
+// -------- АВТОВЫБОР ОПРЕДЕЛЕНИЯ ДИСПЛЕЯ-------------
+// Если кончается на 4Т - это 0х27. Если на 4АТ - 0х3f
+#if (DRIVER_VERSION)
 LiquidCrystal_I2C lcd(0x27, 20, 4);
-//LiquidCrystal_I2C lcd(0x3f, 20, 4);
+#else
+LiquidCrystal_I2C lcd(0x3f, 20, 4);
+#endif
+// -------- АВТОВЫБОР ОПРЕДЕЛЕНИЯ ДИСПЛЕЯ-------------
+#define printByte(args)  write(args);
 
+// настройка даьчтков
 OneWire oneWire(SENSOR_PIN);
 DallasTemperature sensors(&oneWire);
 DeviceAddress Thermometer1, Thermometer2;
 
-#define printByte(args)  write(args);
 // стартовый логотип
 byte logo0[8] = {0b00011, 0b00110,  0b01110,  0b11111,  0b11011,  0b11001,  0b00000,  0b00000};
 byte logo1[8] = {0b10000, 0b00001,  0b00001,  0b00001,  0b00000,  0b10001,  0b11011,  0b11111};
@@ -30,7 +73,6 @@ byte logo2[8] = {0b11100, 0b11000,  0b10001,  0b11011,  0b11111,  0b11100,  0b00
 byte logo3[8] = {0b00000, 0b00001,  0b00011,  0b00111,  0b01101,  0b00111,  0b00010,  0b00000};
 byte logo4[8] = {0b11111, 0b11111,  0b11011,  0b10001,  0b00000,  0b00000,  0b00000,  0b00000};
 byte logo5[8] = {0b00000, 0b10000,  0b11000,  0b11100,  0b11110,  0b11100,  0b01000,  0b00000};
-// значок градуса
 // значок градуса!!!! lcd.write(223);
 byte degree[8] = {0b11100,  0b10100,  0b11100,  0b00000,  0b00000,  0b00000,  0b00000,  0b00000};
 // правый край полосы загрузки
@@ -62,13 +104,14 @@ int duty, LEDcolor;
 int k, b, R, G, B, Rf, Gf, Bf;
 byte mainTemp;
 byte lines[] = {4, 5, 7, 6};
-byte plotLines[] = {0, 1, 4, 5, 6, 7};
+byte plotLines[] = {0, 1, 4, 5, 6, 7};    // 0-CPU temp, 1-GPU temp, 2-CPU load, 3-GPU load, 4-RAM load, 5-GPU memory
 String perc;
 unsigned long sec;
 unsigned int mins, hrs;
 byte temp1, temp2;
 boolean btn1_sig, btn2_sig, btn1_flag, btn2_flag;
-// Названия меню
+
+// Названия для легенды графиков
 const char plot_0[] = "CPU";
 const char plot_1[] = "GPU";
 const char plot_2[] = "RAM";
@@ -237,9 +280,6 @@ void parsing() {
     timeOut_flag = 1;
   }
 }
-// 0-CPU temp, 1-GPU temp, 2-CPU load, 3-GPU load, 4-RAM load, 5-GPU memory
-// PCdata[index]: 0-CPU temp, 1-GPU temp, 2-mother temp, 3-HDD temp, 4-CPU load, 5-GPU load, 6-RAM load, 7-GPU memory
-// 8-maxFAN, 9-minFAN, 10-maxTEMP, 11-minTEMP, 12-mnlFAN, 13-mnlCOLOR, 14-fanCtrl, 15-colorCtrl, 16-brightCtrl, 17-LOGinterval, 18-tempSource
 void updatePlot() {
   if ((millis() - plot_timer) > (PCdata[17] * 1000)) {
     for (int i = 0; i < 6; i++) {           // для каждой строки параметров

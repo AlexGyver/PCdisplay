@@ -45,6 +45,7 @@
 ## Материалы и компоненты
 * Arduino NANO http://ali.pub/20o35g  http://ali.pub/20o36t
 * Дисплей http://ali.pub/20o3dt  http://ali.pub/20o3el
+* Провод http://ali.pub/20oa1k  http://ali.pub/20oa3w
 * Датчик температуры http://ali.pub/20o3fk  http://ali.pub/20o3gc
 * Лента светодиодная http://ali.pub/20o51w  http://ali.pub/20o53u
 * Макетная плата http://ali.pub/20o3nj  http://ali.pub/20o3nx
@@ -55,6 +56,7 @@
 * Кнопки ищите на радиорынке, у китайцев можно 500 штук только купить
 * Или тут смотрите http://alexgyver.ru/electronics/
 * Или такие http://ali.pub/20o4vo
+* Корпус http://ali.pub/20ocky  http://ali.pub/20ocpm
 
 РАССЫПУХА В РОССИИ
 * Мосфет https://www.chipdip.ru/product/irf3205
