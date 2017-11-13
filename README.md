@@ -30,7 +30,7 @@
 
 <a id="chapter-1"></a>
 ## Папки
-- **libraries** - библиотеки проекта. **Заменяя имеющиеся версии**, установить в
+- **libraries** - библиотеки проекта. **Заменяя имеющиеся версии**, установить в  
 `C:\Program Files (x86)\Arduino\libraries\` (Windows x64)  
 `C:\Program Files\Arduino\libraries\` (Windows x86)
 - **PCdisplay_v.1.*** - прошивка для Arduino, файл в папке открыть в Arduino IDE (читай [FAQ](#chapter-5))
