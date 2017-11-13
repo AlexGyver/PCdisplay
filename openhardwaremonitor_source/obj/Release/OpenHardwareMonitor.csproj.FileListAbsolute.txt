@@ -1,0 +1,61 @@
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe.config
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\Aga.Controls.dll
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OxyPlot.dll
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OxyPlot.WindowsForms.dll
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csprojResolveAssemblyReference.cache
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.AboutBox.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.PortForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.SerialForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ParameterForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.CrashForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.MainForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ReportForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csproj.GenerateResource.Cache
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.exe
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe.config
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\Aga.Controls.dll
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OxyPlot.dll
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\Bin\Release\OxyPlot.WindowsForms.dll
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csprojResolveAssemblyReference.cache
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.AboutBox.resources
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.PortForm.resources
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.SerialForm.resources
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ParameterForm.resources
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.CrashForm.resources
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.MainForm.resources
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ReportForm.resources
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csproj.GenerateResource.Cache
+C:\Users\Шумаков Иван\ПО\open-hardware-monitor-master\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.exe
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe.config
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\Bin\Release\Aga.Controls.dll
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\Bin\Release\OxyPlot.dll
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\Bin\Release\OxyPlot.WindowsForms.dll
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csprojResolveAssemblyReference.cache
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.AboutBox.resources
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.PortForm.resources
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.SerialForm.resources
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ParameterForm.resources
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.CrashForm.resources
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.MainForm.resources
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ReportForm.resources
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csproj.GenerateResource.Cache
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csproj.CoreCompileInputs.cache
+C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.exe
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe.config
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitor.exe
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\Bin\Release\Aga.Controls.dll
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\Bin\Release\OxyPlot.dll
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\Bin\Release\OxyPlot.WindowsForms.dll
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csprojResolveAssemblyReference.cache
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.AboutBox.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.PortForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.SerialForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ParameterForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.CrashForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.MainForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.GUI.ReportForm.resources
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.csproj.GenerateResource.Cache
+E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitor.exe
