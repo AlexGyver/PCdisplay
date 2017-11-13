@@ -13,7 +13,7 @@
   - Управление цветом пропорционально температуре (синий - зелёный - жёлтый - красный)
   - Ручное управление цветом из интерфейса программы
 
-  Программа HardwareMonitorPlus
+  Программа HardwareMonitorPlus  https://github.com/AlexGyver/PCdisplay
   - Запустить OpenHardwareMonitor.exe
   - Options/Serial/Run - запуск соединения с Ардуиной
   - Options/Serial/Config - настройка параметров работы
@@ -26,21 +26,24 @@
     - LED brightness - управление яркостью ленты
     - CHART interval - интервал обновления графиков
 
-   Что идёт в порт: 0-CPU temp, 1-GPU temp, 2-mother temp, 3-HDD temp, 4-CPU load, 5-GPU load, 6-RAM load, 7-GPU memory
-  // 8-maxFAN, 9-minFAN, 10-maxTEMP, 11-minTEMP, 12-mnlFAN, 13-mnlCOLOR, 14-fanCtrl, 15-colorCtrl, 16-brightCtrl, 17-LOGinterval, 18-tempSource
+   Что идёт в порт: 0-CPU temp, 1-GPU temp, 2-mother temp, 3-max HDD temp, 4-CPU load, 5-GPU load, 6-RAM use, 7-GPU memory use,
+   8-maxFAN, 9-minFAN, 10-maxTEMP, 11-minTEMP, 12-manualFAN, 13-manualCOLOR, 14-fanCtrl, 15-colorCtrl, 16-brightCtrl, 17-LOGinterval, 18-tempSource
 */
+// ------------------------ НАСТРОЙКИ ----------------------------
+// настройки пределов скорости и температуры по умолчанию (на случай отсутствия связи)
 byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
-// 0 - маркировка драйвера кончается на 4АТ, 1 - на 4Т
-#define DRIVER_VERSION 0
+#define DRIVER_VERSION 0    // 0 - маркировка драйвера кончается на 4АТ, 1 - на 4Т
+// ------------------------ НАСТРОЙКИ ----------------------------
 
-#define FAN_PIN 9              // на мосфет вентиляторов
-#define R_PIN 5                // на мосфет ленты, красный
-#define G_PIN 3                // на мосфет ленты, зелёный
-#define B_PIN 6                // на мосфет ленты, синий
-#define BTN1 A3                // первая кнопка
-#define BTN2 A2                // вторая кнопка
-#define SENSOR_PIN 14          // датчик температуры
-#define TEMPERATURE_PRECISION 9
+// ----------------------- ПИНЫ ---------------------------
+#define FAN_PIN 9           // на мосфет вентиляторов
+#define R_PIN 5             // на мосфет ленты, красный
+#define G_PIN 3             // на мосфет ленты, зелёный
+#define B_PIN 6             // на мосфет ленты, синий
+#define BTN1 A3             // первая кнопка
+#define BTN2 A2             // вторая кнопка
+#define SENSOR_PIN 14       // датчик температуры
+// ----------------------- ПИНЫ ---------------------------
 
 // -------------------- БИБЛИОТЕКИ ---------------------
 #include <OneWire.h>            // библиотека протокола датчиков
@@ -59,8 +62,9 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 LiquidCrystal_I2C lcd(0x3f, 20, 4);
 #endif
 // -------- АВТОВЫБОР ОПРЕДЕЛЕНИЯ ДИСПЛЕЯ-------------
-#define printByte(args)  write(args);
 
+#define printByte(args)  write(args);
+#define TEMPERATURE_PRECISION 9
 // настройка даьчтков
 OneWire oneWire(SENSOR_PIN);
 DallasTemperature sensors(&oneWire);
