@@ -39,8 +39,9 @@
 - **schemes&PCBs** - принципиальные схемы и печатки
 
 <a id="chapter-2"></a>
-## Схема
-![СХЕМА](https://github.com/AlexGyver/SecretKnockLock/blob/master/scheme.jpg)
+## Схемы
+![SCHEME](https://github.com/AlexGyver/PCdisplay/blob/master/schemes%26PCBs/scheme_fritzing.png)
+![SCHEME](https://github.com/AlexGyver/PCdisplay/blob/master/schemes%26PCBs/scheme_EasyEDA.png)
 
 <a id="chapter-3"></a>
 ## Материалы и компоненты
