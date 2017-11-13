@@ -6,6 +6,7 @@ byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
 #define BTN1 A3
 #define BTN2 A2
 #define SENSOR_PIN 14
+#define TEMPERATURE_PRECISION 9
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -13,13 +14,13 @@ byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <TimerOne.h>           // библиотека таймера
-#define TEMPERATURE_PRECISION 9
-OneWire oneWire(SENSOR_PIN);
-DallasTemperature sensors(&oneWire);
-DeviceAddress Thermometer1, Thermometer2;
 
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 //LiquidCrystal_I2C lcd(0x3f, 20, 4);
+
+OneWire oneWire(SENSOR_PIN);
+DallasTemperature sensors(&oneWire);
+DeviceAddress Thermometer1, Thermometer2;
 
 #define printByte(args)  write(args);
 // стартовый логотип
