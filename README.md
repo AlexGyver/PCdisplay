@@ -86,6 +86,7 @@
 * Настроить что нужно по проекту
 * Нажать загрузить
 * Пользоваться  
+  
 **Программа HardwareMonitorPlus**
 * Запустить OpenHardwareMonitor.exe
 * Options/Serial/Run - запуск соединения с Ардуиной
