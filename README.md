@@ -4,12 +4,9 @@
 * [Папки проекта](#chapter-1)
 * [Схемы подключения](#chapter-2)
 * [Материалы и компоненты](#chapter-3)
-* [Настройка и использование](#chapter-4)
+* [Как скачать и прошить](#chapter-4)
 * [FAQ](#chapter-5)
 * [Полезная информация](#chapter-6)
-* [Мой сайт](http://alexgyver.ru/)
-* [Основной YouTube канал](https://www.youtube.com/channel/UCgtAOyEQdAyjvm9ATCi_Aig?sub_confirmation=1)
-* [YouTube канал про Arduino](https://www.youtube.com/channel/UC4axiS76D784-ofoTdo5zOA?sub_confirmation=1)
 
 <a id="chapter-0"></a>
 ## Описание проекта
@@ -30,9 +27,8 @@
 
 <a id="chapter-1"></a>
 ## Папки
-- **libraries** - библиотеки проекта. **Заменяя имеющиеся версии**, установить в  
-`C:\Program Files (x86)\Arduino\libraries\` (Windows x64)  
-`C:\Program Files\Arduino\libraries\` (Windows x86)
+**ВНИМАНИЕ! Если это твой первый опыт работы с Arduino, читай [инструкцию](#chapter-4)**
+- **libraries** - библиотеки проекта. Заменить имеющиеся версии
 - **PCdisplay_v.1.*** - прошивка для Arduino, файл в папке открыть в Arduino IDE (читай [FAQ](#chapter-5))
 - **HardwareMonitorPlus** - программа, необходимая для работы устройства (закинуть куда угодно)
 - **openhardwaremonitor_source** - исходник программы для Visual Studio (C#)
@@ -76,16 +72,20 @@
 * [Аккумуляторы и зарядные модули](http://alexgyver.ru/18650/)
 
 <a id="chapter-4"></a>
-## Настройка и использование
-* [Загрузка прошивки](http://alexgyver.ru/arduino-first/) - ультра подробная статья по началу работы с Ардуино
-* Установить библиотеки в
+## Как скачать и прошить
+* [Первые шаги с Arduino](http://alexgyver.ru/arduino-first/) - ультра подробная статья по началу работы с Ардуино, ознакомиться первым делом!
+* Скачать архив с проектом
+> На главной странице проекта (где ты читаешь этот текст) вверху справа зелёная кнопка **Clone or download**, вот её жми, там будет **Download ZIP**
+* Установить библиотеки в  
 `C:\Program Files (x86)\Arduino\libraries\` (Windows x64)  
 `C:\Program Files\Arduino\libraries\` (Windows x86)
 * Подключить Ардуино к компьютеру
-* Запустить файл прошивки
-* Настроить (COM порт, модель Arduino NANO 328)
+* Запустить файл прошивки (который имеет расширение .ino)
+* Настроить IDE (COM порт, модель Arduino, как в статье выше)
+* Настроить что нужно по проекту
 * Нажать загрузить
-Программа HardwareMonitorPlus
+* Пользоваться
+**Программа HardwareMonitorPlus**
 * Запустить OpenHardwareMonitor.exe
 * Options/Serial/Run - запуск соединения с Ардуиной
 * Options/Serial/Config - настройка параметров работы
