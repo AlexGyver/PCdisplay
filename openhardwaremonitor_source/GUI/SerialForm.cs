@@ -109,7 +109,7 @@ namespace OpenHardwareMonitor.GUI
             _parent.SaveConfiguration();
 
             // Push data.
-            _parent.timer_Tick(null, EventArgs.Empty);
+            //_parent.timer_Tick(null, EventArgs.Empty);
         }
 
         #region Event Handlers
