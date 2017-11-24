@@ -50,7 +50,15 @@
 <a id="chapter-3"></a>
 ## Материалы и компоненты
 * Arduino NANO http://ali.pub/20o35g  http://ali.pub/20o36t
-* Дисплей http://ali.pub/20o3dt  http://ali.pub/20o3el
+* Дисплей 2004 синий с драйвером http://ali.pub/20o3dt  http://ali.pub/20o3el
+* Дисплей 1602 синий с драйвером http://ali.pub/21wqmn http://ali.pub/21wqla
+* Драйвер дисплея отдельно http://ali.pub/21wqos
+* Дисплеи 1602 БЕЗ ДРАЙВЕРА (купить отдельно):
+  - Синий фон, белые буквы http://ali.pub/21wr11
+  - Зелёный фон, чёрные буквы http://ali.pub/21wqv7  
+  - Чёрный фон, рыжие буквы http://ali.pub/21wr27
+  - Чёрный фон, белые буквы http://ali.pub/21wr3y
+  - Серый фон, чёрные буквы http://ali.pub/21wrhr
 * Провод http://ali.pub/20oa1k  http://ali.pub/20oa3w
 * Датчик температуры http://ali.pub/20o3fk  http://ali.pub/20o3gc
 * Лента светодиодная http://ali.pub/20o51w  http://ali.pub/20o53u
