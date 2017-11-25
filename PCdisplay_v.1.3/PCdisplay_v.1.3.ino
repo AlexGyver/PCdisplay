@@ -1,6 +1,4 @@
 /*
-  Модифицировано под дисплей 1602 klykov.net vk.com/ms262 instagram.com/klykovnet
-
   Блок электроники для крутого моддинга вашего ПК, возможности:
   - Вывод основных параметров железа на внешний LCD дисплей
   - Температура: CPU, GPU, материнская плата, самый горячий HDD
@@ -19,23 +17,24 @@
   - Запустить OpenHardwareMonitor.exe
   - Options/Serial/Run - запуск соединения с Ардуиной
   - Options/Serial/Config - настройка параметров работы
-    - PORT address - адрес порта, куда подключена Ардуина
-    - TEMP source - источник показаний температуры (процессор, видеокарта, максимум проц+видео, датчик 1, датчик 2)
-    - FAN min, FAN max - минимальные и максимальные обороты вентиляторов, в %
-    - TEMP min, TEMP max - минимальная и максимальная температура, в градусах Цельсия
-    - Manual FAN - ручное управление скоростью вентилятора в %
-    - Manual COLOR - ручное управление цветом ленты
-    - LED brightness - управление яркостью ленты
-    - CHART interval - интервал обновления графиков
+   - PORT address - адрес порта, куда подключена Ардуина
+   - TEMP source - источник показаний температуры (процессор, видеокарта, максимум проц+видео, датчик 1, датчик 2)
+   - FAN min, FAN max - минимальные и максимальные обороты вентиляторов, в %
+   - TEMP min, TEMP max - минимальная и максимальная температура, в градусах Цельсия
+   - Manual FAN - ручное управление скоростью вентилятора в %
+   - Manual COLOR - ручное управление цветом ленты
+   - LED brightness - управление яркостью ленты
+   - CHART interval - интервал обновления графиков
 
-   Что идёт в порт: 0-CPU temp, 1-GPU temp, 2-mother temp, 3-max HDD temp, 4-CPU load, 5-GPU load, 6-RAM use, 7-GPU memory use,
-   8-maxFAN, 9-minFAN, 10-maxTEMP, 11-minTEMP, 12-manualFAN, 13-manualCOLOR, 14-fanCtrl, 15-colorCtrl, 16-brightCtrl, 17-LOGinterval, 18-tempSource
+  Что идёт в порт: 0-CPU temp, 1-GPU temp, 2-mother temp, 3-max HDD temp, 4-CPU load, 5-GPU load, 6-RAM use, 7-GPU memory use,
+  8-maxFAN, 9-minFAN, 10-maxTEMP, 11-minTEMP, 12-manualFAN, 13-manualCOLOR, 14-fanCtrl, 15-colorCtrl, 16-brightCtrl, 17-LOGinterval, 18-tempSource
 */
 // ------------------------ НАСТРОЙКИ ----------------------------
 // настройки пределов скорости и температуры по умолчанию (на случай отсутствия связи)
 byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
-#define DRIVER_VERSION 0    // 0 - маркировка драйвера кончается на 4АТ, 1 - на 4Т
+#define DRIVER_VERSION 1    // 0 - маркировка драйвера кончается на 4АТ, 1 - на 4Т
 #define COLOR_ALGORITM 0    // 0 или 1 - разные алгоритмы изменения цвета (строка 222)
+#define ERROR_DUTY 90       // скорость вентиляторов при потере связи
 // ------------------------ НАСТРОЙКИ ----------------------------
 
 // ----------------------- ПИНЫ ---------------------------
@@ -60,9 +59,9 @@ byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
 // -------- АВТОВЫБОР ОПРЕДЕЛЕНИЯ ДИСПЛЕЯ-------------
 // Если кончается на 4Т - это 0х27. Если на 4АТ - 0х3f
 #if (DRIVER_VERSION)
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 20, 4);
 #else
-LiquidCrystal_I2C lcd(0x3f, 16, 2);
+LiquidCrystal_I2C lcd(0x3f, 20, 4);
 #endif
 // -------- АВТОВЫБОР ОПРЕДЕЛЕНИЯ ДИСПЛЕЯ-------------
 
@@ -156,9 +155,6 @@ void setup() {
   lcd.backlight();
   lcd.clear();            // очистить дисплей
   show_logo();            // показать логотип
-  delay(2000);
-  lcd.clear();            // очистить дисплей
-  show_logo2();            // показать логотип
 
   Timer1.pwm(FAN_PIN, 400);  // включить вентиляторы на 40%
   delay(2000);               // на 2 секунды
@@ -181,7 +177,6 @@ void loop() {
   buttonsTick();                      // опрос кнопок и смена режимов
   updateDisplay();                    // обновить показания на дисплее
   timeoutTick();                      // проверка таймаута
-
 }
 // ------------------------------ ОСНОВНОЙ ЦИКЛ -------------------------------
 
@@ -191,7 +186,7 @@ void buttonsTick() {
   if (btn1_sig && !btn1_flag) {
     display_mode++;
     reDraw_flag = 1;
-    if (display_mode > 9) display_mode = 0;
+    if (display_mode > 7) display_mode = 0;
     btn1_flag = 1;
   }
   if (!btn1_sig && btn1_flag) {
@@ -200,7 +195,7 @@ void buttonsTick() {
   if (btn2_sig && !btn2_flag) {
     display_mode--;
     reDraw_flag = 1;
-    if (display_mode < 0) display_mode = 9;
+    if (display_mode < 0) display_mode = 7;
     btn2_flag = 1;
   }
   if (!btn2_sig && btn2_flag) {
@@ -302,6 +297,7 @@ void dutyCalculate() {
     duty = map(mainTemp, PCdata[11], PCdata[10], PCdata[9], PCdata[8]);
     duty = constrain(duty, PCdata[9], PCdata[8]);
   }
+  if (!timeOut_flag) duty = ERROR_DUTY;               // если пропало соединение, поставить вентиляторы на ERROR_DUTY
 }
 void parsing() {
   while (Serial.available() > 0) {
@@ -337,7 +333,7 @@ void updatePlot() {
     }
     for (int i = 0; i < 6; i++) {
       // запомнить общее число полосок графика в ПОСЛЕДНИЙ элемент массива
-      PLOTmem[i][15] = PCdata[plotLines[i]];
+      PLOTmem[i][15] = ceil(PCdata[plotLines[i]] / 3);
     }
     plot_timer = millis();
   }
@@ -354,13 +350,9 @@ void updateDisplay() {
         case 4:
         case 5: draw_plot_symb();
           break;
-        case 6: draw_labels_11();
+        case 6: draw_labels_1();
           break;
-        case 7: draw_labels_12();
-          break;
-        case 8: draw_labels_21();
-          break;
-        case 9: draw_labels_22();
+        case 7: draw_labels_2();
           break;
       }
       reDraw_flag = 0;
@@ -373,13 +365,9 @@ void updateDisplay() {
       case 4:
       case 5: draw_plot();
         break;
-      case 6: draw_stats_11();
+      case 6: draw_stats_1();
         break;
-      case 7: draw_stats_12();
-        break;
-      case 8: draw_stats_21();
-        break;
-      case 9: draw_stats_22();
+      case 7: draw_stats_2();
         break;
       case 50: debug();
         break;
@@ -387,83 +375,51 @@ void updateDisplay() {
     updateDisplay_flag = 0;
   }
 }
-
-void draw_stats_11() {
+void draw_stats_1() {
   lcd.setCursor(4, 0); lcd.print(PCdata[0]); lcd.write(223);
-  lcd.setCursor(13, 0); lcd.print(PCdata[4]);
+  lcd.setCursor(17, 0); lcd.print(PCdata[4]);
   if (PCdata[4] < 10) perc = "% ";
   else if (PCdata[4] < 100) perc = "%";
   else perc = "";  lcd.print(perc);
   lcd.setCursor(4, 1); lcd.print(PCdata[1]); lcd.write(223);
-  lcd.setCursor(13, 1); lcd.print(PCdata[5]);
+  lcd.setCursor(17, 1); lcd.print(PCdata[5]);
   if (PCdata[5] < 10) perc = "% ";
   else if (PCdata[5] < 100) perc = "%";
   else perc = "";  lcd.print(perc);
-
-  for (int i = 0; i < 2; i++) {
-    byte line = ceil(PCdata[lines[i]] / 16);
-    lcd.setCursor(7, i);
-    if (line == 0) lcd.printByte(1)
-      else lcd.printByte(4);
-    for (int n = 1; n < 5; n++) {
-      if (n < line) lcd.printByte(4);
-      if (n >= line) lcd.printByte(2);
-    }
-    if (line == 6) lcd.printByte(4)
-      else lcd.printByte(3);
-  }
-}
-
-void draw_stats_12() {
-
-  lcd.setCursor(13, 0); lcd.print(PCdata[7]);
+  lcd.setCursor(17, 2); lcd.print(PCdata[7]);
   if (PCdata[7] < 10) perc = "% ";
   else if (PCdata[7] < 100) perc = "%";
   else perc = "";  lcd.print(perc);
-  lcd.setCursor(13, 1); lcd.print(PCdata[6]);
+  lcd.setCursor(17, 3); lcd.print(PCdata[6]);
   if (PCdata[6] < 10) perc = "% ";
   else if (PCdata[6] < 100) perc = "%";
   else perc = "";  lcd.print(perc);
 
-  for (int i = 0; i < 2; i++) {
-    byte line = ceil(PCdata[lines[i + 2]] / 16);
+  for (int i = 0; i < 4; i++) {
+    byte line = ceil(PCdata[lines[i]] / 10);
     lcd.setCursor(7, i);
     if (line == 0) lcd.printByte(1)
       else lcd.printByte(4);
-    for (int n = 1; n < 5; n++) {
+    for (int n = 1; n < 9; n++) {
       if (n < line) lcd.printByte(4);
       if (n >= line) lcd.printByte(2);
     }
-    if (line == 6) lcd.printByte(4)
+    if (line == 10) lcd.printByte(4)
       else lcd.printByte(3);
   }
 }
-
-void draw_stats_21() {
-  lcd.setCursor(13, 0); lcd.print(duty);
+void draw_stats_2() {
+  lcd.setCursor(16, 0); lcd.print(duty);
   if ((duty) < 10) perc = "% ";
   else if ((duty) < 100) perc = "%";
   else perc = "";  lcd.print(perc);
 
-  lcd.setCursor(3, 1); lcd.print(temp1); lcd.write(223);
-  lcd.setCursor(11, 1); lcd.print(temp2); lcd.write(223);
+  lcd.setCursor(6, 1); lcd.print(temp1); lcd.write(223);
+  lcd.setCursor(16, 1); lcd.print(temp2); lcd.write(223);
+  lcd.setCursor(4, 2); lcd.print(PCdata[2]); lcd.write(223);
+  lcd.setCursor(16, 2); lcd.print(PCdata[3]); lcd.write(223);
 
-  byte line = ceil(duty / 16);
-  lcd.setCursor(6, 0);
-  if (line == 0) lcd.printByte(1)
-    else lcd.printByte(4);
-  for (int n = 1; n < 5; n++) {
-    if (n < line) lcd.printByte(4);
-    if (n >= line) lcd.printByte(2);
-  }
-  if (line == 6) lcd.printByte(4)
-    else lcd.printByte(3);
-}
-void draw_stats_22() {
-  lcd.setCursor(2, 0); lcd.print(PCdata[2]); lcd.write(223);
-  lcd.setCursor(10, 0); lcd.print(PCdata[3]); lcd.write(223);
-
-  lcd.setCursor(7, 1);
+  lcd.setCursor(9, 3);
   sec = (long)(millis() - blink_timer) / 1000;
   hrs = floor((sec / 3600));
   mins = floor(sec - (hrs * 3600)) / 60;
@@ -476,8 +432,19 @@ void draw_stats_22() {
   lcd.print(":");
   if (sec < 10) lcd.print(0);
   lcd.print(sec);
+
+  byte line = ceil(duty / 10);
+  lcd.setCursor(6, 0);
+  if (line == 0) lcd.printByte(1)
+    else lcd.printByte(4);
+  for (int n = 1; n < 9; n++) {
+    if (n < line) lcd.printByte(4);
+    if (n >= line) lcd.printByte(2);
+  }
+  if (line == 10) lcd.printByte(4)
+    else lcd.printByte(3);
 }
-void draw_labels_11() {
+void draw_labels_1() {
   lcd.createChar(0, degree);
   lcd.createChar(1, left_empty);
   lcd.createChar(2, center_empty);
@@ -487,19 +454,12 @@ void draw_labels_11() {
   lcd.print("CPU:");
   lcd.setCursor(0, 1);
   lcd.print("GPU:");
-}
-void draw_labels_12() {
-  lcd.createChar(0, degree);
-  lcd.createChar(1, left_empty);
-  lcd.createChar(2, center_empty);
-  lcd.createChar(3, right_empty);
-  lcd.createChar(4, row8);
-  lcd.setCursor(0, 0);
+  lcd.setCursor(0, 2);
   lcd.print("GPUmem:");
-  lcd.setCursor(0, 1);
+  lcd.setCursor(0, 3);
   lcd.print("RAMuse:");
 }
-void draw_labels_21() {
+void draw_labels_2() {
   lcd.createChar(0, degree);
   lcd.createChar(1, left_empty);
   lcd.createChar(2, center_empty);
@@ -509,27 +469,19 @@ void draw_labels_21() {
   lcd.setCursor(0, 0);
   lcd.print("FANsp:");
   lcd.setCursor(0, 1);
-  lcd.print("T1: ");
-  lcd.setCursor(8, 1);
-  lcd.print("T2:");
-}
-void draw_labels_22() {
-  lcd.createChar(0, degree);
-  lcd.createChar(1, left_empty);
-  lcd.createChar(2, center_empty);
-  lcd.createChar(3, right_empty);
-  lcd.createChar(4, row8);
-
-  lcd.setCursor(0, 0);
-  lcd.print("M:");
-  lcd.setCursor(7, 0);
-  lcd.print("HM:");
-  lcd.setCursor(0, 1);
+  lcd.print("TMP1: ");
+  lcd.setCursor(10, 1);
+  lcd.print("TMP2:");
+  lcd.setCursor(0, 2);
+  lcd.print("MOM:");
+  lcd.setCursor(9, 2);
+  lcd.print("HDDmax:");
+  lcd.setCursor(0, 3);
   lcd.print("UPTIME:");
 }
 void draw_legend() {
   byte data = PCdata[plotLines[display_mode]];
-  lcd.setCursor(10, 0); lcd.print(data);
+  lcd.setCursor(16, 2); lcd.print(data);
   if (display_mode > 1) {
     if (data < 10) perc = "% ";
     else if (data < 100) perc = "%";
@@ -552,35 +504,49 @@ void draw_legend() {
 void draw_plot() {
   draw_legend();
 
-  lcd.setCursor(0, 1);
-  for (int i = 0; i < 16; i++) {
-    lcd.printByte(constrain(map(PLOTmem[display_mode][i], 0, 100, 0, 7), 0, 7));
+  for (byte i = 0; i < 16; i++) {                       // каждый столбец параметров
+    blocks = floor(PLOTmem[display_mode][i] / 8);       // найти количество целых блоков
+    halfs = PLOTmem[display_mode][i] - blocks * 8;      // найти число оставшихся полосок
+    for (byte n = 0; n < 4; n++) {
+      if (n < blocks) {
+        lcd.setCursor(i, (3 - n));
+        lcd.printByte(0);
+      }
+      if (n >= blocks) {
+        if (n != 3) {
+          lcd.setCursor(i, (3 - n));
+          if (halfs > 0) lcd.printByte(halfs);
+          for (byte k = n + 1; k < 4; k++) {
+            lcd.setCursor(i, (3 - k));
+            lcd.print(" ");
+          }
+          break;
+        }
+      }
+    }
   }
-
 }
 
 void draw_plot_symb() {
-  lcd.createChar(0, row1);
-  lcd.createChar(1, row2);
-  lcd.createChar(2, row3);
-  lcd.createChar(3, row4);
-  lcd.createChar(4, row5);
-  lcd.createChar(5, row6);
-  lcd.createChar(6, row7);
-  lcd.createChar(7, row8);
-  lcd.setCursor(0, 0);
+  lcd.createChar(0, row8);
+  lcd.createChar(1, row1);
+  lcd.createChar(2, row2);
+  lcd.createChar(3, row3);
+  lcd.createChar(4, row4);
+  lcd.createChar(5, row5);
+  lcd.createChar(6, row6);
+  lcd.createChar(7, row7);
+  lcd.setCursor(16, 0);
   lcd.print(plotNames0[display_mode]);
-  lcd.setCursor(3, 0);
+  lcd.setCursor(16, 1);
   lcd.print(plotNames1[display_mode]);
-  lcd.print(": ");
 }
 void timeoutTick() {
   if ((millis() - timeout > 5000) && timeOut_flag) {
-    duty = speedMIN;
     lcd.clear();
-    lcd.setCursor(3, 0);
-    lcd.print("CONNECTION");
     lcd.setCursor(5, 1);
+    lcd.print("CONNECTION");
+    lcd.setCursor(7, 2);
     lcd.print("FAILED");
     timeOut_flag = 0;
     reDraw_flag = 1;
@@ -593,24 +559,18 @@ void show_logo() {
   lcd.createChar(3, logo3);
   lcd.createChar(4, logo4);
   lcd.createChar(5, logo5);
-  lcd.setCursor(0, 0);
+  lcd.setCursor(2, 1);
   lcd.printByte(0);
   lcd.printByte(1);
   lcd.printByte(2);
-  lcd.setCursor(0, 1);
+  lcd.setCursor(2, 2);
   lcd.printByte(3);
   lcd.printByte(4);
   lcd.printByte(5);
-  lcd.setCursor(4, 0);
+  lcd.setCursor(6, 1);
   lcd.print("AlexGyver");
-  lcd.setCursor(4, 1);
+  lcd.setCursor(6, 2);
   lcd.print("Technologies");
-}
-void show_logo2() {
-  lcd.setCursor(1, 0);
-  lcd.print("modified by");
-  lcd.setCursor(5, 1);
-  lcd.print("klykov.net");
 }
 void debug() {
   lcd.clear();
