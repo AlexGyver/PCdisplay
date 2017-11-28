@@ -37,7 +37,9 @@ namespace OpenHardwareMonitor.Hardware.CPU {
     private const ushort FAMILY_14H_MISCELLANEOUS_CONTROL_DEVICE_ID = 0x1703;
     private const ushort FAMILY_15H_MODEL_00_MISC_CONTROL_DEVICE_ID = 0x1603;
     private const ushort FAMILY_15H_MODEL_10_MISC_CONTROL_DEVICE_ID = 0x1403;
+    private const ushort FAMILY_15H_MODEL_30_MISC_CONTROL_DEVICE_ID = 0x141D;
     private const ushort FAMILY_16H_MODEL_00_MISC_CONTROL_DEVICE_ID = 0x1533;
+    private const ushort FAMILY_16H_MODEL_30_MISC_CONTROL_DEVICE_ID = 0x1583;
 
     private const uint REPORTED_TEMPERATURE_CONTROL_REGISTER = 0xA4;
     private const uint CLOCK_POWER_TIMING_CONTROL_0_REGISTER = 0xD4;
@@ -75,12 +77,16 @@ namespace OpenHardwareMonitor.Hardware.CPU {
               FAMILY_15H_MODEL_00_MISC_CONTROL_DEVICE_ID; break;
             case 0x10: miscellaneousControlDeviceId =
               FAMILY_15H_MODEL_10_MISC_CONTROL_DEVICE_ID; break;
+            case 0x30: miscellaneousControlDeviceId =
+              FAMILY_15H_MODEL_30_MISC_CONTROL_DEVICE_ID; break;
             default: miscellaneousControlDeviceId = 0; break;
           } break;
         case 0x16:
           switch (model & 0xF0) {
             case 0x00: miscellaneousControlDeviceId =
-              FAMILY_16H_MODEL_00_MISC_CONTROL_DEVICE_ID; break;            
+              FAMILY_16H_MODEL_00_MISC_CONTROL_DEVICE_ID; break;
+            case 0x30: miscellaneousControlDeviceId =
+              FAMILY_16H_MODEL_30_MISC_CONTROL_DEVICE_ID; break;
             default: miscellaneousControlDeviceId = 0; break;
           } break;
         default: miscellaneousControlDeviceId = 0; break;
@@ -96,10 +102,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         coreClocks[i] = new Sensor(CoreString(i), i + 1, SensorType.Clock,
           this, settings);
         if (HasTimeStampCounter)
-                {
-                    ActivateSensor(coreClocks[i]);
-                }
-            }
+          ActivateSensor(coreClocks[i]);
+      }
 
       corePerformanceBoostSupport = (cpuid[0][0].ExtData[7, 3] & (1 << 9)) > 0;
 
@@ -109,12 +113,10 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       // disable core performance boost  
       uint hwcrEax, hwcrEdx;
       Ring0.Rdmsr(HWCR, out hwcrEax, out hwcrEdx);
-      if (corePerformanceBoostSupport)
-            {
-                Ring0.Wrmsr(HWCR, hwcrEax | (1 << 25), hwcrEdx);
-            }
+      if (corePerformanceBoostSupport) 
+        Ring0.Wrmsr(HWCR, hwcrEax | (1 << 25), hwcrEdx);
 
-            uint ctlEax, ctlEdx;
+      uint ctlEax, ctlEdx;
       Ring0.Rdmsr(PERF_CTL_0, out ctlEax, out ctlEdx);
       uint ctrEax, ctrEdx;
       Ring0.Rdmsr(PERF_CTR_0, out ctrEax, out ctrEdx);
@@ -126,13 +128,11 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       Ring0.Wrmsr(PERF_CTR_0, ctrEax, ctrEdx);
 
       // restore core performance boost
-      if (corePerformanceBoostSupport)
-            {
-                Ring0.Wrmsr(HWCR, hwcrEax, hwcrEdx);
-            }
+      if (corePerformanceBoostSupport)     
+        Ring0.Wrmsr(HWCR, hwcrEax, hwcrEdx);
 
-            // restore the thread affinity.
-            ThreadAffinity.Set(mask);
+      // restore the thread affinity.
+      ThreadAffinity.Set(mask);
 
       // the file reader for lm-sensors support on Linux
       temperatureStream = null;
@@ -143,10 +143,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
           string name = null;
           try {
             using (StreamReader reader = new StreamReader(path + "/device/name"))
-                        {
-                            name = reader.ReadLine();
-                        }
-                    } catch (IOException) { }
+              name = reader.ReadLine();
+          } catch (IOException) { }
           switch (name) {
             case "k10temp":
               temperatureStream = new FileStream(path + "/device/temp1_input", 
@@ -167,11 +165,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       // estimate the multiplier
       List<double> estimate = new List<double>(3);
       for (int i = 0; i < 3; i++)
-            {
-                estimate.Add(estimateTimeStampCounterMultiplier(0.025));
-            }
-
-            estimate.Sort();
+        estimate.Add(estimateTimeStampCounterMultiplier(0.025));
+      estimate.Sort();
       return estimate[1];
     }
 

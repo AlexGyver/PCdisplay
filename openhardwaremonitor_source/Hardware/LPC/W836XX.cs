@@ -93,11 +93,9 @@ namespace OpenHardwareMonitor.Hardware.LPC {
       this.chip = chip;
 
       if (!IsWinbondVendor())
-            {
-                return;
-            }
-
-            temperatures = new float?[3];
+        return;
+      
+      temperatures = new float?[3];
       peciTemperature = new bool[3];
       switch (chip) {
         case Chip.W83667HG:
@@ -166,16 +164,12 @@ namespace OpenHardwareMonitor.Hardware.LPC {
 
     private static ulong SetBit(ulong target, int bit, int value) {
       if ((value & 1) != value)
-            {
-                throw new ArgumentException("Value must be one bit only.");
-            }
+        throw new ArgumentException("Value must be one bit only.");
 
-            if (bit < 0 || bit > 63)
-            {
-                throw new ArgumentException("Bit out of range.");
-            }
+      if (bit < 0 || bit > 63)
+        throw new ArgumentException("Bit out of range.");
 
-            ulong mask = (((ulong)1) << bit);
+      ulong mask = (((ulong)1) << bit);
       return value > 0 ? target | mask : target & ~mask;
     }
 
@@ -187,11 +181,9 @@ namespace OpenHardwareMonitor.Hardware.LPC {
 
     public void Update() {
       if (!Ring0.WaitIsaBusMutex(10))
-            {
-                return;
-            }
+        return;
 
-            for (int i = 0; i < voltages.Length; i++) {
+      for (int i = 0; i < voltages.Length; i++) {
         if (voltageRegister[i] != VOLTAGE_VBAT_REG) {
           // two special VCore measurement modes for W83627THF
           float fvalue;
@@ -201,26 +193,18 @@ namespace OpenHardwareMonitor.Hardware.LPC {
             byte vrmConfiguration = ReadByte(0, 0x18);
             int value = ReadByte(voltageBank[i], voltageRegister[i]);
             if ((vrmConfiguration & 0x01) == 0)
-                        {
-                            fvalue = 0.016f * value; // VRM8 formula
-                        }
-                        else
-                        {
-                            fvalue = 0.00488f * value + 0.69f; // VRM9 formula
-                        }
-                    } else {
+              fvalue = 0.016f * value; // VRM8 formula
+            else
+              fvalue = 0.00488f * value + 0.69f; // VRM9 formula
+          } else {
             int value = ReadByte(voltageBank[i], voltageRegister[i]);
             fvalue = voltageGain * value;
           }
           if (fvalue > 0)
-                    {
-                        voltages[i] = fvalue;
-                    }
-                    else
-                    {
-                        voltages[i] = null;
-                    }
-                } else {
+            voltages[i] = fvalue;
+          else
+            voltages[i] = null;
+        } else {
           // Battery voltage
           bool valid = (ReadByte(0, 0x5D) & 0x01) > 0;
           if (valid) {
@@ -234,13 +218,11 @@ namespace OpenHardwareMonitor.Hardware.LPC {
       for (int i = 0; i < temperatures.Length; i++) {
         int value = ((sbyte)ReadByte(TEMPERATURE_BANK[i], 
           TEMPERATURE_REG[i])) << 1;
-        if (TEMPERATURE_BANK[i] > 0)
-                {
-                    value |= ReadByte(TEMPERATURE_BANK[i],
+        if (TEMPERATURE_BANK[i] > 0) 
+          value |= ReadByte(TEMPERATURE_BANK[i],
             (byte)(TEMPERATURE_REG[i] + 1)) >> 7;
-                }
 
-                float temperature = value / 2.0f;
+        float temperature = value / 2.0f;
         if (temperature <= 125 && temperature >= -55 && !peciTemperature[i]) {
           temperatures[i] = temperature;
         } else {
@@ -250,11 +232,8 @@ namespace OpenHardwareMonitor.Hardware.LPC {
 
       ulong bits = 0;
       for (int i = 0; i < FAN_BIT_REG.Length; i++)
-            {
-                bits = (bits << 8) | ReadByte(0, FAN_BIT_REG[i]);
-            }
-
-            ulong newBits = bits;
+        bits = (bits << 8) | ReadByte(0, FAN_BIT_REG[i]);
+      ulong newBits = bits;
       for (int i = 0; i < fans.Length; i++) {
         int count = ReadByte(FAN_TACHO_BANK[i], FAN_TACHO_REG[i]);
         
@@ -269,17 +248,12 @@ namespace OpenHardwareMonitor.Hardware.LPC {
         fans[i] = value;
 
         // update fan divisor
-        if (count > 192 && divisorBits < 7)
-                {
-                    divisorBits++;
-                }
+        if (count > 192 && divisorBits < 7) 
+          divisorBits++;
+        if (count < 96 && divisorBits > 0)
+          divisorBits--;
 
-                if (count < 96 && divisorBits > 0)
-                {
-                    divisorBits--;
-                }
-
-                newBits = SetBit(newBits, FAN_DIV_BIT2[i], (divisorBits >> 2) & 1);
+        newBits = SetBit(newBits, FAN_DIV_BIT2[i], (divisorBits >> 2) & 1);
         newBits = SetBit(newBits, FAN_DIV_BIT1[i], (divisorBits >> 1) & 1);
         newBits = SetBit(newBits, FAN_DIV_BIT0[i], divisorBits & 1);
       }
@@ -290,11 +264,9 @@ namespace OpenHardwareMonitor.Hardware.LPC {
         byte newByte = (byte)(newBits & 0xFF);
         bits = bits >> 8;
         newBits = newBits >> 8;
-        if (oldByte != newByte)
-                {
-                    WriteByte(0, FAN_BIT_REG[i], newByte);
-                }
-            }
+        if (oldByte != newByte) 
+          WriteByte(0, FAN_BIT_REG[i], newByte);        
+      }
 
       Ring0.ReleaseIsaBusMutex();
     }
@@ -312,11 +284,9 @@ namespace OpenHardwareMonitor.Hardware.LPC {
       r.AppendLine();
 
       if (!Ring0.WaitIsaBusMutex(100))
-            {
-                return r.ToString();
-            }
+        return r.ToString();
 
-            r.AppendLine("Hardware Monitor Registers");
+      r.AppendLine("Hardware Monitor Registers");
       r.AppendLine();
       r.AppendLine("      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F");
       r.AppendLine();

@@ -4,7 +4,7 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
-  Copyright (C) 2009-2013 Michael Möller <mmoeller@openhardwaremonitor.org>
+  Copyright (C) 2009-2014 Michael Möller <mmoeller@openhardwaremonitor.org>
 	
 */
 
@@ -23,7 +23,7 @@ namespace OpenHardwareMonitor.Hardware.CPU {
     private static CPUID[][] GetProcessorThreads() {
 
       List<CPUID> threads = new List<CPUID>();
-      for (int i = 0; i < 32; i++) {
+      for (int i = 0; i < 64; i++) {
         try {
           threads.Add(new CPUID(i));
         } catch (ArgumentOutOfRangeException) { }
@@ -81,11 +81,9 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       int index = 0;
       foreach (CPUID[] threads in processorThreads) {
         if (threads.Length == 0)
-                {
-                    continue;
-                }
-
-                CPUID[][] coreThreads = GroupThreadsByCore(threads);
+          continue;
+            
+        CPUID[][] coreThreads = GroupThreadsByCore(threads);
 
         this.threads[index] = coreThreads;
 
@@ -141,11 +139,9 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
     public string GetReport() {
       if (threads == null)
-            {
-                return null;
-            }
-
-            StringBuilder r = new StringBuilder();
+        return null;
+      
+      StringBuilder r = new StringBuilder();
       
       r.AppendLine("CPUID");
       r.AppendLine();
@@ -172,8 +168,7 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         r.AppendLine("CPUID Return Values");
         r.AppendLine();
         for (int j = 0; j < threads[i].Length; j++)
-                {
-                    for (int k = 0; k < threads[i][j].Length; k++) {
+          for (int k = 0; k < threads[i][j].Length; k++) {
             r.AppendLine(" CPU Thread: " + threads[i][j][k].Thread);
             r.AppendLine(" APIC ID: " + threads[i][j][k].ApicId);
             r.AppendLine(" Processor ID: " + threads[i][j][k].ProcessorId);
@@ -185,8 +180,7 @@ namespace OpenHardwareMonitor.Hardware.CPU {
             AppendCpuidData(r, threads[i][j][k].ExtData, CPUID.CPUID_EXT);
             r.AppendLine();
           }
-                }
-            }
+      }
       return r.ToString(); 
     }
 

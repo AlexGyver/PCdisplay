@@ -48,14 +48,10 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
     protected string CoreString(int i) {
       if (coreCount == 1)
-            {
-                return "CPU Core";
-            }
-            else
-            {
-                return "CPU Core #" + (i + 1);
-            }
-        }
+        return "CPU Core";
+      else
+        return "CPU Core #" + (i + 1);
+    }
 
     public GenericCPU(int processorIndex, CPUID[][] cpuid, ISettings settings)
       : base(cpuid[0][0].Name, CreateIdentifier(cpuid[0][0].Vendor, 
@@ -75,64 +71,39 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       // check if processor has MSRs
       if (cpuid[0][0].Data.GetLength(0) > 1
         && (cpuid[0][0].Data[1, 3] & 0x20) != 0)
-            {
-                hasModelSpecificRegisters = true;
-            }
-            else
-            {
-                hasModelSpecificRegisters = false;
-            }
+        hasModelSpecificRegisters = true;
+      else
+        hasModelSpecificRegisters = false;
 
-            // check if processor has a TSC
-            if (cpuid[0][0].Data.GetLength(0) > 1
+      // check if processor has a TSC
+      if (cpuid[0][0].Data.GetLength(0) > 1
         && (cpuid[0][0].Data[1, 3] & 0x10) != 0)
-            {
-                hasTimeStampCounter = true;
-            }
-            else
-            {
-                hasTimeStampCounter = false;
-            }
+        hasTimeStampCounter = true;
+      else
+        hasTimeStampCounter = false;
 
-            // check if processor supports an invariant TSC 
-            if (cpuid[0][0].ExtData.GetLength(0) > 7
+      // check if processor supports an invariant TSC 
+      if (cpuid[0][0].ExtData.GetLength(0) > 7
         && (cpuid[0][0].ExtData[7, 3] & 0x100) != 0)
-            {
-                isInvariantTimeStampCounter = true;
-            }
-            else
-            {
-                isInvariantTimeStampCounter = false;
-            }
+        isInvariantTimeStampCounter = true;
+      else
+        isInvariantTimeStampCounter = false;
 
-            if (coreCount > 1)
-            {
-                totalLoad = new Sensor("CPU Total", 0, SensorType.Load, this, settings);
-            }
-            else
-            {
-                totalLoad = null;
-            }
-
-            coreLoads = new Sensor[coreCount];
+      if (coreCount > 1)
+        totalLoad = new Sensor("CPU Total", 0, SensorType.Load, this, settings);
+      else
+        totalLoad = null;
+      coreLoads = new Sensor[coreCount];
       for (int i = 0; i < coreLoads.Length; i++)
-            {
-                coreLoads[i] = new Sensor(CoreString(i), i + 1,
+        coreLoads[i] = new Sensor(CoreString(i), i + 1,
           SensorType.Load, this, settings);
-            }
-
-            cpuLoad = new CPULoad(cpuid);
+      cpuLoad = new CPULoad(cpuid);
       if (cpuLoad.IsAvailable) {
         foreach (Sensor sensor in coreLoads)
-                {
-                    ActivateSensor(sensor);
-                }
-
-                if (totalLoad != null)
-                {
-                    ActivateSensor(totalLoad);
-                }
-            }
+          ActivateSensor(sensor);
+        if (totalLoad != null)
+          ActivateSensor(totalLoad);
+      }
 
       if (hasTimeStampCounter) {
         ulong mask = ThreadAffinity.Set(1UL << cpuid[0][0].Thread);
@@ -182,10 +153,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         }
 
         if (error < 1e-4)
-                {
-                    break;
-                }
-            }                
+          break;
+      }                
     }
 
     private void EstimateTimeStampCounterFrequency(double timeWindow, 
@@ -271,11 +240,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
           r.AppendLine();
           r.AppendLine(" MSR       EDX       EAX");
           foreach (uint msr in msrArray)
-                    {
-                        AppendMSRData(r, msr, cpuid[i][0].Thread);
-                    }
-
-                    r.AppendLine();
+            AppendMSRData(r, msr, cpuid[i][0].Thread);
+          r.AppendLine();
         }
       }
 
@@ -335,15 +301,10 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       if (cpuLoad.IsAvailable) {
         cpuLoad.Update();
         for (int i = 0; i < coreLoads.Length; i++)
-                {
-                    coreLoads[i].Value = cpuLoad.GetCoreLoad(i);
-                }
-
-                if (totalLoad != null)
-                {
-                    totalLoad.Value = cpuLoad.GetTotalLoad();
-                }
-            }
+          coreLoads[i].Value = cpuLoad.GetCoreLoad(i);
+        if (totalLoad != null)
+          totalLoad.Value = cpuLoad.GetTotalLoad();
+      }
     }
   }
 }

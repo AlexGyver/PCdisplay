@@ -350,20 +350,12 @@ namespace OpenHardwareMonitor.Hardware.HDD {
             "SELECT * FROM Win32_DiskPartition " +
             "WHERE DiskIndex = " + driveIndex))
         using (ManagementObjectCollection dpc = s.Get())
-                {
-                    foreach (ManagementObject dp in dpc)
-                    {
-                        using (ManagementObjectCollection ldc = 
+        foreach (ManagementObject dp in dpc) 
+          using (ManagementObjectCollection ldc = 
             dp.GetRelated("Win32_LogicalDisk"))
-                        {
-                            foreach (ManagementBaseObject ld in ldc)
-                            {
-                                list.Add(((string)ld["Name"]).TrimEnd(':'));
-                            }
-                        }
-                    }
-                }
-            } catch { }
+          foreach (ManagementBaseObject ld in ldc) 
+            list.Add(((string)ld["Name"]).TrimEnd(':')); 
+      } catch { }
       return list.ToArray();
     }
 

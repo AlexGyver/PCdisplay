@@ -36,11 +36,8 @@ namespace OpenHardwareMonitor.GUI {
       Graphics g = e.Graphics;
       Rectangle r = SplitterRectangle;
       using (SolidBrush brush = new SolidBrush(color))
-            {
-                g.FillRectangle(brush, r);
-            }
-
-            ControlPaint.DrawBorder3D(g, r, border3DStyle);
+        g.FillRectangle(brush, r);
+      ControlPaint.DrawBorder3D(g, r, border3DStyle);
     }
 
     protected override void OnKeyDown(KeyEventArgs e) {

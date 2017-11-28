@@ -26,15 +26,10 @@ namespace OpenHardwareMonitor.GUI {
       this.settings = settings;
       this.name = name;
       if (name != null)
-            {
-                this.value = settings.GetValue(name, value);
-            }
-            else
-            {
-                this.value = value;
-            }
-
-            this.menuItems = menuItems;
+        this.value = settings.GetValue(name, value);
+      else
+        this.value = value;
+      this.menuItems = menuItems;
       this.value = Math.Max(Math.Min(this.value, menuItems.Length - 1), 0);
 
       for (int i = 0; i < this.menuItems.Length; i++) {
@@ -52,20 +47,12 @@ namespace OpenHardwareMonitor.GUI {
         if (this.value != value) {
           this.value = value;
           if (this.name != null)
-                    {
-                        settings.SetValue(name, value);
-                    }
-
-                    for (int i = 0; i < this.menuItems.Length; i++)
-                    {
-                        this.menuItems[i].Checked = i == value;
-                    }
-
-                    if (changed != null)
-                    {
-                        changed(this, null);
-                    }
-                }
+            settings.SetValue(name, value);
+          for (int i = 0; i < this.menuItems.Length; i++) 
+            this.menuItems[i].Checked = i == value;
+          if (changed != null)
+            changed(this, null);
+        }
       }
     }
 
@@ -73,10 +60,8 @@ namespace OpenHardwareMonitor.GUI {
       add {
         changed += value;
         if (changed != null)
-                {
-                    changed(this, null);
-                }
-            }
+          changed(this, null);
+      }
       remove {
         changed -= value;
       }

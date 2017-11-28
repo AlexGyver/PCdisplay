@@ -19,21 +19,17 @@ namespace OpenHardwareMonitor.Collections {
 
     public bool Add(T item) {
       if (list.Contains(item))
-            {
-                return false;
-            }
+        return false;
 
-            list.Add(item);
+      list.Add(item);
       return true;
     }
 
     public bool Remove(T item) {
       if (!list.Contains(item))
-            {
-                return false;
-            }
+        return false;
 
-            list.Remove(item);
+      list.Remove(item);
       return true;
     }
 

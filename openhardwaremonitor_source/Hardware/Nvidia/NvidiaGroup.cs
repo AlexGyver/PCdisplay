@@ -21,11 +21,9 @@ namespace OpenHardwareMonitor.Hardware.Nvidia {
 
     public NvidiaGroup(ISettings settings) {
       if (!NVAPI.IsAvailable)
-            {
-                return;
-            }
+        return;
 
-            report.AppendLine("NVAPI");
+      report.AppendLine("NVAPI");
       report.AppendLine();
 
       string version;
@@ -71,10 +69,8 @@ namespace OpenHardwareMonitor.Hardware.Nvidia {
               handlesFromDisplay, out countFromDisplay) == NvStatus.OK) {
               for (int j = 0; j < countFromDisplay; j++) {
                 if (!displayHandles.ContainsKey(handlesFromDisplay[j]))
-                                {
-                                    displayHandles.Add(handlesFromDisplay[j], displayHandle);
-                                }
-                            }
+                  displayHandles.Add(handlesFromDisplay[j], displayHandle);
+              }
             }
           }
         }
@@ -104,9 +100,7 @@ namespace OpenHardwareMonitor.Hardware.Nvidia {
 
     public void Close() {
       foreach (Hardware gpu in hardware)
-            {
-                gpu.Close();
-            }
-        }
+        gpu.Close();      
+    }
   }
 }

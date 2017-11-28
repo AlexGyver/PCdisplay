@@ -29,12 +29,10 @@ namespace OpenHardwareMonitor.GUI {
     private ShowDesktop() {
       // create a reference window to detect show desktop
       referenceWindow = new NativeWindow();
-            CreateParams cp = new CreateParams
-            {
-                ExStyle = GadgetWindow.WS_EX_TOOLWINDOW,
-                Caption = referenceWindowCaption
-            };
-            referenceWindow.CreateHandle(cp);
+      CreateParams cp = new CreateParams();
+      cp.ExStyle = GadgetWindow.WS_EX_TOOLWINDOW;
+      cp.Caption = referenceWindowCaption;
+      referenceWindow.CreateHandle(cp);
       NativeMethods.SetWindowPos(referenceWindow.Handle, 
         GadgetWindow.HWND_BOTTOM, 0, 0, 0, 0, GadgetWindow.SWP_NOMOVE | 
         GadgetWindow.SWP_NOSIZE | GadgetWindow.SWP_NOACTIVATE | 
@@ -58,11 +56,9 @@ namespace OpenHardwareMonitor.GUI {
     private IntPtr GetDesktopWorkerWindow() {
       IntPtr shellWindow = NativeMethods.GetShellWindow();
       if (shellWindow == IntPtr.Zero)
-            {
-                return IntPtr.Zero;
-            }
+        return IntPtr.Zero;
 
-            int shellId;
+      int shellId;
       NativeMethods.GetWindowThreadProcessId(shellWindow, out shellId);
 
       IntPtr workerWindow = IntPtr.Zero;
@@ -78,16 +74,14 @@ namespace OpenHardwareMonitor.GUI {
             IntPtr desktopWindow = NativeMethods.FindWindowEx(
               window, IntPtr.Zero, "SysListView32", null);
             if (desktopWindow != IntPtr.Zero)
-                        {
-                            return workerWindow;
-                        }
-                    }
+              return workerWindow;
+          }
         }
       }
       return IntPtr.Zero;
     }
 
-    private void OnTimer(object state) {
+    private void OnTimer(Object state) {
       bool showDesktopDetected;
 
       IntPtr workerWindow = GetDesktopWorkerWindow();
@@ -117,21 +111,16 @@ namespace OpenHardwareMonitor.GUI {
     public event ShowDesktopChangedEventHandler ShowDesktopChanged {
       add {
         // start the monitor timer when someone is listening
-        if (ShowDesktopChangedEvent == null)
-                {
-                    StartTimer();
-                }
-
-                ShowDesktopChangedEvent += value;
+        if (ShowDesktopChangedEvent == null)           
+          StartTimer();
+        ShowDesktopChangedEvent += value;
       }
       remove {
         ShowDesktopChangedEvent -= value;
         // stop the monitor timer if nobody is interested
         if (ShowDesktopChangedEvent == null)
-                {
-                    StopTimer();
-                }
-            }
+          StopTimer();
+      }
     }
 
     private static class NativeMethods {

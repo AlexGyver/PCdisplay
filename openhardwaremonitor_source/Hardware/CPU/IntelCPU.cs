@@ -1,10 +1,10 @@
-﻿/*
+/*
  
   This Source Code Form is subject to the terms of the Mozilla Public
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
-  Copyright (C) 2009-2013 Michael Möller <mmoeller@openhardwaremonitor.org>
+  Copyright (C) 2009-2017 Michael Möller <mmoeller@openhardwaremonitor.org>
 	
 */
 
@@ -23,7 +23,12 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       Nehalem,
       SandyBridge,
       IvyBridge,
-      Haswell
+      Haswell,
+      Broadwell,
+      Silvermont,
+      Skylake,
+      Airmont,
+      KabyLake
     }
 
     private readonly Sensor[] coreTemperatures;
@@ -58,11 +63,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
     private float[] Floats(float f) {
       float[] result = new float[coreCount];
       for (int i = 0; i < coreCount; i++)
-            {
-                result[i] = f;
-            }
-
-            return result;
+        result[i] = f;
+      return result;
     }
 
     private float[] GetTjMaxFromMSR() {
@@ -139,10 +141,45 @@ namespace OpenHardwareMonitor.Hardware.CPU {
                 microarchitecture = Microarchitecture.IvyBridge;
                 tjMax = GetTjMaxFromMSR();
                 break;
-              case 0x3C: // Intel Core i5, i7 4xxx LGA1150 (22nm)
-              case 0x45:
-              case 0x46:
+              case 0x3C: // Intel Core i5, i7 4xxx LGA1150 (22nm)              
+              case 0x3F: // Intel Xeon E5-2600/1600 v3, Core i7-59xx
+                         // LGA2011-v3, Haswell-E (22nm)
+              case 0x45: // Intel Core i5, i7 4xxxU (22nm)
+              case 0x46: 
                 microarchitecture = Microarchitecture.Haswell;
+                tjMax = GetTjMaxFromMSR();
+                break;
+              case 0x3D: // Intel Core M-5xxx (14nm)
+              case 0x47: // Intel i5, i7 5xxx, Xeon E3-1200 v4 (14nm)
+              case 0x4F: // Intel Xeon E5-26xx v4
+              case 0x56: // Intel Xeon D-15xx
+                microarchitecture = Microarchitecture.Broadwell;
+                tjMax = GetTjMaxFromMSR();
+                break;
+              case 0x36: // Intel Atom S1xxx, D2xxx, N2xxx (32nm)
+                microarchitecture = Microarchitecture.Atom;
+                tjMax = GetTjMaxFromMSR();
+                break;
+              case 0x37: // Intel Atom E3xxx, Z3xxx (22nm)
+              case 0x4A:
+              case 0x4D: // Intel Atom C2xxx (22nm)
+              case 0x5A:
+              case 0x5D:
+                microarchitecture = Microarchitecture.Silvermont;
+                tjMax = GetTjMaxFromMSR();
+                break;
+              case 0x4E:
+              case 0x5E: // Intel Core i5, i7 6xxxx LGA1151 (14nm)
+                microarchitecture = Microarchitecture.Skylake;
+                tjMax = GetTjMaxFromMSR();
+                break;
+              case 0x4C:
+                microarchitecture = Microarchitecture.Airmont;
+                tjMax = GetTjMaxFromMSR();
+                break;
+              case 0x8E: 
+              case 0x9E: // Intel Core i5, i7 7xxxx (14nm)
+                microarchitecture = Microarchitecture.KabyLake;
                 tjMax = GetTjMaxFromMSR();
                 break;
               default:
@@ -188,7 +225,12 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         case Microarchitecture.Nehalem:
         case Microarchitecture.SandyBridge:
         case Microarchitecture.IvyBridge:
-        case Microarchitecture.Haswell: {
+        case Microarchitecture.Haswell: 
+        case Microarchitecture.Broadwell:
+        case Microarchitecture.Silvermont:
+        case Microarchitecture.Skylake:
+        case Microarchitecture.Airmont:
+        case Microarchitecture.KabyLake: {
             uint eax, edx;
             if (Ring0.Rdmsr(MSR_PLATFORM_INFO, out eax, out edx)) {
               timeStampCounterMultiplier = (eax >> 8) & 0xff;
@@ -242,14 +284,17 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         coreClocks[i] =
           new Sensor(CoreString(i), i + 1, SensorType.Clock, this, settings);
         if (HasTimeStampCounter && microarchitecture != Microarchitecture.Unknown)
-                {
-                    ActivateSensor(coreClocks[i]);
-                }
-            }
+          ActivateSensor(coreClocks[i]);
+      }
 
       if (microarchitecture == Microarchitecture.SandyBridge ||
           microarchitecture == Microarchitecture.IvyBridge ||
-          microarchitecture == Microarchitecture.Haswell) 
+          microarchitecture == Microarchitecture.Haswell ||
+          microarchitecture == Microarchitecture.Broadwell || 
+          microarchitecture == Microarchitecture.Skylake ||
+          microarchitecture == Microarchitecture.Silvermont ||
+          microarchitecture == Microarchitecture.Airmont ||
+          microarchitecture == Microarchitecture.KabyLake) 
       {
         powerSensors = new Sensor[energyStatusMSRs.Length];
         lastEnergyTime = new DateTime[energyStatusMSRs.Length];
@@ -257,18 +302,21 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
         uint eax, edx;
         if (Ring0.Rdmsr(MSR_RAPL_POWER_UNIT, out eax, out edx))
-                {
-                    energyUnitMultiplier = 1.0f / (1 << (int)((eax >> 8) & 0x1FF));
-                }
-
-                if (energyUnitMultiplier != 0) {
+          switch (microarchitecture) {
+            case Microarchitecture.Silvermont:
+            case Microarchitecture.Airmont:
+              energyUnitMultiplier = 1.0e-6f * (1 << (int)((eax >> 8) & 0x1F));
+              break;
+            default:
+              energyUnitMultiplier = 1.0f / (1 << (int)((eax >> 8) & 0x1F));
+              break;
+          }
+        if (energyUnitMultiplier != 0) {
           for (int i = 0; i < energyStatusMSRs.Length; i++) {
             if (!Ring0.Rdmsr(energyStatusMSRs[i], out eax, out edx))
-                        {
-                            continue;
-                        }
+              continue;
 
-                        lastEnergyTime[i] = DateTime.UtcNow;
+            lastEnergyTime[i] = DateTime.UtcNow;
             lastEnergyConsumed[i] = eax;
             powerSensors[i] = new Sensor(powerSensorLabels[i], i,
               SensorType.Power, this, settings);
@@ -360,7 +408,11 @@ namespace OpenHardwareMonitor.Hardware.CPU {
                 } break;
               case Microarchitecture.SandyBridge:
               case Microarchitecture.IvyBridge:
-              case Microarchitecture.Haswell: {
+              case Microarchitecture.Haswell: 
+              case Microarchitecture.Broadwell:
+              case Microarchitecture.Silvermont:
+              case Microarchitecture.Skylake:
+              case Microarchitecture.KabyLake: {
                   uint multiplier = (eax >> 8) & 0xff;
                   coreClocks[i].Value = (float)(multiplier * newBusClock);
                 } break;
@@ -384,26 +436,20 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       if (powerSensors != null) {
         foreach (Sensor sensor in powerSensors) {
           if (sensor == null)
-                    {
-                        continue;
-                    }
+            continue;
 
-                    uint eax, edx;
+          uint eax, edx;
           if (!Ring0.Rdmsr(energyStatusMSRs[sensor.Index], out eax, out edx))
-                    {
-                        continue;
-                    }
+            continue;
 
-                    DateTime time = DateTime.UtcNow;
+          DateTime time = DateTime.UtcNow;
           uint energyConsumed = eax;
           float deltaTime =
             (float)(time - lastEnergyTime[sensor.Index]).TotalSeconds;
           if (deltaTime < 0.01)
-                    {
-                        continue;
-                    }
+            continue;
 
-                    sensor.Value = energyUnitMultiplier * unchecked(
+          sensor.Value = energyUnitMultiplier * unchecked(
             energyConsumed - lastEnergyConsumed[sensor.Index]) / deltaTime;
           lastEnergyTime[sensor.Index] = time;
           lastEnergyConsumed[sensor.Index] = energyConsumed;

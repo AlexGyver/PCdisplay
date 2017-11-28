@@ -99,11 +99,9 @@ namespace OpenHardwareMonitor.Hardware {
 
     public bool DeviceIOControl(IOControlCode ioControlCode, object inBuffer) {
       if (device == null)
-            {
-                return false;
-            }
+        return false;
 
-            uint bytesReturned;
+      uint bytesReturned;
       bool b = NativeMethods.DeviceIoControl(device, ioControlCode,
         inBuffer, inBuffer == null ? 0 : (uint)Marshal.SizeOf(inBuffer),
         null, 0, out bytesReturned, IntPtr.Zero);
@@ -114,11 +112,9 @@ namespace OpenHardwareMonitor.Hardware {
       ref T outBuffer) 
     {
       if (device == null)
-            {
-                return false;
-            }
+        return false;
 
-            object boxedOutBuffer = outBuffer;
+      object boxedOutBuffer = outBuffer;
       uint bytesReturned;
       bool b = NativeMethods.DeviceIoControl(device, ioControlCode,
         inBuffer, inBuffer == null ? 0 : (uint)Marshal.SizeOf(inBuffer),
@@ -141,19 +137,15 @@ namespace OpenHardwareMonitor.Hardware {
       ServiceControlManagerAccessRights.SC_MANAGER_ALL_ACCESS);
 
       if (manager == IntPtr.Zero)
-            {
-                return false;
-            }
+        return false;      
 
-            IntPtr service = NativeMethods.OpenService(manager, id,
+      IntPtr service = NativeMethods.OpenService(manager, id,
         ServiceAccessRights.SERVICE_ALL_ACCESS);
 
       if (service == IntPtr.Zero)
-            {
-                return true;
-            }
+        return true;
 
-            ServiceStatus status = new ServiceStatus();
+      ServiceStatus status = new ServiceStatus();
       NativeMethods.ControlService(service, ServiceControl.SERVICE_CONTROL_STOP, 
         ref status);
 

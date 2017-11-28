@@ -20,10 +20,8 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
 
     public void Close() {
       foreach (Mainboard mainboard in mainboards)
-            {
-                mainboard.Close();
-            }
-        }
+        mainboard.Close();
+    }
 
     public string GetReport() {
       return null;

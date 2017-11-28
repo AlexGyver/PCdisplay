@@ -42,11 +42,9 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
  
       // make sure numDevices is not larger than the info array
       if (numDevices > info.Length)
-            {
-                numDevices = (uint)info.Length;
-            }
+        numDevices = (uint)info.Length;
 
-            for (int i = 0; i < numDevices; i++) {
+      for (int i = 0; i < numDevices; i++) {
         report.Append("Device Index: ");
         report.AppendLine(i.ToString(CultureInfo.InvariantCulture));
         report.Append("Device Type: ");
@@ -98,12 +96,10 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
               byte[] data = new byte[285];
               data[0] = TBalancer.STARTFLAG;
               for (int k = 1; k < data.Length; k++)
-                            {
-                                data[k] = FTD2XX.ReadByte(handle);
-                            }
+                data[k] = FTD2XX.ReadByte(handle);
 
-                            // check protocol version 2X (protocols seen: 2C, 2A, 28)
-                            isValid = (data[274] & 0xF0) == 0x20;
+              // check protocol version 2X (protocols seen: 2C, 2A, 28)
+              isValid = (data[274] & 0xF0) == 0x20;
               protocolVersion = data[274];
               if (!isValid) {
                 report.Append("Status: Wrong Protocol Version: 0x");
@@ -129,10 +125,8 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
         }
 
         if (i < numDevices - 1)
-                {
-                    report.AppendLine();
-                }
-            }
+          report.AppendLine();
+      }
     }
 
     public IHardware[] Hardware {
@@ -150,16 +144,12 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
         r.AppendLine();
         return r.ToString();
       } else
-            {
-                return null;
-            }
-        }
+        return null;
+    }
 
     public void Close() {
       foreach (TBalancer tbalancer in hardware)
-            {
-                tbalancer.Close();
-            }
-        }
+        tbalancer.Close();
+    }
   }
 }
