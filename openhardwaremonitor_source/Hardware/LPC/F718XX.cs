@@ -73,11 +73,9 @@ namespace OpenHardwareMonitor.Hardware.LPC {
       r.AppendLine();
 
       if (!Ring0.WaitIsaBusMutex(100))
-            {
-                return r.ToString();
-            }
+        return r.ToString();
 
-            r.AppendLine("Hardware Monitor Registers");
+      r.AppendLine("Hardware Monitor Registers");
       r.AppendLine();
       r.AppendLine("      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F");
       r.AppendLine();
@@ -101,11 +99,9 @@ namespace OpenHardwareMonitor.Hardware.LPC {
 
     public void Update() {
       if (!Ring0.WaitIsaBusMutex(10))
-            {
-                return;
-            }
+        return;
 
-            for (int i = 0; i < voltages.Length; i++) {
+      for (int i = 0; i < voltages.Length; i++) {
         if (chip == Chip.F71808E && i == 6) {
           // 0x26 is reserved on F71808E
           voltages[i] = 0;
@@ -143,14 +139,10 @@ namespace OpenHardwareMonitor.Hardware.LPC {
             sbyte value = (sbyte)ReadByte((byte)(
               TEMPERATURE_BASE_REG + 2 * (i + 1)));            
             if (value < sbyte.MaxValue && value > 0)
-                            {
-                                temperatures[i] = value;
-                            }
-                            else
-                            {
-                                temperatures[i] = null;
-                            }
-                        } break;
+              temperatures[i] = value;
+            else
+              temperatures[i] = null;
+          } break;
         }
       }
 
@@ -158,15 +150,11 @@ namespace OpenHardwareMonitor.Hardware.LPC {
         int value = ReadByte(FAN_TACHOMETER_REG[i]) << 8;
         value |= ReadByte((byte)(FAN_TACHOMETER_REG[i] + 1));
 
-        if (value > 0)
-                {
-                    fans[i] = (value < 0x0fff) ? 1.5e6f / value : 0;
-                }
-                else
-                {
-                    fans[i] = null;
-                }
-            }
+        if (value > 0) 
+          fans[i] = (value < 0x0fff) ? 1.5e6f / value : 0;
+        else 
+          fans[i] = null;        
+      }
 
       Ring0.ReleaseIsaBusMutex();
     }

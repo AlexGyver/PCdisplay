@@ -59,72 +59,48 @@ namespace OpenHardwareMonitor.GUI {
     private void HardwareRemoved(IHardware hardware) {
       hardware.SensorAdded -= new SensorEventHandler(SensorAdded);
       hardware.SensorRemoved -= new SensorEventHandler(SensorRemoved);
-      foreach (ISensor sensor in hardware.Sensors)
-            {
-                SensorRemoved(sensor);
-            }
-
-            foreach (IHardware subHardware in hardware.SubHardware)
-            {
-                HardwareRemoved(subHardware);
-            }
-        }
+      foreach (ISensor sensor in hardware.Sensors) 
+        SensorRemoved(sensor);
+      foreach (IHardware subHardware in hardware.SubHardware)
+        HardwareRemoved(subHardware);
+    }
 
     private void HardwareAdded(IHardware hardware) {
       foreach (ISensor sensor in hardware.Sensors)
-            {
-                SensorAdded(sensor);
-            }
-
-            hardware.SensorAdded += new SensorEventHandler(SensorAdded);
+        SensorAdded(sensor);
+      hardware.SensorAdded += new SensorEventHandler(SensorAdded);
       hardware.SensorRemoved += new SensorEventHandler(SensorRemoved);
       foreach (IHardware subHardware in hardware.SubHardware)
-            {
-                HardwareAdded(subHardware);
-            }
-        }
+        HardwareAdded(subHardware);
+    }
 
     private void SensorAdded(ISensor sensor) {
       if (settings.GetValue(new Identifier(sensor.Identifier, 
-        "tray").ToString(), false))
-            {
-                Add(sensor, false);
-            }
-        }
+        "tray").ToString(), false)) 
+        Add(sensor, false);   
+    }
 
     private void SensorRemoved(ISensor sensor) {
-      if (Contains(sensor))
-            {
-                Remove(sensor, false);
-            }
-        }
+      if (Contains(sensor)) 
+        Remove(sensor, false);
+    }
 
     public void Dispose() {
       foreach (SensorNotifyIcon icon in list)
-            {
-                icon.Dispose();
-            }
-
-            mainIcon.Dispose();
+        icon.Dispose();
+      mainIcon.Dispose();
     }
 
     public void Redraw() {
       foreach (SensorNotifyIcon icon in list)
-            {
-                icon.Update();
-            }
-        }
+        icon.Update();
+    }
 
     public bool Contains(ISensor sensor) {
       foreach (SensorNotifyIcon icon in list)
-            {
-                if (icon.Sensor == sensor)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+        if (icon.Sensor == sensor)
+          return true;
+      return false;
     }
 
     public void Add(ISensor sensor, bool balloonTip) {
@@ -150,14 +126,9 @@ namespace OpenHardwareMonitor.GUI {
       }
       SensorNotifyIcon instance = null;
       foreach (SensorNotifyIcon icon in list)
-            {
-                if (icon.Sensor == sensor)
-                {
-                    instance = icon;
-                }
-            }
-
-            if (instance != null) {
+        if (icon.Sensor == sensor)
+          instance = icon;
+      if (instance != null) {
         list.Remove(instance);
         UpdateMainIconVisibilty();
         instance.Dispose();        
@@ -168,19 +139,15 @@ namespace OpenHardwareMonitor.GUI {
 
     public void SendHideShowCommand() {
       if (HideShowCommand != null)
-            {
-                HideShowCommand(this, null);
-            }
-        }
+        HideShowCommand(this, null);
+    }
 
     public event EventHandler ExitCommand;
 
     public void SendExitCommand() {
       if (ExitCommand != null)
-            {
-                ExitCommand(this, null);
-            }
-        }
+        ExitCommand(this, null);
+    }
 
     private void UpdateMainIconVisibilty() {
       if (mainIconEnabled) {

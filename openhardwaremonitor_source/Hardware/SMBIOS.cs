@@ -31,11 +31,9 @@ namespace OpenHardwareMonitor.Hardware {
     private static string ReadSysFS(string path) {
       try {
         if (File.Exists(path)) {
-          using (StreamReader reader = new StreamReader(path))
-                    {
-                        return reader.ReadLine();
-                    }
-                } else {
+          using (StreamReader reader = new StreamReader(path)) 
+            return reader.ReadLine();
+        } else {
           return null;
         }
       } catch {
@@ -90,11 +88,9 @@ namespace OpenHardwareMonitor.Hardware {
         } catch { }      
 
         if (majorVersion > 0 || minorVersion > 0)
-                {
-                    version = new Version(majorVersion, minorVersion);
-                }
-
-                if (raw != null && raw.Length > 0) {
+          version = new Version(majorVersion, minorVersion);
+  
+        if (raw != null && raw.Length > 0) {
           int offset = 0;
           byte type = raw[offset];
           while (offset + 4 < raw.Length && type != 127) {
@@ -104,21 +100,16 @@ namespace OpenHardwareMonitor.Hardware {
             ushort handle = (ushort)((raw[offset + 2] << 8) | raw[offset + 3]);
   
             if (offset + length > raw.Length)
-                        {
-                            break;
-                        }
-
-                        byte[] data = new byte[length];
+              break;
+            byte[] data = new byte[length];
             Array.Copy(raw, offset, data, 0, length);
             offset += length;
   
             List<string> stringsList = new List<string>();
             if (offset < raw.Length && raw[offset] == 0)
-                        {
-                            offset++;
-                        }
-
-                        while (offset < raw.Length && raw[offset] != 0) {
+              offset++;
+  
+            while (offset < raw.Length && raw[offset] != 0) {
               StringBuilder sb = new StringBuilder();
               while (offset < raw.Length && raw[offset] != 0) {
                 sb.Append((char)raw[offset]); offset++;
@@ -274,37 +265,25 @@ namespace OpenHardwareMonitor.Hardware {
 
       protected int GetByte(int offset) {
         if (offset < data.Length && offset >= 0)
-                {
-                    return data[offset];
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+          return data[offset];
+        else
+          return 0;
+      }
 
       protected int GetWord(int offset) {
         if (offset + 1 < data.Length && offset >= 0)
-                {
-                    return (data[offset + 1] << 8) | data[offset];
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+          return (data[offset + 1] << 8) | data[offset];
+        else
+          return 0;
+      }
 
       protected string GetString(int offset) {
         if (offset < data.Length && data[offset] > 0 &&
          data[offset] <= strings.Length)
-                {
-                    return strings[data[offset] - 1];
-                }
-                else
-                {
-                    return "";
-                }
-            }
+          return strings[data[offset] - 1];
+        else
+          return "";
+      }
 
       public Structure(byte type, ushort handle, byte[] data, string[] strings) 
       {

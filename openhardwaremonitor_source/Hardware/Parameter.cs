@@ -52,10 +52,8 @@ namespace OpenHardwareMonitor.Hardware {
           NumberStyles.Float,
           CultureInfo.InvariantCulture,
           out this.value))
-                {
-                    this.value = description.DefaultValue;
-                }
-            }
+          this.value = description.DefaultValue;
+      }
     }
 
     public ISensor Sensor {
@@ -104,11 +102,8 @@ namespace OpenHardwareMonitor.Hardware {
 
     public void Accept(IVisitor visitor) {
       if (visitor == null)
-            {
-                throw new ArgumentNullException("visitor");
-            }
-
-            visitor.VisitParameter(this);
+        throw new ArgumentNullException("visitor");
+      visitor.VisitParameter(this);
     }
 
     public void Traverse(IVisitor visitor) { }

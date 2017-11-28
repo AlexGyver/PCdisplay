@@ -59,11 +59,9 @@ namespace OpenHardwareMonitor.Hardware {
 
       Type[] parameterTypes = new Type[parameterCount];
       for (int i = 0; i < parameterCount; i++)
-            {
-                parameterTypes[i] = parameterInfos[i].ParameterType;
-            }
+        parameterTypes[i] = parameterInfos[i].ParameterType;
 
-            MethodBuilder methodBuilder = typeBuilder.DefinePInvokeMethod(
+      MethodBuilder methodBuilder = typeBuilder.DefinePInvokeMethod(
         dllImportAttribute.EntryPoint, dllImportAttribute.Value,
         MethodAttributes.Public | MethodAttributes.Static |
         MethodAttributes.PinvokeImpl, CallingConventions.Standard,
@@ -72,17 +70,13 @@ namespace OpenHardwareMonitor.Hardware {
         dllImportAttribute.CharSet);
 
       foreach (ParameterInfo parameterInfo in parameterInfos)
-            {
-                methodBuilder.DefineParameter(parameterInfo.Position + 1,
+        methodBuilder.DefineParameter(parameterInfo.Position + 1,
           parameterInfo.Attributes, parameterInfo.Name);
-            }
 
-            if (dllImportAttribute.PreserveSig)
-            {
-                methodBuilder.SetImplementationFlags(MethodImplAttributes.PreserveSig);
-            }
+      if (dllImportAttribute.PreserveSig)
+        methodBuilder.SetImplementationFlags(MethodImplAttributes.PreserveSig);
 
-            return typeBuilder.CreateType();
+      return typeBuilder.CreateType();
     }
   }
 }

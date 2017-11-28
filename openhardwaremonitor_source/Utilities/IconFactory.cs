@@ -76,15 +76,10 @@ namespace OpenHardwareMonitor.Utilities {
         Header.Write(bw);
         int stride = Header.Width << 2;
         for (int i = (Header.Height >> 1) - 1; i >= 0; i--)
-                {
-                    bw.Write(Colors, i * stride, stride);
-                }
-
-                for (int i = 0; i < 2 * MaskSize; i++)
-                {
-                    bw.Write((byte)0);
-                }
-            }
+          bw.Write(Colors, i * stride, stride);
+        for (int i = 0; i < 2 * MaskSize; i++)
+          bw.Write((byte)0);        
+      }
     }
 
     private struct ICONDIRENTRY {
@@ -143,10 +138,8 @@ namespace OpenHardwareMonitor.Utilities {
         bw.Write(Type);
         bw.Write(Count);
         for (int i = 0; i < Entries.Length; i++)
-                {
-                    Entries[i].Write(bw);
-                }
-            }
+          Entries[i].Write(bw);
+      }
 
       public uint Size {
         get { return (uint)(6 + Entries.Length * 
@@ -160,11 +153,9 @@ namespace OpenHardwareMonitor.Utilities {
     public static Icon Create(byte[] colors, int width, int height, 
       PixelFormat format) {
       if (format != PixelFormat.Format32bppArgb)
-            {
-                throw new NotImplementedException();
-            }
+        throw new NotImplementedException();
 
-            ICONIMAGE image = new ICONIMAGE(width, height, colors);
+      ICONIMAGE image = new ICONIMAGE(width, height, colors);
       ICONDIR dir = new ICONDIR(
         new ICONDIRENTRY[] { new ICONDIRENTRY(image, 0) } );
       dir.Entries[0].ImageOffset = dir.Size;

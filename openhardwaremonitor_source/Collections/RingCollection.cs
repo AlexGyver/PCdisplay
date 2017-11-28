@@ -30,11 +30,8 @@ namespace OpenHardwareMonitor.Collections {
 
     public RingCollection(int capacity) {
       if (capacity < 0)
-            {
-                throw new ArgumentOutOfRangeException("capacity");
-            }
-
-            this.array = new T[capacity];
+        throw new ArgumentOutOfRangeException("capacity");
+      this.array = new T[capacity];
       this.head = 0; 
       this.tail = 0;
       this.size = 0;
@@ -79,11 +76,8 @@ namespace OpenHardwareMonitor.Collections {
       if (size == array.Length) {
         int newCapacity = array.Length * 3 / 2;
         if (newCapacity < array.Length + 8)
-                {
-                    newCapacity = array.Length + 8;
-                }
-
-                Capacity = newCapacity;
+          newCapacity = array.Length + 8;
+        Capacity = newCapacity;
       }
 
       array[tail] = item;
@@ -93,11 +87,9 @@ namespace OpenHardwareMonitor.Collections {
 
     public T Remove() {
       if (size == 0)
-            {
-                throw new InvalidOperationException();
-            }
+        throw new InvalidOperationException();
 
-            T result = array[head];
+      T result = array[head];
       array[head] = default(T);
       head = head + 1 == array.Length ? 0 : head + 1;
       size--;
@@ -114,69 +106,45 @@ namespace OpenHardwareMonitor.Collections {
     public T this[int index] {
       get {
         if (index < 0 || index >= size)
-                {
-                    throw new IndexOutOfRangeException();
-                }
-
-                int i = head + index;
+          throw new IndexOutOfRangeException();
+        int i = head + index;
         if (i >= array.Length)
-                {
-                    i -= array.Length;
-                }
-
-                return array[i];
+          i -= array.Length;
+        return array[i];
       }
       set {
         if (index < 0 || index >= size)
-                {
-                    throw new IndexOutOfRangeException();
-                }
-
-                int i = head + index;
+          throw new IndexOutOfRangeException();
+        int i = head + index;
         if (i >= array.Length)
-                {
-                    i -= array.Length;
-                }
-
-                array[i] = value;
+          i -= array.Length;
+        array[i] = value;
       }
     }
 
     public T First {
       get {
         if (size == 0)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                return array[head];
+          throw new InvalidOperationException();
+        return array[head];
       }
       set {
         if (size == 0)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                array[head] = value;
+          throw new InvalidOperationException();
+        array[head] = value;
       }
     }
 
     public T Last {
       get {
         if (size == 0)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                return array[tail == 0 ? array.Length - 1 : tail - 1];
+          throw new InvalidOperationException();
+        return array[tail == 0 ? array.Length - 1 : tail - 1];
       }
       set {
         if (size == 0)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                array[tail == 0 ? array.Length - 1 : tail - 1] = value;
+          throw new InvalidOperationException();
+        array[tail == 0 ? array.Length - 1 : tail - 1] = value;
       }
     }
 
@@ -209,32 +177,24 @@ namespace OpenHardwareMonitor.Collections {
       public T Current {
         get {
           if (index < 0)
-                    {
-                        throw new InvalidOperationException();
-                    }
-
-                    return collection[index];
+            throw new InvalidOperationException();
+          return collection[index];
         }
       }
 
       object IEnumerator.Current {
         get {
           if (index < 0)
-                    {
-                        throw new InvalidOperationException();
-                    }
-
-                    return collection[index];
+            throw new InvalidOperationException();
+          return collection[index];
         }
       }
 
       public bool MoveNext() {
         if (index == -2)
-                {
-                    return false;
-                }
+          return false;
 
-                index++;
+        index++;
 
         if (index == collection.size) {
           index = -2;

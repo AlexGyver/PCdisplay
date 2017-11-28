@@ -68,11 +68,9 @@ namespace OpenHardwareMonitor.GUI {
       contextMenu.MenuItems.Add(removeItem);
       MenuItem colorItem = new MenuItem("Change Color...");
       colorItem.Click += delegate(object obj, EventArgs args) {
-          ColorDialog dialog = new ColorDialog
-          {
-              Color = Color
-          };
-          if (dialog.ShowDialog() == DialogResult.OK) {
+        ColorDialog dialog = new ColorDialog();
+        dialog.Color = Color;
+        if (dialog.ShowDialog() == DialogResult.OK) {
           Color = dialog.Color;
           settings.SetValue(new Identifier(sensor.Identifier,
             "traycolor").ToString(), Color);
@@ -143,40 +141,26 @@ namespace OpenHardwareMonitor.GUI {
         Brush brush = this.brush;
         this.brush = new SolidBrush(this.color);
         if (brush != null)
-                {
-                    brush.Dispose();
-                }
-
-                Brush darkBrush = this.darkBrush;
+          brush.Dispose();
+        Brush darkBrush = this.darkBrush;
         this.darkBrush = new SolidBrush(this.darkColor);
         if (darkBrush != null)
-                {
-                    darkBrush.Dispose();
-                }
-            }
+          darkBrush.Dispose();
+      }
     }
 
     public void Dispose() {      
       Icon icon = notifyIcon.Icon;
       notifyIcon.Icon = null;
       if (icon != null)
-            {
-                icon.Dispose();
-            }
-
-            notifyIcon.Dispose();
+        icon.Dispose();      
+      notifyIcon.Dispose();
 
       if (brush != null)
-            {
-                brush.Dispose();
-            }
-
-            if (darkBrush != null)
-            {
-                darkBrush.Dispose();
-            }
-
-            pen.Dispose();
+        brush.Dispose();
+      if (darkBrush != null)
+        darkBrush.Dispose();
+      pen.Dispose();
       graphics.Dispose();      
       bitmap.Dispose();
       font.Dispose();
@@ -185,11 +169,9 @@ namespace OpenHardwareMonitor.GUI {
 
     private string GetString() {
       if (!sensor.Value.HasValue)
-            {
-                return "-";
-            }
+        return "-";
 
-            switch (sensor.SensorType) {
+      switch (sensor.SensorType) {
         case SensorType.Voltage:
           return string.Format("{0:F1}", sensor.Value);
         case SensorType.Clock:
@@ -198,16 +180,11 @@ namespace OpenHardwareMonitor.GUI {
           return string.Format("{0:F0}", sensor.Value);
         case SensorType.Temperature:
           if (unitManager.TemperatureUnit == TemperatureUnit.Fahrenheit)
-                    {
-                        return string.Format("{0:F0}", 
+            return string.Format("{0:F0}", 
               UnitManager.CelsiusToFahrenheit(sensor.Value));
-                    }
-                    else
-                    {
-                        return string.Format("{0:F0}", sensor.Value);
-                    }
-
-                case SensorType.Fan: 
+          else
+            return string.Format("{0:F0}", sensor.Value);
+        case SensorType.Fan: 
           return string.Format("{0:F1}", 1e-3f * sensor.Value);
         case SensorType.Flow:
           return string.Format("{0:F1}", 1e-3f * sensor.Value);
@@ -229,14 +206,9 @@ namespace OpenHardwareMonitor.GUI {
       string text = GetString();
       int count = 0;
       for (int i = 0; i < text.Length; i++)
-            {
-                if ((text[i] >= '0' && text[i] <= '9') || text[i] == '-')
-                {
-                    count++;
-                }
-            }
-
-            bool small = count > 2;
+        if ((text[i] >= '0' && text[i] <= '9') || text[i] == '-')
+          count++;
+      bool small = count > 2;
 
       graphics.Clear(Color.Black);
       TextRenderer.DrawText(graphics, text, small ? smallFont : font,
@@ -306,12 +278,10 @@ namespace OpenHardwareMonitor.GUI {
           break;
       }
 
-      if (icon != null)
-            {
-                icon.Dispose();
-            }
+      if (icon != null) 
+        icon.Dispose();
 
-            string format = "";
+      string format = "";
       switch (sensor.SensorType) {
         case SensorType.Voltage: format = "\n{0}: {1:F2} V"; break;
         case SensorType.Clock: format = "\n{0}: {1:F0} MHz"; break;
@@ -340,11 +310,9 @@ namespace OpenHardwareMonitor.GUI {
         Math.Min(63 - formattedValue.Length, hardwareName.Length));
       string text = hardwareName + formattedValue;
       if (text.Length > 63)
-            {
-                text = null;
-            }
+        text = null;
 
-            notifyIcon.Text = text;
+      notifyIcon.Text = text;
       notifyIcon.Visible = true;         
     }
   }

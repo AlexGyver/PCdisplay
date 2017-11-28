@@ -9,3 +9,6 @@ C:\Users\AgentFire\Desktop\open-hardware-monitor-master-fix (2)\open-hardware-mo
 E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\Bin\Release\OpenHardwareMonitorLib.dll
 E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitorLib.csprojResolveAssemblyReference.cache
 E:\ARDUINO_LIBRARY\openhardwaremonitor\open-hardware-monitor-master\obj\Release\OpenHardwareMonitorLib.dll
+D:\git\openhardwaremonitor\obj\Release\OpenHardwareMonitorLib.csprojResolveAssemblyReference.cache
+D:\git\openhardwaremonitor\obj\Release\OpenHardwareMonitorLib.dll
+D:\git\openhardwaremonitor\Bin\Release\OpenHardwareMonitorLib.dll

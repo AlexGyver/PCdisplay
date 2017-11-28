@@ -30,14 +30,12 @@ namespace OpenHardwareMonitor {
       #endif
 
       if (!AllRequiredFilesAvailable())
-            {
-                Environment.Exit(0);
-            }
+        Environment.Exit(0);
 
-            Application.EnableVisualStyles();
+      Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       using (GUI.MainForm form = new GUI.MainForm()) {
-        form.FormClosed += delegate(object sender, FormClosedEventArgs e) {
+        form.FormClosed += delegate(Object sender, FormClosedEventArgs e) {
           Application.Exit();
         };        
         Application.Run();
@@ -59,34 +57,21 @@ namespace OpenHardwareMonitor {
 
     private static bool AllRequiredFilesAvailable() {
       if (!IsFileAvailable("Aga.Controls.dll"))
-            {
-                return false;
-            }
-
-            if (!IsFileAvailable("OpenHardwareMonitorLib.dll"))
-            {
-                return false;
-            }
-
-            if (!IsFileAvailable("OxyPlot.dll"))
-            {
-                return false;
-            }
-
-            if (!IsFileAvailable("OxyPlot.WindowsForms.dll"))
-            {
-                return false;
-            }
-
-            return true;
+        return false;
+      if (!IsFileAvailable("OpenHardwareMonitorLib.dll"))
+        return false;
+      if (!IsFileAvailable("OxyPlot.dll"))
+        return false;
+      if (!IsFileAvailable("OxyPlot.WindowsForms.dll"))
+        return false;
+      
+      return true;
     }
 
     private static void ReportException(Exception e) {
-            CrashForm form = new CrashForm
-            {
-                Exception = e
-            };
-            form.ShowDialog();
+      CrashForm form = new CrashForm();
+      form.Exception = e;
+      form.ShowDialog();
     }
 
     public static void Application_ThreadException(object sender, 
@@ -106,10 +91,8 @@ namespace OpenHardwareMonitor {
       try {
         Exception e = args.ExceptionObject as Exception;
         if (e != null)
-                {
-                    ReportException(e);
-                }
-            } catch {
+          ReportException(e);
+      } catch {
       } finally {
         Environment.Exit(0);
       }

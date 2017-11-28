@@ -39,18 +39,14 @@ namespace OpenHardwareMonitor.Hardware.RAM {
     }
 
     public override void Update() {
-            NativeMethods.MemoryStatusEx status = new NativeMethods.MemoryStatusEx
-            {
-                Length = checked((uint)Marshal.SizeOf(
-                typeof(NativeMethods.MemoryStatusEx)))
-            };
+      NativeMethods.MemoryStatusEx status = new NativeMethods.MemoryStatusEx();
+      status.Length = checked((uint)Marshal.SizeOf(
+          typeof(NativeMethods.MemoryStatusEx)));
 
-            if (!NativeMethods.GlobalMemoryStatusEx(ref status))
-            {
-                return;
-            }
+      if (!NativeMethods.GlobalMemoryStatusEx(ref status))
+        return;
 
-            loadSensor.Value = 100.0f -
+      loadSensor.Value = 100.0f -
         (100.0f * status.AvailablePhysicalMemory) /
         status.TotalPhysicalMemory;
 

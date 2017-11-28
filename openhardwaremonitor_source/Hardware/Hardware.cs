@@ -41,24 +41,16 @@ namespace OpenHardwareMonitor.Hardware {
     }
 
     protected virtual void ActivateSensor(ISensor sensor) {
-      if (active.Add(sensor))
-            {
-                if (SensorAdded != null)
-                {
-                    SensorAdded(sensor);
-                }
-            }
-        }
+      if (active.Add(sensor)) 
+        if (SensorAdded != null)
+          SensorAdded(sensor);
+    }
 
     protected virtual void DeactivateSensor(ISensor sensor) {
       if (active.Remove(sensor))
-            {
-                if (SensorRemoved != null)
-                {
-                    SensorRemoved(sensor);
-                }
-            }
-        }
+        if (SensorRemoved != null)
+          SensorRemoved(sensor);     
+    }
 
     public string Name {
       get {
@@ -66,15 +58,10 @@ namespace OpenHardwareMonitor.Hardware {
       }
       set {
         if (!string.IsNullOrEmpty(value))
-                {
-                    customName = value;
-                }
-                else
-                {
-                    customName = name;
-                }
-
-                settings.SetValue(new Identifier(Identifier, "name").ToString(), 
+          customName = value;
+        else
+          customName = name;
+        settings.SetValue(new Identifier(Identifier, "name").ToString(), 
           customName);
       }
     }
@@ -103,25 +90,18 @@ namespace OpenHardwareMonitor.Hardware {
 
     public virtual void Close() {
       if (Closing != null)
-            {
-                Closing(this);
-            }
-        }
+        Closing(this);
+    }
 
     public void Accept(IVisitor visitor) {
       if (visitor == null)
-            {
-                throw new ArgumentNullException("visitor");
-            }
-
-            visitor.VisitHardware(this);
+        throw new ArgumentNullException("visitor");
+      visitor.VisitHardware(this);
     }
 
     public virtual void Traverse(IVisitor visitor) {
       foreach (ISensor sensor in active)
-            {
-                sensor.Accept(visitor);
-            }
-        }
+        sensor.Accept(visitor);
+    }
   }
 }

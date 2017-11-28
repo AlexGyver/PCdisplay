@@ -21,18 +21,14 @@ namespace OpenHardwareMonitor.GUI {
     private bool forceVisible = false;
 
     public TreeModel() {
-            root = new Node
-            {
-                Model = this
-            };
-        }
+      root = new Node();
+      root.Model = this;
+    }
 
     public TreePath GetPath(Node node) {
       if (node == root)
-            {
-                return TreePath.Empty;
-            }
-            else {
+        return TreePath.Empty;
+      else {
         Stack<object> stack = new Stack<object>();
         while (node != root) {
           stack.Push(node);
@@ -51,11 +47,8 @@ namespace OpenHardwareMonitor.GUI {
       foreach (object obj in treePath.FullPath) {
         Node node = obj as Node;
         if (node == null || node.Parent != parent)
-                {
-                    return null;
-                }
-
-                parent = node;
+          return null;
+        parent = node;
       }
       return parent;
     }
@@ -64,13 +57,9 @@ namespace OpenHardwareMonitor.GUI {
       Node node = GetNode(treePath);
       if (node != null) {
         foreach (Node n in node.Nodes)
-                {
-                    if (forceVisible || n.IsVisible)
-                    {
-                        yield return n;
-                    }
-                }
-            } else {
+          if (forceVisible || n.IsVisible)
+            yield return n;
+      } else {
         yield break;
       }
     }
@@ -101,21 +90,17 @@ namespace OpenHardwareMonitor.GUI {
     public void OnNodeChanged(Node parent, int index, Node node) {
       if (NodesChanged != null && parent != null) {
         TreePath path = GetPath(parent);
-        if (path != null)
-                {
-                    NodesChanged(this, new TreeModelEventArgs(
+        if (path != null) 
+          NodesChanged(this, new TreeModelEventArgs(
             path, new int[] { index }, new object[] { node }));
-                }
-            }
+      }
     }
 
     public void OnStructureChanged(Node node) {
       if (StructureChanged != null)
-            {
-                StructureChanged(this,
+        StructureChanged(this,
           new TreeModelEventArgs(GetPath(node), new object[0]));
-            }
-        }
+    }
 
     public void OnNodeInserted(Node parent, int index, Node node) {
       if (NodesInserted != null) {

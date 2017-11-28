@@ -39,9 +39,7 @@ namespace OpenHardwareMonitor.Hardware.RAM {
 
     public void Close() {
       foreach (Hardware ram in hardware)
-            {
-                ram.Close();
-            }
-        }
+        ram.Close();
+    }
   }
 }

@@ -126,15 +126,10 @@ namespace OpenHardwareMonitor.GUI {
         if (value != window.Visible) {
           window.Visible = value;
           if (VisibleChanged != null)
-                    {
-                        VisibleChanged(this, EventArgs.Empty);
-                    }
-
-                    if (value)
-                    {
-                        Redraw();
-                    }
-                }
+            VisibleChanged(this, EventArgs.Empty);
+          if (value)
+            Redraw();          
+        }
       }
     }
 

@@ -30,11 +30,8 @@ namespace OpenHardwareMonitor.GUI {
       Node node = this;
       while (node != null) {
         if (node.Model != null)
-                {
-                    return node.Model;
-                }
-
-                node = node.parent;
+          return node.Model;
+        node = node.parent;
       }
       return null;
     }
@@ -57,15 +54,10 @@ namespace OpenHardwareMonitor.GUI {
       set {
         if (value != parent) {
           if (parent != null)
-                    {
-                        parent.nodes.Remove(this);
-                    }
-
-                    if (value != null)
-                    {
-                        value.nodes.Add(this);
-                    }
-                }
+            parent.nodes.Remove(this);
+          if (value != null)
+            value.nodes.Add(this);
+        }
       }
     }
 
@@ -102,33 +94,22 @@ namespace OpenHardwareMonitor.GUI {
             for (int i = 0; i < parent.nodes.Count; i++) {
               Node node = parent.nodes[i];
               if (node == this)
-                            {
-                                break;
-                            }
-
-                            if (node.IsVisible || model.ForceVisible)
-                            {
-                                index++;
-                            }
-                        }
+                break;
+              if (node.IsVisible || model.ForceVisible)
+                index++;
+            }
             if (model.ForceVisible) {
                 model.OnNodeChanged(parent, index, this);
             } else {              
               if (value)
-                            {
-                                model.OnNodeInserted(parent, index, this);
-                            }
-                            else
-                            {
-                                model.OnNodeRemoved(parent, index, this);
-                            }
-                        }
+                model.OnNodeInserted(parent, index, this);
+              else
+                model.OnNodeRemoved(parent, index, this);
+            }
           }
           if (IsVisibleChanged != null)
-                    {
-                        IsVisibleChanged(this);
-                    }
-                }
+            IsVisibleChanged(this);
+        }
       }
     }
 
@@ -147,37 +128,25 @@ namespace OpenHardwareMonitor.GUI {
 
       protected override void ClearItems() {
         while (this.Count != 0)
-                {
-                    this.RemoveAt(this.Count - 1);
-                }
-            }
+          this.RemoveAt(this.Count - 1);
+      }
 
       protected override void InsertItem(int index, Node item) {
         if (item == null)
-                {
-                    throw new ArgumentNullException("item");
-                }
+          throw new ArgumentNullException("item");
 
-                if (item.parent != owner) {
+        if (item.parent != owner) {
           if (item.parent != null)
-                    {
-                        item.parent.nodes.Remove(item);
-                    }
-
-                    item.parent = owner;
+            item.parent.nodes.Remove(item);
+          item.parent = owner;
           base.InsertItem(index, item);
 
           TreeModel model = owner.RootTreeModel();
           if (model != null)
-                    {
-                        model.OnStructureChanged(owner);
-                    }
-
-                    if (owner.NodeAdded != null)
-                    {
-                        owner.NodeAdded(item);
-                    }
-                }
+            model.OnStructureChanged(owner);
+          if (owner.NodeAdded != null)
+            owner.NodeAdded(item);
+        }
       }
 
       protected override void RemoveItem(int index) {
@@ -186,24 +155,17 @@ namespace OpenHardwareMonitor.GUI {
         base.RemoveItem(index);
 
         TreeModel model = owner.RootTreeModel();
-        if (model != null)
-                {
-                    model.OnStructureChanged(owner);
-                }
-
-                if (owner.NodeRemoved != null)
-                {
-                    owner.NodeRemoved(item);
-                }
-            }
+        if (model != null) 
+          model.OnStructureChanged(owner);
+        if (owner.NodeRemoved != null)
+          owner.NodeRemoved(item);
+      }
 
       protected override void SetItem(int index, Node item) {
         if (item == null)
-                {
-                    throw new ArgumentNullException("item");
-                }
+          throw new ArgumentNullException("item");
 
-                RemoveAt(index);
+        RemoveAt(index);
         InsertItem(index, item);
       }
     }

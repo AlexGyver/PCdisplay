@@ -55,10 +55,8 @@ namespace OpenHardwareMonitor.Hardware.Heatmaster {
               if (subKey != null) {
                 string name = subKey.GetValue("PortName") as string;
                 if (name != null && !result.Contains(name))
-                                {
-                                    result.Add(name);
-                                }
-                            }
+                  result.Add(name);
+              }
             }
           }
         }
@@ -71,11 +69,9 @@ namespace OpenHardwareMonitor.Hardware.Heatmaster {
       // No implementation for Heatmaster on Unix systems
       int p = (int)Environment.OSVersion.Platform;
       if ((p == 4) || (p == 128))
-            {
-                return;
-            }
+        return;
 
-            string[] portNames = GetRegistryPortNames();      
+      string[] portNames = GetRegistryPortNames();      
       for (int i = 0; i < portNames.Length; i++) {
         bool isValid = false;
         try {        
@@ -166,16 +162,12 @@ namespace OpenHardwareMonitor.Hardware.Heatmaster {
         r.AppendLine();
         return r.ToString();
       } else
-            {
-                return null;
-            }
-        }
+        return null;
+    }
 
     public void Close() {
       foreach (Heatmaster heatmaster in hardware)
-            {
-                heatmaster.Close();
-            }
-        }
+        heatmaster.Close();
+    }
   }
 }
