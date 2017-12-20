@@ -665,20 +665,28 @@ namespace OpenHardwareMonitor.GUI {
 
         var gpuMaxTemp = Math.Max(
             (int)MaxTemp(computer, HardwareType.GpuNvidia),
-            (int)MaxTemp(computer, HardwareType.Mainboard)
+            (int)MaxTemp(computer, HardwareType.GpuAti)
+        );
+        var gpuMaxUsage = Math.Max(
+          (int)UsageInPercent(computer, HardwareType.GpuAti, "GPU Core"),
+          (int)UsageInPercent(computer, HardwareType.GpuNvidia, "GPU Core")
+        );
+        var gpuMaxMemory = Math.Max(
+          (int)UsageInPercent(computer, HardwareType.GpuAti, "GPU Memory"),
+          (int)UsageInPercent(computer, HardwareType.GpuNvidia, "GPU Memory")
         );
 
-        List<float> data = new List<float>
+        List <float> data = new List<float>
         {
             (int)MaxTemp(computer, HardwareType.CPU),
             gpuMaxTemp,
             (int)MaxTemp(computer, HardwareType.Mainboard),
             (int)MaxTemp(computer, HardwareType.HDD),
             (int)UsageInPercent(computer, HardwareType.CPU, "CPU Total"),
-            (int)(UsageInPercent(computer, HardwareType.GpuAti, "GPU Core") + UsageInPercent(computer, HardwareType.GpuNvidia, "GPU Core")), // тут int                    
+            (int)gpuMaxUsage,
             (int)UsageInPercent(computer, HardwareType.RAM, "Memory"),
-            (int)UsageInPercent(computer, HardwareType.GpuAti, "GPU Memory") + UsageInPercent(computer, HardwareType.GpuNvidia, "GPU Memory"), // тут float                                    
-                
+            (int)gpuMaxMemory,
+
             // Right group.
             settings.GetValue("nMaxFan", 100),
             settings.GetValue("nMinFan", 20),
