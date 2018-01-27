@@ -112,8 +112,7 @@ byte mainTemp;
 byte lines[] = {4, 5, 7, 6};
 byte plotLines[] = {0, 1, 4, 5, 6, 7};    // 0-CPU temp, 1-GPU temp, 2-CPU load, 3-GPU load, 4-RAM load, 5-GPU memory
 String perc;
-unsigned long sec;
-unsigned int mins, hrs;
+unsigned long sec, mins, hrs;
 byte temp1, temp2;
 boolean btn1_sig, btn2_sig, btn1_flag, btn2_flag;
 
