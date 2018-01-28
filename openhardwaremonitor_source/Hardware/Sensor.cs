@@ -57,12 +57,9 @@ namespace OpenHardwareMonitor.Hardware {
       this.hardware = hardware;
       Parameter[] parameters = new Parameter[parameterDescriptions == null ?
         0 : parameterDescriptions.Length];
-      for (int i = 0; i < parameters.Length; i++ )
-            {
-                parameters[i] = new Parameter(parameterDescriptions[i], this, settings);
-            }
-
-            this.parameters = parameters;
+      for (int i = 0; i < parameters.Length; i++ ) 
+        parameters[i] = new Parameter(parameterDescriptions[i], this, settings);
+      this.parameters = parameters;
 
       this.settings = settings;
       this.defaultName = name; 
@@ -112,23 +109,18 @@ namespace OpenHardwareMonitor.Hardware {
               t += reader.ReadInt64();
               DateTime time = DateTime.FromBinary(t);
               if (time > now)
-                            {
-                                break;
-                            }
-
-                            float value = reader.ReadSingle();
+                break;
+              float value = reader.ReadSingle();
               AppendValue(value, time);
             }
           } catch (EndOfStreamException) { }
         }
       } catch { }
       if (values.Count > 0)
-            {
-                AppendValue(float.NaN, DateTime.UtcNow);
-            }
+        AppendValue(float.NaN, DateTime.UtcNow);
 
-            // remove the value string from the settings to reduce memory usage
-            settings.Remove(name);
+      // remove the value string from the settings to reduce memory usage
+      settings.Remove(name);
     }
 
     private void AppendValue(float value, DateTime time) {
@@ -162,16 +154,11 @@ namespace OpenHardwareMonitor.Hardware {
         return name; 
       }
       set {
-        if (!string.IsNullOrEmpty(value))
-                {
-                    name = value;
-                }
-                else
-                {
-                    name = defaultName;
-                }
-
-                settings.SetValue(new Identifier(Identifier, "name").ToString(), name);
+        if (!string.IsNullOrEmpty(value)) 
+          name = value;          
+        else 
+          name = defaultName;
+        settings.SetValue(new Identifier(Identifier, "name").ToString(), name);
       }
     }
 
@@ -194,11 +181,9 @@ namespace OpenHardwareMonitor.Hardware {
       set {
         DateTime now = DateTime.UtcNow;
         while (values.Count > 0 && (now - values.First.Time).TotalDays > 1)
-                {
-                    values.Remove();
-                }
+          values.Remove();
 
-                if (value.HasValue) {
+        if (value.HasValue) {
           sum += value.Value;
           count++;
           if (count == 4) {
@@ -210,15 +195,10 @@ namespace OpenHardwareMonitor.Hardware {
 
         this.currentValue = value;
         if (minValue > value || !minValue.HasValue)
-                {
-                    minValue = value;
-                }
-
-                if (maxValue < value || !maxValue.HasValue)
-                {
-                    maxValue = value;
-                }
-            }
+          minValue = value;
+        if (maxValue < value || !maxValue.HasValue)
+          maxValue = value;
+      }
     }
 
     public float? Min { get { return minValue; } }
@@ -238,19 +218,14 @@ namespace OpenHardwareMonitor.Hardware {
 
     public void Accept(IVisitor visitor) {
       if (visitor == null)
-            {
-                throw new ArgumentNullException("visitor");
-            }
-
-            visitor.VisitSensor(this);
+        throw new ArgumentNullException("visitor");
+      visitor.VisitSensor(this);
     }
 
     public void Traverse(IVisitor visitor) {
       foreach (IParameter parameter in parameters)
-            {
-                parameter.Accept(visitor);
-            }
-        }
+        parameter.Accept(visitor);
+    }
 
     public IControl Control {
       get {

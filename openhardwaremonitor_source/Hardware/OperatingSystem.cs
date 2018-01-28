@@ -17,11 +17,9 @@ namespace OpenHardwareMonitor.Hardware {
 
     public static bool Is64BitOperatingSystem() {
       if (IntPtr.Size == 8)
-            {
-                return true;
-            }
+        return true;
 
-            try {
+      try {
         bool wow64Process;
         bool result = IsWow64Process(
           Process.GetCurrentProcess().Handle, out wow64Process);

@@ -34,346 +34,226 @@ namespace OpenHardwareMonitor.GUI {
     public event EventHandler BalloonTipClicked {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipClicked += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipClicked += value;
-                }
-            }
+          genericNotifyIcon.BalloonTipClicked += value;
+        else
+          windowsNotifyIcon.BalloonTipClicked += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipClicked -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipClicked -= value;
-                }
-            }
+          genericNotifyIcon.BalloonTipClicked -= value;
+        else
+          windowsNotifyIcon.BalloonTipClicked -= value;
+      }
     }
 
     public event EventHandler BalloonTipClosed {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipClosed += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipClosed += value;
-                }
-            }
+          genericNotifyIcon.BalloonTipClosed += value;
+        else
+          windowsNotifyIcon.BalloonTipClosed += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipClosed -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipClosed -= value;
-                }
-            }
+          genericNotifyIcon.BalloonTipClosed -= value;
+        else
+          windowsNotifyIcon.BalloonTipClosed -= value;
+      }
     }
 
     public event EventHandler BalloonTipShown {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipShown += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipShown += value;
-                }
-            }
+          genericNotifyIcon.BalloonTipShown += value;
+        else
+          windowsNotifyIcon.BalloonTipShown += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipShown -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipShown -= value;
-                }
-            }
+          genericNotifyIcon.BalloonTipShown -= value;
+        else
+          windowsNotifyIcon.BalloonTipShown -= value;
+      }
     }
 
     public event EventHandler Click {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.Click += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.Click += value;
-                }
-            }
+          genericNotifyIcon.Click += value;
+        else
+          windowsNotifyIcon.Click += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.Click -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.Click -= value;
-                }
-            }
+          genericNotifyIcon.Click -= value;
+        else
+          windowsNotifyIcon.Click -= value;
+      }
     }
 
     public event EventHandler DoubleClick {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.DoubleClick += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.DoubleClick += value;
-                }
-            }
+          genericNotifyIcon.DoubleClick += value;
+        else
+          windowsNotifyIcon.DoubleClick += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.DoubleClick -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.DoubleClick -= value;
-                }
-            }
+          genericNotifyIcon.DoubleClick -= value;
+        else
+          windowsNotifyIcon.DoubleClick -= value;
+      }
     }
 
     public event MouseEventHandler MouseClick {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseClick += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseClick += value;
-                }
-            }
+          genericNotifyIcon.MouseClick += value;
+        else
+          windowsNotifyIcon.MouseClick += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseClick -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseClick -= value;
-                }
-            }
+          genericNotifyIcon.MouseClick -= value;
+        else
+          windowsNotifyIcon.MouseClick -= value;
+      }
     }
 
     public event MouseEventHandler MouseDoubleClick {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseDoubleClick += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseDoubleClick += value;
-                }
-            }
+          genericNotifyIcon.MouseDoubleClick += value;
+        else
+          windowsNotifyIcon.MouseDoubleClick += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseDoubleClick -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseDoubleClick -= value;
-                }
-            }
+          genericNotifyIcon.MouseDoubleClick -= value;
+        else
+          windowsNotifyIcon.MouseDoubleClick -= value;
+      }
     }
 
     public event MouseEventHandler MouseDown {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseDown += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseDown += value;
-                }
-            }
+          genericNotifyIcon.MouseDown += value;
+        else
+          windowsNotifyIcon.MouseDown += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseDown -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseDown -= value;
-                }
-            }
+          genericNotifyIcon.MouseDown -= value;
+        else
+          windowsNotifyIcon.MouseDown -= value;
+      }
     }
 
     public event MouseEventHandler MouseMove {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseMove += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseMove += value;
-                }
-            }
+          genericNotifyIcon.MouseMove += value;
+        else
+          windowsNotifyIcon.MouseMove += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseMove -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseMove -= value;
-                }
-            }
+          genericNotifyIcon.MouseMove -= value;
+        else
+          windowsNotifyIcon.MouseMove -= value;
+      }
     }
 
     public event MouseEventHandler MouseUp {
       add {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseUp += value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseUp += value;
-                }
-            }
+          genericNotifyIcon.MouseUp += value;
+        else
+          windowsNotifyIcon.MouseUp += value;
+      }
       remove {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.MouseUp -= value;
-                }
-                else
-                {
-                    windowsNotifyIcon.MouseUp -= value;
-                }
-            }
+          genericNotifyIcon.MouseUp -= value;
+        else
+          windowsNotifyIcon.MouseUp -= value;
+      }
     }
 
     public string BalloonTipText {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.BalloonTipText;
-                }
-                else
-                {
-                    return windowsNotifyIcon.BalloonTipText;
-                }
-            }
+          return genericNotifyIcon.BalloonTipText;
+        else
+          return windowsNotifyIcon.BalloonTipText;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipText = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipText = value;
-                }
-            }
+          genericNotifyIcon.BalloonTipText = value;
+        else
+          windowsNotifyIcon.BalloonTipText = value;
+      }
     }
 
     public ToolTipIcon BalloonTipIcon {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.BalloonTipIcon;
-                }
-                else
-                {
-                    return windowsNotifyIcon.BalloonTipIcon;
-                }
-            }
+          return genericNotifyIcon.BalloonTipIcon;
+        else
+          return windowsNotifyIcon.BalloonTipIcon;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipIcon = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipIcon = value;
-                }
-            }
+          genericNotifyIcon.BalloonTipIcon = value;
+        else
+          windowsNotifyIcon.BalloonTipIcon = value;
+      }
     }
 
     public string BalloonTipTitle {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.BalloonTipTitle;
-                }
-                else
-                {
-                    return windowsNotifyIcon.BalloonTipTitle;
-                }
-            }
+          return genericNotifyIcon.BalloonTipTitle;
+        else
+          return windowsNotifyIcon.BalloonTipTitle;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.BalloonTipTitle = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.BalloonTipTitle = value;
-                }
-            }
+          genericNotifyIcon.BalloonTipTitle = value;
+        else
+          windowsNotifyIcon.BalloonTipTitle = value;
+      }
     }
 
     public ContextMenu ContextMenu {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.ContextMenu;
-                }
-                else
-                {
-                    return windowsNotifyIcon.ContextMenu;
-                }
-            }
+          return genericNotifyIcon.ContextMenu;
+        else
+          return windowsNotifyIcon.ContextMenu;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.ContextMenu = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.ContextMenu = value;
-                }
-            }
+          genericNotifyIcon.ContextMenu = value;
+        else
+          windowsNotifyIcon.ContextMenu = value;
+      }
     }
 
     public ContextMenuStrip ContextMenuStrip {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.ContextMenuStrip;
-                }
-                else
-                {
-                    return windowsNotifyIcon.ContextMenuStrip;
-                }
-            }
+          return genericNotifyIcon.ContextMenuStrip;
+        else
+          return windowsNotifyIcon.ContextMenuStrip;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.ContextMenuStrip = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.ContextMenuStrip = value;
-                }
-            }
+          genericNotifyIcon.ContextMenuStrip = value;
+        else
+          windowsNotifyIcon.ContextMenuStrip = value;
+      }
     }
 
     public object Tag { get; set; }
@@ -381,82 +261,54 @@ namespace OpenHardwareMonitor.GUI {
     public Icon Icon {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.Icon;
-                }
-                else
-                {
-                    return windowsNotifyIcon.Icon;
-                }
-            }
+          return genericNotifyIcon.Icon;
+        else
+          return windowsNotifyIcon.Icon;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.Icon = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.Icon = value;
-                }
-            }
+          genericNotifyIcon.Icon = value;
+        else
+          windowsNotifyIcon.Icon = value;
+      }
     }
 
     public string Text {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.Text;
-                }
-                else
-                {
-                    return windowsNotifyIcon.Text;
-                }
-            }
+          return genericNotifyIcon.Text;
+        else
+          return windowsNotifyIcon.Text;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.Text = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.Text = value;
-                }
-            }
+          genericNotifyIcon.Text = value;
+        else
+          windowsNotifyIcon.Text = value;
+      }
     }
 
     public bool Visible {
       get {
         if (genericNotifyIcon != null)
-                {
-                    return genericNotifyIcon.Visible;
-                }
-                else
-                {
-                    return windowsNotifyIcon.Visible;
-                }
-            }
+          return genericNotifyIcon.Visible;
+        else
+          return windowsNotifyIcon.Visible;
+      }
       set {
         if (genericNotifyIcon != null)
-                {
-                    genericNotifyIcon.Visible = value;
-                }
-                else
-                {
-                    windowsNotifyIcon.Visible = value;
-                }
-            }
+          genericNotifyIcon.Visible = value;
+        else
+          windowsNotifyIcon.Visible = value;
+      }
     }
 
     public void Dispose() {
       if (genericNotifyIcon != null)
-            {
-                genericNotifyIcon.Dispose();
-            }
-            else
-            {
-                windowsNotifyIcon.Dispose();
-            }
-        }
+        genericNotifyIcon.Dispose();
+      else
+        windowsNotifyIcon.Dispose();
+    }
 
     public void ShowBalloonTip(int timeout) {
       ShowBalloonTip(timeout, BalloonTipTitle, BalloonTipText, BalloonTipIcon);
@@ -465,14 +317,10 @@ namespace OpenHardwareMonitor.GUI {
     public void ShowBalloonTip(int timeout, string tipTitle, string tipText,
       ToolTipIcon tipIcon) {
       if (genericNotifyIcon != null)
-            {
-                genericNotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
-            }
-            else
-            {
-                windowsNotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
-            }
-        }
+        genericNotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
+      else
+        windowsNotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
+    }
     
     private class NotifyIconWindowsImplementation : Component {
 
@@ -524,23 +372,17 @@ namespace OpenHardwareMonitor.GUI {
         }
         set {
           if (value == null)
-                    {
-                        value = "";
-                    }
+            value = "";
 
-                    if (value.Length > 63)
-                    {
-                        throw new ArgumentOutOfRangeException();
-                    }
+          if (value.Length > 63)
+            throw new ArgumentOutOfRangeException();
 
-                    if (!value.Equals(text)) {
+          if (!value.Equals(text)) {
             text = value;
 
             if (visible)
-                        {
-                            UpdateNotifyIcon(visible);
-                        }
-                    }
+              UpdateNotifyIcon(visible);
+          }
         }
       }
 
@@ -598,28 +440,20 @@ namespace OpenHardwareMonitor.GUI {
       public void ShowBalloonTip(int timeout, string tipTitle, string tipText,
         ToolTipIcon tipIcon) {
         if (timeout < 0)
-                {
-                    throw new ArgumentOutOfRangeException("timeout");
-                }
+          throw new ArgumentOutOfRangeException("timeout");
 
-                if (string.IsNullOrEmpty(tipText))
-                {
-                    throw new ArgumentException("tipText");
-                }
+        if (string.IsNullOrEmpty(tipText))
+          throw new ArgumentException("tipText");
 
-                if (DesignMode)
-                {
-                    return;
-                }
+        if (DesignMode)
+          return;
 
-                if (created) {
+        if (created) {
           NativeMethods.NotifyIconData data = new NativeMethods.NotifyIconData();
           if (window.Handle == IntPtr.Zero)
-                    {
-                        window.CreateHandle(new CreateParams());
-                    }
+            window.CreateHandle(new CreateParams());
 
-                    data.Window = window.Handle;
+          data.Window = window.Handle;
           data.ID = id;
           data.Flags = NativeMethods.NotifyIconDataFlags.Info;
           data.TimeoutOrVersion = timeout;
@@ -634,11 +468,9 @@ namespace OpenHardwareMonitor.GUI {
 
       private void ShowContextMenu() {
         if (ContextMenu == null && ContextMenuStrip == null)
-                {
-                    return;
-                }
+          return;
 
-                NativeMethods.Point p = new NativeMethods.Point();
+        NativeMethods.Point p = new NativeMethods.Point();
         NativeMethods.GetCursorPos(ref p);
         NativeMethods.SetForegroundWindow(
           new HandleRef(window, window.Handle));
@@ -647,7 +479,7 @@ namespace OpenHardwareMonitor.GUI {
           ContextMenu.GetType().InvokeMember("OnPopup",
             BindingFlags.NonPublic | BindingFlags.InvokeMethod |
             BindingFlags.Instance, null, ContextMenu,
-            new object[] { System.EventArgs.Empty });
+            new Object[] { System.EventArgs.Empty });
 
           NativeMethods.TrackPopupMenuEx(
             new HandleRef(ContextMenu, ContextMenu.Handle), 72,
@@ -660,35 +492,27 @@ namespace OpenHardwareMonitor.GUI {
         }
 
         if (ContextMenuStrip != null)
-                {
-                    ContextMenuStrip.GetType().InvokeMember("ShowInTaskbar",
+          ContextMenuStrip.GetType().InvokeMember("ShowInTaskbar",
             BindingFlags.NonPublic | BindingFlags.InvokeMethod |
             BindingFlags.Instance, null, ContextMenuStrip,
-            new object[] { p.x, p.y });
-                }
-            }
+            new Object[] { p.x, p.y });
+      }
 
       private void UpdateNotifyIcon(bool showNotifyIcon) {
         if (DesignMode)
-                {
-                    return;
-                }
+          return;
 
-                lock (syncObj) {
+        lock (syncObj) {
           window.LockReference(showNotifyIcon);
 
-                    NativeMethods.NotifyIconData data = new NativeMethods.NotifyIconData
-                    {
-                        CallbackMessage = WM_TRAYMOUSEMESSAGE,
-                        Flags = NativeMethods.NotifyIconDataFlags.Message
-                    };
+          NativeMethods.NotifyIconData data = new NativeMethods.NotifyIconData();
+          data.CallbackMessage = WM_TRAYMOUSEMESSAGE;
+          data.Flags = NativeMethods.NotifyIconDataFlags.Message;
 
-                    if (showNotifyIcon && window.Handle == IntPtr.Zero)
-                    {
-                        window.CreateHandle(new CreateParams());
-                    }
+          if (showNotifyIcon && window.Handle == IntPtr.Zero)
+            window.CreateHandle(new CreateParams());
 
-                    data.Window = window.Handle;
+          data.Window = window.Handle;
           data.ID = id;
 
           if (icon != null) {
@@ -736,42 +560,30 @@ namespace OpenHardwareMonitor.GUI {
         bool doubleClick) {
         if (doubleClick) {
           if (DoubleClick != null)
-                    {
-                        DoubleClick(this, new MouseEventArgs(button, 2, 0, 0, 0));
-                    }
+            DoubleClick(this, new MouseEventArgs(button, 2, 0, 0, 0));
 
-                    if (MouseDoubleClick != null)
-                    {
-                        MouseDoubleClick(this, new MouseEventArgs(button, 2, 0, 0, 0));
-                    }
+          if (MouseDoubleClick != null)
+            MouseDoubleClick(this, new MouseEventArgs(button, 2, 0, 0, 0));
 
-                    doubleClickDown = true;
+          doubleClickDown = true;
         }
 
         if (MouseDown != null)
-                {
-                    MouseDown(this,
+          MouseDown(this,
             new MouseEventArgs(button, doubleClick ? 2 : 1, 0, 0, 0));
-                }
-            }
+      }
 
       private void ProcessMouseUp(ref Message message, MouseButtons button) {
         if (MouseUp != null)
-                {
-                    MouseUp(this, new MouseEventArgs(button, 0, 0, 0, 0));
-                }
+          MouseUp(this, new MouseEventArgs(button, 0, 0, 0, 0));
 
-                if (!doubleClickDown) {
+        if (!doubleClickDown) {
           if (Click != null)
-                    {
-                        Click(this, new MouseEventArgs(button, 0, 0, 0, 0));
-                    }
+            Click(this, new MouseEventArgs(button, 0, 0, 0, 0));
 
-                    if (MouseClick != null)
-                    {
-                        MouseClick(this, new MouseEventArgs(button, 0, 0, 0, 0));
-                    }
-                }
+          if (MouseClick != null)
+            MouseClick(this, new MouseEventArgs(button, 0, 0, 0, 0));
+        }
         doubleClickDown = false;
       }
 
@@ -780,7 +592,7 @@ namespace OpenHardwareMonitor.GUI {
           (bool)ContextMenu.GetType().InvokeMember("ProcessInitMenuPopup",
             BindingFlags.NonPublic | BindingFlags.InvokeMethod |
             BindingFlags.Instance, null, ContextMenu,
-            new object[] { message.WParam })) {
+            new Object[] { message.WParam })) {
           return;
         }
         window.DefWndProc(ref message);
@@ -806,12 +618,9 @@ namespace OpenHardwareMonitor.GUI {
             switch ((int)message.LParam) {
               case WM_MOUSEMOVE:
                 if (MouseMove != null)
-                                {
-                                    MouseMove(this,
+                  MouseMove(this,
                     new MouseEventArgs(Control.MouseButtons, 0, 0, 0, 0));
-                                }
-
-                                return;
+                return;
               case WM_LBUTTONDOWN:
                 ProcessMouseDown(ref message, MouseButtons.Left, false);
                 return;
@@ -826,11 +635,8 @@ namespace OpenHardwareMonitor.GUI {
                 return;
               case WM_RBUTTONUP:
                 if (ContextMenu != null || ContextMenuStrip != null)
-                                {
-                                    ShowContextMenu();
-                                }
-
-                                ProcessMouseUp(ref message, MouseButtons.Right);
+                  ShowContextMenu();
+                ProcessMouseUp(ref message, MouseButtons.Right);
                 return;
               case WM_RBUTTONDBLCLK:
                 ProcessMouseDown(ref message, MouseButtons.Right, true);
@@ -846,26 +652,17 @@ namespace OpenHardwareMonitor.GUI {
                 return;
               case NIN_BALLOONSHOW:
                 if (BalloonTipShown != null)
-                                {
-                                    BalloonTipShown(this, EventArgs.Empty);
-                                }
-
-                                return;
+                  BalloonTipShown(this, EventArgs.Empty);
+                return;
               case NIN_BALLOONHIDE:
               case NIN_BALLOONTIMEOUT:
                 if (BalloonTipClosed != null)
-                                {
-                                    BalloonTipClosed(this, EventArgs.Empty);
-                                }
-
-                                return;
+                  BalloonTipClosed(this, EventArgs.Empty);
+                return;
               case NIN_BALLOONUSERCLICK:
                 if (BalloonTipClicked != null)
-                                {
-                                    BalloonTipClicked(this, EventArgs.Empty);
-                                }
-
-                                return;
+                  BalloonTipClicked(this, EventArgs.Empty);
+                return;
               default:
                 return;
             }
@@ -891,11 +688,9 @@ namespace OpenHardwareMonitor.GUI {
 
         ~NotifyIconNativeWindow() {
           if (base.Handle != IntPtr.Zero)
-                    {
-                        NativeMethods.PostMessage(
+            NativeMethods.PostMessage(
               new HandleRef(this, base.Handle), WM_CLOSE, 0, 0);
-                    }
-                }
+        }
 
         public void LockReference(bool locked) {
           if (locked) {
@@ -905,10 +700,8 @@ namespace OpenHardwareMonitor.GUI {
             }
           } else {
             if (referenceHandle.IsAllocated)
-                        {
-                            referenceHandle.Free();
-                        }
-                    }
+              referenceHandle.Free();
+          }
         }
 
         protected override void OnThreadException(Exception e) {

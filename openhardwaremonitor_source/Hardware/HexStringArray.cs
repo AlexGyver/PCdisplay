@@ -22,15 +22,10 @@ namespace OpenHardwareMonitor.Hardware {
         string[] array = line.Split(new[] { ' ', '\t' }, 
           StringSplitOptions.RemoveEmptyEntries);
         if (array.Length == 0)
-                {
-                    continue;
-                }
-
-                if (Convert.ToInt32(array[0], 16) == (address & 0xFFF0))
-                {
-                    return Convert.ToByte(array[(address & 0x0F) + 1], 16);
-                }
-            }
+          continue; 
+        if (Convert.ToInt32(array[0], 16) == (address & 0xFFF0)) 
+          return Convert.ToByte(array[(address & 0x0F) + 1], 16);
+      }
 
       throw new ArgumentException();
     }

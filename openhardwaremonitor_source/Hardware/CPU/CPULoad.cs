@@ -56,11 +56,9 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       if (NativeMethods.NtQuerySystemInformation(
         SystemInformationClass.SystemProcessorPerformanceInformation,
         informations, informations.Length * size, out returnLength) != 0)
-            {
-                return false;
-            }
+        return false;
 
-            idle = new long[(int)returnLength / size];
+      idle = new long[(int)returnLength / size];
       total = new long[(int)returnLength / size];
 
       for (int i = 0; i < idle.Length; i++) {
@@ -82,10 +80,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         this.totalTimes = null;
       }
       if (idleTimes != null)
-            {
-                available = true;
-            }
-        }
+        available = true;
+    }
 
     public bool IsAvailable {
       get { return available; }
@@ -101,32 +97,22 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
     public void Update() {
       if (this.idleTimes == null)
-            {
-                return;
-            }
+        return;
 
-            long[] newIdleTimes;
+      long[] newIdleTimes;
       long[] newTotalTimes;
 
       if (!GetTimes(out newIdleTimes, out newTotalTimes))
-            {
-                return;
-            }
+        return;
 
-            for (int i = 0; i < Math.Min(newTotalTimes.Length, totalTimes.Length); i++)
-            {
-                if (newTotalTimes[i] - this.totalTimes[i] < 100000)
-                {
-                    return;
-                }
-            }
+      for (int i = 0; i < Math.Min(newTotalTimes.Length, totalTimes.Length); i++) 
+        if (newTotalTimes[i] - this.totalTimes[i] < 100000)
+          return;
 
-            if (newIdleTimes == null || newTotalTimes == null)
-            {
-                return;
-            }
+      if (newIdleTimes == null || newTotalTimes == null)
+        return;
 
-            float total = 0;
+      float total = 0;
       int count = 0;
       for (int i = 0; i < cpuid.Length; i++) {
         float value = 0;

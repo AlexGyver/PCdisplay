@@ -28,10 +28,8 @@ namespace OpenHardwareMonitor.Hardware.LPC {
           string name = null;
           try {
             using (StreamReader reader = new StreamReader(path + "/name"))
-                        {
-                            name = reader.ReadLine();
-                        }
-                    } catch (IOException) { }
+              name = reader.ReadLine();
+          } catch (IOException) { }
 
           switch (name) {
             case "atk0110":
@@ -95,10 +93,8 @@ namespace OpenHardwareMonitor.Hardware.LPC {
 
     public void Close() {
       foreach (LMChip lmChip in lmChips)
-            {
-                lmChip.Close();
-            }
-        }
+        lmChip.Close();
+    }
 
     public ISuperIO[] SuperIO {
       get {
@@ -134,30 +130,24 @@ namespace OpenHardwareMonitor.Hardware.LPC {
         this.voltages = new float?[voltagePaths.Length];
         this.voltageStreams = new FileStream[voltagePaths.Length];
         for (int i = 0; i < voltagePaths.Length; i++)
-                {
-                    voltageStreams[i] = new FileStream(voltagePaths[i],
+          voltageStreams[i] = new FileStream(voltagePaths[i],
             FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                }
 
-                string[] temperaturePaths = Directory.GetFiles(path, "temp*_input");
+        string[] temperaturePaths = Directory.GetFiles(path, "temp*_input");
         this.temperatures = new float?[temperaturePaths.Length];
         this.temperatureStreams = new FileStream[temperaturePaths.Length];
         for (int i = 0; i < temperaturePaths.Length; i++)
-                {
-                    temperatureStreams[i] = new FileStream(temperaturePaths[i],
+          temperatureStreams[i] = new FileStream(temperaturePaths[i],
             FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                }
 
-                string[] fanPaths = Directory.GetFiles(path, "fan*_input");
+        string[] fanPaths = Directory.GetFiles(path, "fan*_input");
         this.fans = new float?[fanPaths.Length];
         this.fanStreams = new FileStream[fanPaths.Length];
         for (int i = 0; i < fanPaths.Length; i++)
-                {
-                    fanStreams[i] = new FileStream(fanPaths[i],
+          fanStreams[i] = new FileStream(fanPaths[i],
             FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                }
 
-                this.controls = new float?[0];
+        this.controls = new float?[0];
       }
 
       public byte? ReadGPIO(int index) {
@@ -218,20 +208,12 @@ namespace OpenHardwareMonitor.Hardware.LPC {
 
       public void Close() {
         foreach (FileStream stream in voltageStreams)
-                {
-                    stream.Close();
-                }
-
-                foreach (FileStream stream in temperatureStreams)
-                {
-                    stream.Close();
-                }
-
-                foreach (FileStream stream in fanStreams)
-                {
-                    stream.Close();
-                }
-            }
+          stream.Close();
+        foreach (FileStream stream in temperatureStreams)
+          stream.Close();
+        foreach (FileStream stream in fanStreams)
+          stream.Close();
+      }
     }
   }
 }

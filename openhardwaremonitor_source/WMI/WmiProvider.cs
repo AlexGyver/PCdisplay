@@ -31,31 +31,25 @@ namespace OpenHardwareMonitor.WMI {
       activeInstances = new List<IWmiObject>();
 
       foreach (IHardware hardware in computer.Hardware)
-            {
-                ComputerHardwareAdded(hardware);
-            }
+        ComputerHardwareAdded(hardware);
 
-            computer.HardwareAdded += ComputerHardwareAdded;
+      computer.HardwareAdded += ComputerHardwareAdded;
       computer.HardwareRemoved += ComputerHardwareRemoved;
     }
 
     public void Update() {
       foreach (IWmiObject instance in activeInstances)
-            {
-                instance.Update();
-            }
-        }
+        instance.Update();
+    }
 
     #region Eventhandlers
     
     private void ComputerHardwareAdded(IHardware hardware) {
       if (!Exists(hardware.Identifier.ToString())) {
         foreach (ISensor sensor in hardware.Sensors)
-                {
-                    HardwareSensorAdded(sensor);
-                }
+          HardwareSensorAdded(sensor);
 
-                hardware.SensorAdded += HardwareSensorAdded;
+        hardware.SensorAdded += HardwareSensorAdded;
         hardware.SensorRemoved += HardwareSensorRemoved;
 
         Hardware hw = new Hardware(hardware);
@@ -67,10 +61,8 @@ namespace OpenHardwareMonitor.WMI {
       }
 
       foreach (IHardware subHardware in hardware.SubHardware)
-            {
-                ComputerHardwareAdded(subHardware);
-            }
-        }
+        ComputerHardwareAdded(subHardware);
+    }
 
     private void HardwareSensorAdded(ISensor data) {
       Sensor sensor = new Sensor(data);
@@ -85,17 +77,13 @@ namespace OpenHardwareMonitor.WMI {
       hardware.SensorAdded -= HardwareSensorAdded;
       hardware.SensorRemoved -= HardwareSensorRemoved;
       
-      foreach (ISensor sensor in hardware.Sensors)
-            {
-                HardwareSensorRemoved(sensor);
-            }
+      foreach (ISensor sensor in hardware.Sensors) 
+        HardwareSensorRemoved(sensor);
+      
+      foreach (IHardware subHardware in hardware.SubHardware)
+        ComputerHardwareRemoved(subHardware);
 
-            foreach (IHardware subHardware in hardware.SubHardware)
-            {
-                ComputerHardwareRemoved(subHardware);
-            }
-
-            RevokeInstance(hardware.Identifier.ToString());
+      RevokeInstance(hardware.Identifier.ToString());
     }
 
     private void HardwareSensorRemoved(ISensor sensor) {
@@ -116,11 +104,9 @@ namespace OpenHardwareMonitor.WMI {
       );
 
       if (instanceIndex == -1)
-            {
-                return;
-            }
+        return;
 
-            try {
+      try {
         Instrumentation.Revoke(activeInstances[instanceIndex]);
       } catch (Exception) { }
 

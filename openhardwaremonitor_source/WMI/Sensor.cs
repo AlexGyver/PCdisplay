@@ -44,14 +44,10 @@ namespace OpenHardwareMonitor.WMI {
       Value = (sensor.Value != null) ? (float)sensor.Value : 0;
 
       if (sensor.Min != null)
-            {
-                Min = (float)sensor.Min;
-            }
+        Min = (float)sensor.Min;
 
-            if (sensor.Max != null)
-            {
-                Max = (float)sensor.Max;
-            }
-        }
+      if (sensor.Max != null)
+        Max = (float)sensor.Max;
+    }
   }
 }

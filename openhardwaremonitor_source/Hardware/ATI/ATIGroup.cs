@@ -41,8 +41,7 @@ namespace OpenHardwareMonitor.Hardware.ATI {
           if (numberOfAdapters > 0) {
             ADLAdapterInfo[] adapterInfo = new ADLAdapterInfo[numberOfAdapters];
             if (ADL.ADL_Adapter_AdapterInfo_Get(adapterInfo) == ADL.ADL_OK)
-                        {
-                            for (int i = 0; i < numberOfAdapters; i++) {
+              for (int i = 0; i < numberOfAdapters; i++) {
                 int isActive;
                 ADL.ADL_Adapter_Active_Get(adapterInfo[i].AdapterIndex,
                   out isActive);
@@ -82,28 +81,22 @@ namespace OpenHardwareMonitor.Hardware.ATI {
                 {
                   bool found = false;
                   foreach (ATIGPU gpu in hardware)
-                                    {
-                                        if (gpu.BusNumber == adapterInfo[i].BusNumber &&
+                    if (gpu.BusNumber == adapterInfo[i].BusNumber &&
                       gpu.DeviceNumber == adapterInfo[i].DeviceNumber) {
                       found = true;
                       break;
                     }
-                                    }
-
-                                    if (!found)
-                                    {
-                                        hardware.Add(new ATIGPU(
+                  if (!found)
+                    hardware.Add(new ATIGPU(
                       adapterInfo[i].AdapterName.Trim(),
                       adapterInfo[i].AdapterIndex,
                       adapterInfo[i].BusNumber,
                       adapterInfo[i].DeviceNumber, settings));
-                                    }
-                                }
+                }
 
                 report.AppendLine();
               }
-                        }
-                    }
+          }
         }
       } catch (DllNotFoundException) { } 
         catch (EntryPointNotFoundException e) {
@@ -126,11 +119,8 @@ namespace OpenHardwareMonitor.Hardware.ATI {
     public void Close() {
       try {
         foreach (ATIGPU gpu in hardware)
-                {
-                    gpu.Close();
-                }
-
-                ADL.ADL_Main_Control_Destroy();
+          gpu.Close();
+        ADL.ADL_Main_Control_Destroy();
       } catch (Exception) { }
     }
   }

@@ -4,7 +4,7 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
-  Copyright (C) 2010-2012 Michael Möller <mmoeller@openhardwaremonitor.org>
+  Copyright (C) 2010-2016 Michael Möller <mmoeller@openhardwaremonitor.org>
 	
 */
 
@@ -45,17 +45,22 @@ namespace OpenHardwareMonitor.Hardware {
       IOCTL_OLS_READ_MEMORY = new IOControlCode(OLS_TYPE, 0x841,
         IOControlCode.Access.Read);
 
+    private static Assembly GetAssembly() {
+      return typeof(Ring0).Assembly;
+    }
+
     private static string GetTempFileName() {
       
       // try to create one in the application folder
-      string fileName = Path.ChangeExtension(
-        Assembly.GetEntryAssembly().Location, ".sys");
-      try {
-        using (FileStream stream = File.Create(fileName)) {
-          return fileName;
-        }        
-      } catch (IOException) { } 
-        catch (UnauthorizedAccessException) { }
+      string location = GetAssembly().Location;
+      if (!string.IsNullOrEmpty(location)) {        
+        try {
+          string fileName = Path.ChangeExtension(location, ".sys");
+          using (FileStream stream = File.Create(fileName)) {
+            return fileName;
+          }
+        } catch (Exception) { }
+      }
 
       // if this failed, try to get a file in the temporary folder
       try {
@@ -78,12 +83,11 @@ namespace OpenHardwareMonitor.Hardware {
         (OperatingSystem.Is64BitOperatingSystem() ? "WinRing0x64.sys" : 
         "WinRing0.sys");
 
-      string[] names =
-        Assembly.GetExecutingAssembly().GetManifestResourceNames();
+      string[] names = GetAssembly().GetManifestResourceNames();
       byte[] buffer = null;
       for (int i = 0; i < names.Length; i++) {
         if (names[i].Replace('\\', '.') == resourceName) {
-          using (Stream stream = Assembly.GetExecutingAssembly().
+          using (Stream stream = GetAssembly().
             GetManifestResourceStream(names[i])) 
           {
               buffer = new byte[stream.Length];
@@ -93,11 +97,9 @@ namespace OpenHardwareMonitor.Hardware {
       }
 
       if (buffer == null)
-            {
-                return false;
-            }
+        return false;
 
-            try {
+      try {
         using (FileStream target = new FileStream(fileName, FileMode.Create)) {
           target.Write(buffer, 0, buffer.Length);
           target.Flush();
@@ -129,17 +131,13 @@ namespace OpenHardwareMonitor.Hardware {
       // no implementation for unix systems
       int p = (int)Environment.OSVersion.Platform;
       if ((p == 4) || (p == 128))
-            {
-                return;
-            }
+        return;  
+      
+      if (driver != null)
+        return;
 
-            if (driver != null)
-            {
-                return;
-            }
-
-            // clear the current report
-            report.Length = 0;
+      // clear the current report
+      report.Length = 0;
      
       driver = new KernelDriver("WinRing0_1_2_0");
       driver.Open();
@@ -190,21 +188,16 @@ namespace OpenHardwareMonitor.Hardware {
         try {
           // try to delte the driver file
           if (File.Exists(fileName))
-                    {
-                        File.Delete(fileName);
-                    }
-
-                    fileName = null;
+            File.Delete(fileName);
+          fileName = null;
         } catch (IOException) { } 
           catch (UnauthorizedAccessException) { }
       }
 
-      if (!driver.IsOpen)
-            {
-                driver = null;
-            }
+      if (!driver.IsOpen) 
+        driver = null;
 
-            string mutexName = "Global\\Access_ISABUS.HTP.Method";
+      string mutexName = "Global\\Access_ISABUS.HTP.Method";
       try {
         isaBusMutex = new Mutex(false, mutexName);
       } catch (UnauthorizedAccessException) {
@@ -220,21 +213,17 @@ namespace OpenHardwareMonitor.Hardware {
 
     public static void Close() {
       if (driver == null)
-            {
-                return;
-            }
+        return;
 
-            uint refCount = 0;
+      uint refCount = 0;
       driver.DeviceIOControl(IOCTL_OLS_GET_REFCOUNT, null, ref refCount);
 
       driver.Close();
 
       if (refCount <= 1)
-            {
-                driver.Delete();
-            }
+        driver.Delete();
 
-            driver = null;
+      driver = null;
 
       if (isaBusMutex != null) {
         isaBusMutex.Close();
@@ -260,18 +249,13 @@ namespace OpenHardwareMonitor.Hardware {
         r.AppendLine();
         return r.ToString();
       } else
-            {
-                return null;
-            }
-        }
+        return null;
+    }
 
     public static bool WaitIsaBusMutex(int millisecondsTimeout) {
       if (isaBusMutex == null)
-            {
-                return true;
-            }
-
-            try {
+        return true;
+      try {
         return isaBusMutex.WaitOne(millisecondsTimeout, false);
       } catch (AbandonedMutexException) { return false; } 
         catch (InvalidOperationException) { return false; }
@@ -279,11 +263,8 @@ namespace OpenHardwareMonitor.Hardware {
 
     public static void ReleaseIsaBusMutex() {
       if (isaBusMutex == null)
-            {
-                return;
-            }
-
-            isaBusMutex.ReleaseMutex();
+        return;
+      isaBusMutex.ReleaseMutex();
     }
 
     public static bool Rdmsr(uint index, out uint eax, out uint edx) {
@@ -321,26 +302,20 @@ namespace OpenHardwareMonitor.Hardware {
 
     public static bool Wrmsr(uint index, uint eax, uint edx) {
       if (driver == null)
-            {
-                return false;
-            }
+        return false;
 
-            WrmsrInput input = new WrmsrInput
-            {
-                Register = index,
-                Value = ((ulong)edx << 32) | eax
-            };
+      WrmsrInput input = new WrmsrInput();
+      input.Register = index;
+      input.Value = ((ulong)edx << 32) | eax;
 
-            return driver.DeviceIOControl(IOCTL_OLS_WRITE_MSR, input);
+      return driver.DeviceIOControl(IOCTL_OLS_WRITE_MSR, input);
     }
 
     public static byte ReadIoPort(uint port) {
       if (driver == null)
-            {
-                return 0;
-            }
+        return 0;
 
-            uint value = 0;
+      uint value = 0;
       driver.DeviceIOControl(IOCTL_OLS_READ_IO_PORT_BYTE, port, ref value);
 
       return (byte)(value & 0xFF);
@@ -354,17 +329,13 @@ namespace OpenHardwareMonitor.Hardware {
 
     public static void WriteIoPort(uint port, byte value) {
       if (driver == null)
-            {
-                return;
-            }
+        return;
 
-            WriteIoPortInput input = new WriteIoPortInput
-            {
-                PortNumber = port,
-                Value = value
-            };
+      WriteIoPortInput input = new WriteIoPortInput();
+      input.PortNumber = port;
+      input.Value = value;
 
-            driver.DeviceIOControl(IOCTL_OLS_WRITE_IO_PORT_BYTE, input);
+      driver.DeviceIOControl(IOCTL_OLS_WRITE_IO_PORT_BYTE, input);
     }
 
     public const uint InvalidPciAddress = 0xFFFFFFFF;
@@ -388,13 +359,11 @@ namespace OpenHardwareMonitor.Hardware {
         return false;
       }
 
-            ReadPciConfigInput input = new ReadPciConfigInput
-            {
-                PciAddress = pciAddress,
-                RegAddress = regAddress
-            };
+      ReadPciConfigInput input = new ReadPciConfigInput();
+      input.PciAddress = pciAddress;
+      input.RegAddress = regAddress;
 
-            value = 0;
+      value = 0;
       return driver.DeviceIOControl(IOCTL_OLS_READ_PCI_CONFIG, input, 
         ref value);
     }
@@ -410,18 +379,14 @@ namespace OpenHardwareMonitor.Hardware {
       uint value) 
     {
       if (driver == null || (regAddress & 3) != 0)
-            {
-                return false;
-            }
+        return false;
 
-            WritePciConfigInput input = new WritePciConfigInput
-            {
-                PciAddress = pciAddress,
-                RegAddress = regAddress,
-                Value = value
-            };
+      WritePciConfigInput input = new WritePciConfigInput();
+      input.PciAddress = pciAddress;
+      input.RegAddress = regAddress;
+      input.Value = value;
 
-            return driver.DeviceIOControl(IOCTL_OLS_WRITE_PCI_CONFIG, input);
+      return driver.DeviceIOControl(IOCTL_OLS_WRITE_PCI_CONFIG, input);
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -436,14 +401,12 @@ namespace OpenHardwareMonitor.Hardware {
         return false;
       }
 
-            ReadMemoryInput input = new ReadMemoryInput
-            {
-                address = address,
-                unitSize = 1,
-                count = (uint)Marshal.SizeOf(buffer)
-            };
+      ReadMemoryInput input = new ReadMemoryInput();
+      input.address = address;
+      input.unitSize = 1;
+      input.count = (uint)Marshal.SizeOf(buffer);
 
-            return driver.DeviceIOControl(IOCTL_OLS_READ_MEMORY, input,
+      return driver.DeviceIOControl(IOCTL_OLS_READ_MEMORY, input,
         ref buffer);
     }
   }

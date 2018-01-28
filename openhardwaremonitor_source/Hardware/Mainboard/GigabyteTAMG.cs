@@ -38,11 +38,9 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
 
     public GigabyteTAMG(byte[] table) {
       if (table == null)
-            {
-                throw new ArgumentNullException("table");
-            }
+        throw new ArgumentNullException("table");
 
-            this.table = table;
+      this.table = table;
       
       int index = IndexOf(table, Encoding.ASCII.GetBytes("$HEALTH$"), 0);
 
@@ -81,11 +79,9 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
 
     public static int IndexOf(byte[] array, byte[] pattern, int startIndex) {
       if (array == null || pattern == null || pattern.Length > array.Length)
-            {
-                return -1;
-            }
+        return -1;
 
-            for (int i = startIndex; i < array.Length - pattern.Length; i++) {
+      for (int i = startIndex; i < array.Length - pattern.Length; i++) {
         bool found = true;
         for (int j = 0; j < pattern.Length; j++) {
           if (array[i + j] != pattern[j]) {
@@ -93,11 +89,9 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
             break;
           }
         }
-        if (found)
-                {
-                    return i;
-                }
-            }
+        if (found) 
+          return i;
+      }
       return -1;
     }
 

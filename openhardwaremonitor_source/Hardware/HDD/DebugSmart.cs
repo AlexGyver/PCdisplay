@@ -10,16 +10,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace OpenHardwareMonitor.Hardware.HDD
-{
+namespace OpenHardwareMonitor.Hardware.HDD {
 
 #if DEBUG
 
-    internal class DebugSmart : ISmart
-    {
+  internal class DebugSmart : ISmart {
 
-        private Drive[] drives = {
+    private Drive[] drives = {
       new Drive("KINGSTON SNV425S264GB", null, 16,
         @" 01 000000000000 100 100      
            02 000000000000 100 100      
@@ -39,7 +38,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
            AA 07007B000000 100 100      
            AD 0E1E71304919 100 100"),
 
-      new Drive("PLEXTOR  PX-128M2S", "1.03", 16,
+      new Drive("PLEXTOR  PX-128M2S", "1.03", 16, 
         @" 01 000000000000 100 100 0   
            03 000000000000 100 100 0   
            04 000000000000 100 100 0   
@@ -58,7 +57,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
            C6 000000000000 100 100 0   
            C7 000000000000 100 100 0"),
 
-      new Drive("OCZ-VERTEX2", "1.25", 16,
+      new Drive("OCZ-VERTEX2", "1.25", 16, 
         @" 01 DADAD5000000 100 106 50
            05 000000000000 100 100 3 
            09 DF0900004A2F 100 100 0 
@@ -78,8 +77,8 @@ namespace OpenHardwareMonitor.Hardware.HDD
            EA 000600000000 0   0   0 
            F1 000600000000 0   0   0 
            F2 801200000000 0   0   0"),
-
-      new Drive("WDC WD5000AADS-00S9B0", null, 10,
+      
+      new Drive("WDC WD5000AADS-00S9B0", null, 10, 
         @" 1   000000000000 200 200         
            3   820D00000000 149 150         
            4   610800000000 98  98          
@@ -101,7 +100,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
            5   000000000000 0   0           
            1   000000000000 0   0"),
 
-      new Drive("INTEL SSDSA2M080G2GC", null, 10,
+      new Drive("INTEL SSDSA2M080G2GC", null, 10, 
         @" 3   000000000000 100 100         
            4   000000000000 100 100         
            5   010000000000 100 100         
@@ -117,7 +116,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
            184 000000000000 100 100         
            1   000000000000 0   0"),
 
-      new Drive("OCZ-VERTEX", null, 10,
+      new Drive("OCZ-VERTEX", null, 10, 
         @" 1   000000000000 0   8   
            9   000000000000 30  99  
            12  000000000000 0   15  
@@ -140,7 +139,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
            211 000000000000 0   0   
            212 000000000000 0   0   
            213 000000000000 0   0"),
-
+ 
       new Drive("INTEL SSDSA2CW120G3", null, 16,
         @"03 000000000000 100 100 0
           04 000000000000 100 100 0
@@ -162,7 +161,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
           F1 FF4300000000 100 100 0
           F2 264F00000000 100 100 0"),
 
-     new Drive("CORSAIR CMFSSD-128GBG2D", "VBM19C1Q", 16,
+     new Drive("CORSAIR CMFSSD-128GBG2D", "VBM19C1Q", 16, 
        @"09 100900000000 99  99  0 
          0C 560200000000 99  99  0 
          AF 000000000000 100 100 10
@@ -181,7 +180,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
          E8 240000000000 60  60  10
          E9 630594120000 92  92  0"),
 
-      new Drive("Maxtor 6L300R0", null, 10,
+      new Drive("Maxtor 6L300R0", null, 10,    
         @"3   9E5500000000 183 193         
           4   0A0D00000000 252 252         
           5   010000000000 253 253         
@@ -217,7 +216,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
           1   000000000000 0   0           
           144 000000000000 0   34 "),
 
-        new Drive("M4-CT256M4SSD2", "0309", 16,
+        new Drive("M4-CT256M4SSD2", "0309", 16, 
           @"01 000000000000 100 100 50     
             05 000000000000 100 100 10     
             09 AB0100000000 100 100 1      
@@ -242,7 +241,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
             CA 000000000000 100 100 1      
             CE 000000000000 100 100 1 "),
 
-        new Drive("C300-CTFDDAC256MAG", "0007", 16,
+        new Drive("C300-CTFDDAC256MAG", "0007", 16, 
           @"01 000000000000 100 100 0  
             05 000000000000 100 100 0  
             09 4C0A00000000 100 100 0  
@@ -266,7 +265,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
             CA 000000000000 100 100 0  
             CE 000000000000 100 100 0"),
 
-        new Drive("M4-CT064M4SSD2", "0009", 16,
+        new Drive("M4-CT064M4SSD2", "0009", 16, 
           @"01 000000000000 100 100 50
             05 000000000000 100 100 10
             09 260000000000 100 100 1 
@@ -291,7 +290,7 @@ namespace OpenHardwareMonitor.Hardware.HDD
             CA 000000000000 100 100 1 
             CE 000000000000 100 100 1"),
 
-        new Drive("M4-CT128M4SSD2", "000F", 16,
+        new Drive("M4-CT128M4SSD2", "000F", 16, 
           @"01 000000000000 100 100 50 
             05 000000000000 100 100 10 
             09 CA1400000000 100 100 1  
@@ -316,148 +315,124 @@ namespace OpenHardwareMonitor.Hardware.HDD
             CA 010000000000 99  99  1  
             CE 000000000000 100 100 1 "),
 
-        new Drive("Samsung SSD 840 PRO Series", "DXM05B0Q", 16,
+       new Drive("Samsung SSD 840 PRO Series", "DXM05B0Q", 16,
           @"05 000000000000 100 100 10 
-            09 260000000000 99  99  0  
-            0C 170000000000 99  99  0  
-            B1 010000000000 99  99  0  
+            09 541200000000 99  99  0  
+            0C 820500000000 98  98  0  
+            B1 B90200000000 80  80  0  
             B3 000000000000 100 100 10 
             B5 000000000000 100 100 10 
             B6 000000000000 100 100 10 
             B7 000000000000 100 100 10 
             BB 000000000000 100 100 0  
-            BE 190000000000 60  75  0  
+            BE 1C0000000000 48  72  0  
             C3 000000000000 200 200 0  
-            C7 000000000000 100 100 0  
-            EB 030000000000 99  99  0  
-            F1 8FF425100000 99  99  0")};
+            C7 020000000000 99  99  0  
+            EB 690000000000 99  99  0  
+            F1 A56AA1F60200 99  99  0")};
 
-        public IntPtr OpenDrive(int driveNumber)
-        {
-            if (driveNumber < drives.Length)
-            {
-                return (IntPtr)driveNumber;
-            }
-            else
-            {
-                return InvalidHandle;
-            }
-        }
-
-        public bool EnableSmart(IntPtr handle, int driveNumber)
-        {
-            if (handle != (IntPtr)driveNumber)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return true;
-        }
-
-        public DriveAttributeValue[] ReadSmartData(IntPtr handle, int driveNumber)
-        {
-            if (handle != (IntPtr)driveNumber)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return drives[driveNumber].DriveAttributeValues;
-        }
-
-        public DriveThresholdValue[] ReadSmartThresholds(IntPtr handle,
-          int driveNumber)
-        {
-            if (handle != (IntPtr)driveNumber)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return drives[driveNumber].DriveThresholdValues;
-        }
-
-        public bool ReadNameAndFirmwareRevision(IntPtr handle, int driveNumber,
-          out string name, out string firmwareRevision)
-        {
-            if (handle != (IntPtr)driveNumber)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            name = drives[driveNumber].Name;
-            firmwareRevision = drives[driveNumber].FirmwareVersion;
-            return true;
-        }
-
-        public void CloseHandle(IntPtr handle) { }
-
-
-        private class Drive
-        {
-
-            public Drive(string name, string firmware, int idBase, string value)
-            {
-                this.Name = name;
-                this.FirmwareVersion = firmware;
-
-                string[] lines = value.Split(new[] { '\r', '\n' },
-                  StringSplitOptions.RemoveEmptyEntries);
-
-                DriveAttributeValues = new DriveAttributeValue[lines.Length];
-                List<DriveThresholdValue> thresholds = new List<DriveThresholdValue>();
-
-                for (int i = 0; i < lines.Length; i++)
-                {
-
-                    string[] array = lines[i].Split(new[] { ' ' },
-                      StringSplitOptions.RemoveEmptyEntries);
-
-                    if (array.Length != 4 && array.Length != 5)
-                    {
-                        throw new Exception();
-                    }
-
-                    DriveAttributeValue v = new DriveAttributeValue();
-                    v.Identifier = Convert.ToByte(array[0], idBase);
-
-                    v.RawValue = new byte[6];
-                    for (int j = 0; j < 6; j++)
-                    {
-                        v.RawValue[j] = Convert.ToByte(array[1].Substring(2 * j, 2), 16);
-                    }
-
-                    v.WorstValue = Convert.ToByte(array[2], 10);
-                    v.AttrValue = Convert.ToByte(array[3], 10);
-
-                    DriveAttributeValues[i] = v;
-
-                    if (array.Length == 5)
-                    {
-                        DriveThresholdValue t = new DriveThresholdValue();
-                        t.Identifier = v.Identifier;
-                        t.Threshold = Convert.ToByte(array[4], 10);
-                        thresholds.Add(t);
-                    }
-                }
-
-                DriveThresholdValues = thresholds.ToArray();
-            }
-
-            public DriveAttributeValue[] DriveAttributeValues { get; private set; }
-
-            public DriveThresholdValue[] DriveThresholdValues { get; private set; }
-
-            public string Name { get; private set; }
-
-            public string FirmwareVersion { get; private set; }
-        }
-
-        public IntPtr InvalidHandle { get { return (IntPtr)(-1); } }
-
-        public string[] GetLogicalDrives(int driveIndex)
-        {
-            return new string[0];
-        }
+    public IntPtr OpenDrive(int driveNumber) {
+      if (driveNumber < drives.Length)
+        return (IntPtr)driveNumber;
+      else
+        return InvalidHandle;
     }
+
+    public bool EnableSmart(IntPtr handle, int driveNumber) {
+      if (handle != (IntPtr)driveNumber)
+        throw new ArgumentOutOfRangeException();
+
+      return true;
+    }
+
+    public DriveAttributeValue[] ReadSmartData(IntPtr handle, int driveNumber) {
+      if (handle != (IntPtr)driveNumber)
+        throw new ArgumentOutOfRangeException();
+
+      return drives[driveNumber].DriveAttributeValues;
+    }
+
+    public DriveThresholdValue[] ReadSmartThresholds(IntPtr handle, 
+      int driveNumber) 
+    {
+      if (handle != (IntPtr)driveNumber)
+        throw new ArgumentOutOfRangeException();
+
+      return drives[driveNumber].DriveThresholdValues;
+    }
+
+    public bool ReadNameAndFirmwareRevision(IntPtr handle, int driveNumber, 
+      out string name, out string firmwareRevision) {
+      if (handle != (IntPtr)driveNumber)
+        throw new ArgumentOutOfRangeException();
+
+      name = drives[driveNumber].Name;
+      firmwareRevision = drives[driveNumber].FirmwareVersion;
+      return true;
+    }
+
+    public void CloseHandle(IntPtr handle) { }
+
+
+    private class Drive {
+
+      public Drive(string name, string firmware, int idBase, string value) {
+        this.Name = name;
+        this.FirmwareVersion = firmware;
+
+        string[] lines = value.Split(new[] { '\r', '\n' }, 
+          StringSplitOptions.RemoveEmptyEntries);
+
+        DriveAttributeValues = new DriveAttributeValue[lines.Length];
+        List<DriveThresholdValue> thresholds = new List<DriveThresholdValue>();
+
+        for (int i = 0; i < lines.Length; i++) {
+
+          string[] array = lines[i].Split(new[] { ' ' },
+            StringSplitOptions.RemoveEmptyEntries);
+
+          if (array.Length != 4 && array.Length != 5)
+            throw new Exception();
+
+          DriveAttributeValue v = new DriveAttributeValue();
+          v.Identifier = Convert.ToByte(array[0], idBase);
+
+          v.RawValue = new byte[6];
+          for (int j = 0; j < 6; j++) {
+            v.RawValue[j] = Convert.ToByte(array[1].Substring(2 * j, 2), 16);
+          }
+
+          v.WorstValue = Convert.ToByte(array[2], 10);
+          v.AttrValue = Convert.ToByte(array[3], 10);
+
+          DriveAttributeValues[i] = v;
+
+          if (array.Length == 5) {
+            DriveThresholdValue t = new DriveThresholdValue();
+            t.Identifier = v.Identifier;
+            t.Threshold = Convert.ToByte(array[4], 10);
+            thresholds.Add(t);
+          }
+        }
+
+        DriveThresholdValues = thresholds.ToArray();
+      }
+
+      public DriveAttributeValue[] DriveAttributeValues { get; private set; }
+
+      public DriveThresholdValue[] DriveThresholdValues { get; private set; }
+
+      public string Name { get; private set; }
+
+      public string FirmwareVersion { get; private set; }
+    }
+
+    public IntPtr InvalidHandle { get { return (IntPtr)(-1); } }
+
+    public string[] GetLogicalDrives(int driveIndex) {
+      return new string[0];
+    }
+  }
 
 #endif
 

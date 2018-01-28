@@ -38,12 +38,10 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
       // AM2+ 65nm +21 offset
       uint model = cpuid[0][0].Model;
-      if (model >= 0x69 && model != 0xc1 && model != 0x6c && model != 0x7c)
-            {
-                offset += 21;
-            }
+      if (model >= 0x69 && model != 0xc1 && model != 0x6c && model != 0x7c) 
+        offset += 21;
 
-            if (model < 40) {
+      if (model < 40) {
         // AMD Athlon 64 Processors
         thermSenseCoreSelCPU0 = 0x0;
         thermSenseCoreSelCPU1 = 0x4;
@@ -79,10 +77,8 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         coreClocks[i] = new Sensor(CoreString(i), i + 1, SensorType.Clock,
           this, settings);
         if (HasTimeStampCounter)
-                {
-                    ActivateSensor(coreClocks[i]);
-                }
-            }
+          ActivateSensor(coreClocks[i]);
+      }
 
       Update();                   
     }

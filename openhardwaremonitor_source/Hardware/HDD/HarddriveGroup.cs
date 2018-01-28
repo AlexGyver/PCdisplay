@@ -25,12 +25,9 @@ namespace OpenHardwareMonitor.Hardware.HDD {
 
     public HarddriveGroup(ISettings settings) {
       int p = (int)Environment.OSVersion.Platform;
-      if (p == 4 || p == 128)
-            {
-                return;
-            }
+      if (p == 4 || p == 128) return;
 
-            ISmart smart = new WindowsSmart();
+      ISmart smart = new WindowsSmart();
 
       for (int drive = 0; drive < MAX_DRIVES; drive++) {
         AbstractHarddrive instance =
@@ -52,10 +49,8 @@ namespace OpenHardwareMonitor.Hardware.HDD {
     }
 
     public void Close() {
-      foreach (AbstractHarddrive hdd in hardware)
-            {
-                hdd.Close();
-            }
-        }
+      foreach (AbstractHarddrive hdd in hardware) 
+        hdd.Close();
+    }
   }
 }

@@ -61,6 +61,10 @@ namespace OpenHardwareMonitor.GUI {
           this.Image = Utilities.EmbeddedResources.GetImage("data.png");
           this.Text = "Data";
           break;
+        case SensorType.SmallData :
+          this.Image = Utilities.EmbeddedResources.GetImage("data.png");
+          this.Text = "Data";
+          break;
         case SensorType.Factor:
           this.Image = Utilities.EmbeddedResources.GetImage("factor.png");
           this.Text = "Factors";
@@ -83,14 +87,11 @@ namespace OpenHardwareMonitor.GUI {
 
     private void node_IsVisibleChanged(Node node) {      
       foreach (Node n in Nodes)
-            {
-                if (n.IsVisible) {
+        if (n.IsVisible) {
           this.IsVisible = true;
           return;
         }
-            }
-
-            this.IsVisible = false;
+      this.IsVisible = false;
     }
 
     public SensorType SensorType {

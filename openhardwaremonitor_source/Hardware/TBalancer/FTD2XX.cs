@@ -149,14 +149,10 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
       FT_STATUS status = FT_Write(handle, buffer, (uint)buffer.Length, 
         out bytesWritten);
       if (bytesWritten != buffer.Length)
-            {
-                return FT_STATUS.FT_FAILED_TO_WRITE_DEVICE;
-            }
-            else
-            {
-                return status;
-            }
-        }
+        return FT_STATUS.FT_FAILED_TO_WRITE_DEVICE;
+      else
+        return status;
+    }
 
     public static int BytesToRead(FT_HANDLE handle) {
       uint amountInRxQueue;
@@ -175,11 +171,8 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
       uint bytesReturned;
       FT_STATUS status = FT_ReadByte(handle, out buffer, 1, out bytesReturned);
       if (status != FT_STATUS.FT_OK || bytesReturned != 1)
-            {
-                throw new InvalidOperationException();
-            }
-
-            return buffer;
+        throw new InvalidOperationException();
+      return buffer;
     }
 
     public static void Read(FT_HANDLE handle, byte[] buffer) {
@@ -187,32 +180,24 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
       FT_STATUS status = 
         FT_Read(handle, buffer, (uint)buffer.Length, out bytesReturned);
       if (status != FT_STATUS.FT_OK || bytesReturned != buffer.Length)
-            {
-                throw new InvalidOperationException();
-            }
-        }
+        throw new InvalidOperationException();
+    }
 
     private static string GetDllName() {
       int p = (int)Environment.OSVersion.Platform;
       if ((p == 4) || (p == 128))
-            {
-                return "libftd2xx.so";
-            }
-            else
-            {
-                return "ftd2xx.dll";
-            }
-        }
+        return "libftd2xx.so";
+      else
+        return "ftd2xx.dll";
+    }
 
     private static T CreateDelegate<T>(string entryPoint)
       where T : class {
-            DllImportAttribute attribute = new DllImportAttribute(GetDllName())
-            {
-                CallingConvention = CallingConvention.StdCall,
-                PreserveSig = true,
-                EntryPoint = entryPoint
-            };
-            T newDelegate;
+      DllImportAttribute attribute = new DllImportAttribute(GetDllName());
+      attribute.CallingConvention = CallingConvention.StdCall;
+      attribute.PreserveSig = true;
+      attribute.EntryPoint = entryPoint;
+      T newDelegate;
       PInvokeDelegateFactory.CreateDelegate(attribute, out newDelegate);
       return newDelegate;
     }

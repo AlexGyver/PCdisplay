@@ -4,7 +4,7 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
-  Copyright (C) 2009-2010 Michael Möller <mmoeller@openhardwaremonitor.org>
+  Copyright (C) 2009-2014 Michael Möller <mmoeller@openhardwaremonitor.org>
 	
 */
 
@@ -56,11 +56,9 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
     private static uint NextLog2(long x) {
       if (x <= 0)
-            {
-                return 0;
-            }
+        return 0;
 
-            x--;
+      x--;
       uint count = 0;
       while (x > 0) {
         x >>= 1;
@@ -78,25 +76,18 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
       uint eax, ebx, ecx, edx;
 
-      if (thread >= 32)
-            {
-                throw new ArgumentOutOfRangeException("thread");
-            }
-
-            ulong mask = 1UL << thread;
+      if (thread >= 64)
+        throw new ArgumentOutOfRangeException("thread");
+      ulong mask = 1UL << thread;
 
       if (Opcode.CpuidTx(CPUID_0, 0,
           out eax, out ebx, out ecx, out edx, mask)) {
         if (eax > 0)
-                {
-                    maxCpuid = eax;
-                }
-                else
-                {
-                    return;
-                }
+          maxCpuid = eax;
+        else
+          return;
 
-                StringBuilder vendorBuilder = new StringBuilder();
+        StringBuilder vendorBuilder = new StringBuilder();
         AppendRegister(vendorBuilder, ebx);
         AppendRegister(vendorBuilder, edx);
         AppendRegister(vendorBuilder, ecx);
@@ -116,14 +107,10 @@ namespace OpenHardwareMonitor.Hardware.CPU {
         if (Opcode.CpuidTx(CPUID_EXT, 0,
           out eax, out ebx, out ecx, out edx, mask)) {
           if (eax > CPUID_EXT)
-                    {
-                        maxCpuidExt = eax - CPUID_EXT;
-                    }
-                    else
-                    {
-                        return;
-                    }
-                } else {
+            maxCpuidExt = eax - CPUID_EXT;
+          else
+            return;
+        } else {
           throw new ArgumentOutOfRangeException("thread");
         }
       } else {
@@ -135,21 +122,17 @@ namespace OpenHardwareMonitor.Hardware.CPU {
 
       cpuidData = new uint[maxCpuid + 1, 4];
       for (uint i = 0; i < (maxCpuid + 1); i++)
-            {
-                Opcode.CpuidTx(CPUID_0 + i, 0, 
+        Opcode.CpuidTx(CPUID_0 + i, 0, 
           out cpuidData[i, 0], out cpuidData[i, 1],
           out cpuidData[i, 2], out cpuidData[i, 3], mask);
-            }
 
-            cpuidExtData = new uint[maxCpuidExt + 1, 4];
+      cpuidExtData = new uint[maxCpuidExt + 1, 4];
       for (uint i = 0; i < (maxCpuidExt + 1); i++)
-            {
-                Opcode.CpuidTx(CPUID_EXT + i, 0, 
+        Opcode.CpuidTx(CPUID_EXT + i, 0, 
           out cpuidExtData[i, 0], out cpuidExtData[i, 1], 
           out cpuidExtData[i, 2], out cpuidExtData[i, 3], mask);
-            }
 
-            StringBuilder nameBuilder = new StringBuilder();
+      StringBuilder nameBuilder = new StringBuilder();
       for (uint i = 2; i <= 4; i++) {
         if (Opcode.CpuidTx(CPUID_EXT + i, 0, 
           out eax, out ebx, out ecx, out edx, mask)) 
@@ -169,18 +152,11 @@ namespace OpenHardwareMonitor.Hardware.CPU {
       nameBuilder.Replace("Quad-Core Processor", "");
       nameBuilder.Replace("Six-Core Processor", "");
       nameBuilder.Replace("Eight-Core Processor", "");
-      for (int i = 0; i < 10; i++)
-            {
-                nameBuilder.Replace("  ", " ");
-            }
-
-            name = nameBuilder.ToString();
+      for (int i = 0; i < 10; i++) nameBuilder.Replace("  ", " ");
+      name = nameBuilder.ToString();
       if (name.Contains("@"))
-            {
-                name = name.Remove(name.LastIndexOf('@'));
-            }
-
-            name = name.Trim();      
+        name = name.Remove(name.LastIndexOf('@'));
+      name = name.Trim();      
 
       this.family = ((cpuidData[1, 0] & 0x0FF00000) >> 20) +
         ((cpuidData[1, 0] & 0x0F00) >> 8);
@@ -195,30 +171,20 @@ namespace OpenHardwareMonitor.Hardware.CPU {
           uint maxCoreAndThreadIdPerPackage = (cpuidData[1, 1] >> 16) & 0xFF;
           uint maxCoreIdPerPackage;
           if (maxCpuid >= 4)
-                    {
-                        maxCoreIdPerPackage = ((cpuidData[4, 0] >> 26) & 0x3F) + 1;
-                    }
-                    else
-                    {
-                        maxCoreIdPerPackage = 1;
-                    }
-
-                    threadMaskWith = 
+            maxCoreIdPerPackage = ((cpuidData[4, 0] >> 26) & 0x3F) + 1;
+          else
+            maxCoreIdPerPackage = 1;
+          threadMaskWith = 
             NextLog2(maxCoreAndThreadIdPerPackage / maxCoreIdPerPackage);
           coreMaskWith = NextLog2(maxCoreIdPerPackage);
           break;
         case Vendor.AMD:
           uint corePerPackage;
           if (maxCpuidExt >= 8)
-                    {
-                        corePerPackage = (cpuidExtData[8, 2] & 0xFF) + 1;
-                    }
-                    else
-                    {
-                        corePerPackage = 1;
-                    }
-
-                    threadMaskWith = 0;
+            corePerPackage = (cpuidExtData[8, 2] & 0xFF) + 1;
+          else
+            corePerPackage = 1;
+          threadMaskWith = 0;
           coreMaskWith = NextLog2(corePerPackage);
           break;
         default:

@@ -35,15 +35,11 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
       if (smbios.Board != null) {
         if (!string.IsNullOrEmpty(smbios.Board.ProductName)) {
           if (manufacturer == Manufacturer.Unknown)
-                    {
-                        this.name = smbios.Board.ProductName;
-                    }
-                    else
-                    {
-                        this.name = manufacturer + " " +
+            this.name = smbios.Board.ProductName;
+          else
+            this.name = manufacturer + " " +
               smbios.Board.ProductName;
-                    }
-                } else {
+        } else {
           this.name = manufacturer.ToString();
         }
       } else {
@@ -65,11 +61,9 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
       
       superIOHardware = new Hardware[superIO.Length];
       for (int i = 0; i < superIO.Length; i++)
-            {
-                superIOHardware[i] = new SuperIOHardware(this, superIO[i],
+        superIOHardware[i] = new SuperIOHardware(this, superIO[i],
           manufacturer, model, settings);
-            }
-        }
+    }
 
     public string Name {
       get {
@@ -77,15 +71,10 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
       }
       set {
         if (!string.IsNullOrEmpty(value))
-                {
-                    customName = value;
-                }
-                else
-                {
-                    customName = name;
-                }
-
-                settings.SetValue(new Identifier(Identifier, "name").ToString(),
+          customName = value;
+        else
+          customName = name;
+        settings.SetValue(new Identifier(Identifier, "name").ToString(),
           customName);
       }
     }
@@ -110,11 +99,9 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
       r.Append(smbios.GetReport());
 
       if (lpcio != null)
-            {
-                r.Append(lpcio.GetReport());
-            }
+        r.Append(lpcio.GetReport());
 
-            byte[] table = 
+      byte[] table = 
         FirmwareTable.GetTable(FirmwareTable.Provider.ACPI, "TAMG");
       if (table != null) {
         GigabyteTAMG tamg = new GigabyteTAMG(table);
@@ -128,15 +115,10 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
 
     public void Close() {
       if (lmSensors != null)
-            {
-                lmSensors.Close();
-            }
-
-            foreach (Hardware hardware in superIOHardware)
-            {
-                hardware.Close();
-            }
-        }
+        lmSensors.Close();
+      foreach (Hardware hardware in superIOHardware)
+        hardware.Close();
+    }
 
     public IHardware[] SubHardware {
       get { return superIOHardware; }
@@ -153,18 +135,13 @@ namespace OpenHardwareMonitor.Hardware.Mainboard {
 
     public void Accept(IVisitor visitor) {
       if (visitor == null)
-            {
-                throw new ArgumentNullException("visitor");
-            }
-
-            visitor.VisitHardware(this);
+        throw new ArgumentNullException("visitor");
+      visitor.VisitHardware(this);
     }
 
     public void Traverse(IVisitor visitor) {
       foreach (IHardware hardware in superIOHardware)
-            {
-                hardware.Accept(visitor);
-            }
-        }
+        hardware.Accept(visitor);     
+    }
   }
 }

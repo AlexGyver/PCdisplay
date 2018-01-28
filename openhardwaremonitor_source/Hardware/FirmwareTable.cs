@@ -32,19 +32,15 @@ namespace OpenHardwareMonitor.Hardware {
         catch (EntryPointNotFoundException) { return null; }
 
       if (size <= 0)
-            {
-                return null;
-            }
+        return null;
 
-            IntPtr nativeBuffer = Marshal.AllocHGlobal(size);
+      IntPtr nativeBuffer = Marshal.AllocHGlobal(size);
       NativeMethods.GetSystemFirmwareTable(provider, table, nativeBuffer, size);
 
       if (Marshal.GetLastWin32Error() != 0)
-            {
-                return null;
-            }
+        return null;
 
-            byte[] buffer = new byte[size];
+      byte[] buffer = new byte[size];
       Marshal.Copy(nativeBuffer, buffer, 0, size);
       Marshal.FreeHGlobal(nativeBuffer);
 
@@ -67,12 +63,10 @@ namespace OpenHardwareMonitor.Hardware {
       Marshal.FreeHGlobal(nativeBuffer);
 
       string[] result = new string[size / 4];
-      for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = Encoding.ASCII.GetString(buffer, 4 * i, 4);
-            }
+      for (int i = 0; i < result.Length; i++) 
+        result[i] = Encoding.ASCII.GetString(buffer, 4 * i, 4);
 
-            return result;
+      return result;
     }
 
     public enum Provider : int {

@@ -318,15 +318,10 @@ namespace OpenHardwareMonitor.Hardware.Nvidia {
       StringBuilder builder = new StringBuilder(SHORT_STRING_MAX);
       NvStatus status;
       if (_NvAPI_GPU_GetFullName != null)
-            {
-                status = _NvAPI_GPU_GetFullName(gpuHandle, builder);
-            }
-            else
-            {
-                status = NvStatus.FUNCTION_NOT_FOUND;
-            }
-
-            name = builder.ToString();
+        status = _NvAPI_GPU_GetFullName(gpuHandle, builder);
+      else
+        status = NvStatus.FUNCTION_NOT_FOUND;
+      name = builder.ToString();
       return status;
     }
 
@@ -334,15 +329,10 @@ namespace OpenHardwareMonitor.Hardware.Nvidia {
       StringBuilder builder = new StringBuilder(SHORT_STRING_MAX);
       NvStatus status;
       if (_NvAPI_GetInterfaceVersionString != null)
-            {
-                status = _NvAPI_GetInterfaceVersionString(builder);
-            }
-            else
-            {
-                status = NvStatus.FUNCTION_NOT_FOUND;
-            }
-
-            version = builder.ToString();
+        status = _NvAPI_GetInterfaceVersionString(builder);
+      else
+        status = NvStatus.FUNCTION_NOT_FOUND;
+      version = builder.ToString();
       return status;
     }
 
@@ -366,13 +356,11 @@ namespace OpenHardwareMonitor.Hardware.Nvidia {
     }
 
     static NVAPI() {
-            DllImportAttribute attribute = new DllImportAttribute(GetDllName())
-            {
-                CallingConvention = CallingConvention.Cdecl,
-                PreserveSig = true,
-                EntryPoint = "nvapi_QueryInterface"
-            };
-            PInvokeDelegateFactory.CreateDelegate(attribute,
+      DllImportAttribute attribute = new DllImportAttribute(GetDllName());
+      attribute.CallingConvention = CallingConvention.Cdecl;
+      attribute.PreserveSig = true;
+      attribute.EntryPoint = "nvapi_QueryInterface";
+      PInvokeDelegateFactory.CreateDelegate(attribute,
         out nvapi_QueryInterface);
 
       try {
