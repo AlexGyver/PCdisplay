@@ -38,6 +38,7 @@ byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
 #define COLOR_ALGORITM 0    // 0 или 1 - разные алгоритмы изменения цвета (строка 222)
 #define ERROR_DUTY 90       // скорость вентиляторов при потере связи
 #define ERROR_BACKLIGHT 0   // 0 - гасить подсветку при потере сигнала, 1 - не гасить
+#define ERROR_UPTIME 0      // 1 - сбрасывать uptime при потере связи, 0 - нет
 // ------------------------ НАСТРОЙКИ ----------------------------
 
 // ----------------------- ПИНЫ ---------------------------
@@ -107,7 +108,7 @@ byte blocks, halfs;
 byte index = 0;
 int display_mode = 6;
 String string_convert;
-unsigned long timeout, blink_timer, plot_timer;
+unsigned long timeout, uptime_timer, plot_timer;
 boolean lightState, reDraw_flag = 1, updateDisplay_flag, updateTemp_flag, timeOut_flag = 1;
 int duty, LEDcolor;
 int k, b, R, G, B, Rf, Gf, Bf;
@@ -181,7 +182,7 @@ void loop() {
   LEDcontrol();                       // управлять цветом ленты
   buttonsTick();                      // опрос кнопок и смена режимов
   updateDisplay();                    // обновить показания на дисплее
-  timeoutTick();                      // проверка таймаута  
+  timeoutTick();                      // проверка таймаута
 }
 // ------------------------------ ОСНОВНОЙ ЦИКЛ -------------------------------
 
@@ -298,7 +299,7 @@ void dutyCalculate() {
         break;
       case 4: mainTemp = temp2;
         break;
-    }    
+    }
     duty = map(mainTemp, PCdata[11], PCdata[10], PCdata[9], PCdata[8]);
     duty = constrain(duty, PCdata[9], PCdata[8]);
   }
@@ -325,7 +326,10 @@ void parsing() {
       updateDisplay_flag = 1;
       updateTemp_flag = 1;
     }
-    if (!timeOut_flag && !ERROR_BACKLIGHT) lcd.backlight();     // включить подсветку при появлении сигнала, если разрешено
+    if (!timeOut_flag) {                                // если связь была потеряна, но восстановилась
+      if (!ERROR_BACKLIGHT) lcd.backlight();            // включить подсветку при появлении сигнала, если разрешено
+      if (ERROR_UPTIME) uptime_timer = millis();        // сбросить uptime, если разрешено
+    }
     timeout = millis();
     timeOut_flag = 1;
   }
@@ -465,7 +469,7 @@ void draw_stats_22() {
   lcd.setCursor(10, 0); lcd.print(PCdata[3]); lcd.write(223);
 
   lcd.setCursor(7, 1);
-  sec = (long)(millis() - blink_timer) / 1000;
+  sec = (long)(millis() - uptime_timer) / 1000;
   hrs = floor((sec / 3600));
   mins = floor(sec - (hrs * 3600)) / 60;
   sec = sec - (hrs * 3600 + mins * 60);
@@ -580,7 +584,7 @@ void timeoutTick() {
     lcd.setCursor(3, 0);
     lcd.print("CONNECTION");
     lcd.setCursor(5, 1);
-    lcd.print("FAILED");    
+    lcd.print("FAILED");
     timeOut_flag = 0;
     reDraw_flag = 1;
     if (!ERROR_BACKLIGHT) lcd.noBacklight();   // вырубить подсветку, если разрешено

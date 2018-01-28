@@ -36,6 +36,7 @@ byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
 #define COLOR_ALGORITM 0    // 0 или 1 - разные алгоритмы изменения цвета (строка 222)
 #define ERROR_DUTY 90       // скорость вентиляторов при потере связи
 #define ERROR_BACKLIGHT 0   // 0 - гасить подсветку при потере сигнала, 1 - не гасить
+#define ERROR_UPTIME 0      // 1 - сбрасывать uptime при потере связи, 0 - нет
 // ------------------------ НАСТРОЙКИ ----------------------------
 
 // ----------------------- ПИНЫ ---------------------------
@@ -105,7 +106,7 @@ byte blocks, halfs;
 byte index = 0;
 int display_mode = 6;
 String string_convert;
-unsigned long timeout, blink_timer, plot_timer;
+unsigned long timeout, uptime_timer, plot_timer;
 boolean lightState, reDraw_flag = 1, updateDisplay_flag, updateTemp_flag, timeOut_flag = 1;
 int duty, LEDcolor;
 int k, b, R, G, B, Rf, Gf, Bf;
@@ -320,7 +321,10 @@ void parsing() {
       updateDisplay_flag = 1;
       updateTemp_flag = 1;
     }
-    if (!timeOut_flag && !ERROR_BACKLIGHT) lcd.backlight();     // включить подсветку при появлении сигнала, если разрешено
+    if (!timeOut_flag) {                                // если связь была потеряна, но восстановилась
+      if (!ERROR_BACKLIGHT) lcd.backlight();            // включить подсветку при появлении сигнала, если разрешено
+      if (ERROR_UPTIME) uptime_timer = millis();        // сбросить uptime, если разрешено
+    }
     timeout = millis();
     timeOut_flag = 1;
   }
@@ -421,7 +425,7 @@ void draw_stats_2() {
   lcd.setCursor(16, 2); lcd.print(PCdata[3]); lcd.write(223);
 
   lcd.setCursor(9, 3);
-  sec = (long)(millis() - blink_timer) / 1000;
+  sec = (long)(millis() - uptime_timer) / 1000;
   hrs = floor((sec / 3600));
   mins = floor(sec - (hrs * 3600)) / 60;
   sec = sec - (hrs * 3600 + mins * 60);
