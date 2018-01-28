@@ -35,6 +35,7 @@ byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
 #define DRIVER_VERSION 1    // 0 - маркировка драйвера кончается на 4АТ, 1 - на 4Т
 #define COLOR_ALGORITM 0    // 0 или 1 - разные алгоритмы изменения цвета (строка 222)
 #define ERROR_DUTY 90       // скорость вентиляторов при потере связи
+#define ERROR_BACKLIGHT 0   // 0 - гасить подсветку при потере сигнала, 1 - не гасить
 // ------------------------ НАСТРОЙКИ ----------------------------
 
 // ----------------------- ПИНЫ ---------------------------
@@ -319,6 +320,7 @@ void parsing() {
       updateDisplay_flag = 1;
       updateTemp_flag = 1;
     }
+    if (!timeOut_flag && !ERROR_BACKLIGHT) lcd.backlight();     // включить подсветку при появлении сигнала, если разрешено
     timeout = millis();
     timeOut_flag = 1;
   }
@@ -549,6 +551,7 @@ void timeoutTick() {
     lcd.print("FAILED");
     timeOut_flag = 0;
     reDraw_flag = 1;
+    if (!ERROR_BACKLIGHT) lcd.noBacklight();   // вырубить подсветку, если разрешено
   }
 }
 void show_logo() {
