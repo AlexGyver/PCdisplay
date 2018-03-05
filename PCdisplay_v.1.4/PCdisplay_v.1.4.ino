@@ -546,16 +546,27 @@ void draw_plot_symb() {
   lcd.setCursor(16, 1);
   lcd.print(plotNames1[display_mode]);
 }
-void timeoutTick() {
-  if ((millis() - timeout > 5000) && timeOut_flag) {
-    lcd.clear();
-    lcd.setCursor(5, 1);
-    lcd.print("CONNECTION");
-    lcd.setCursor(7, 2);
-    lcd.print("FAILED");
-    timeOut_flag = 0;
-    reDraw_flag = 1;
-    if (!ERROR_BACKLIGHT) lcd.noBacklight();   // вырубить подсветку, если разрешено
+void timeoutTick() {  
+   while (Serial.available() < 1){
+    if ((millis() - timeout > 5000) && timeOut_flag) {        
+      getTemperature();    
+      index = 0;
+      updateTemp_flag = 1;
+      getTemperature(); 
+      lcd.setCursor(0, 0);
+      lcd.print("TMP1:");
+      lcd.setCursor(10, 0);
+      lcd.print("TMP2:");
+      lcd.setCursor(5, 0); lcd.print(temp1); lcd.write(223);
+      lcd.setCursor(15, 0); lcd.print(temp2); lcd.write(223);
+      lcd.setCursor(5, 1);
+      lcd.print("CONNECTION");
+      lcd.setCursor(7, 2);
+      lcd.print("FAILED");
+      timeOut_flag = 1;    
+      reDraw_flag = 0;
+      updateDisplay_flag = 1;
+    }
   }
 }
 void show_logo() {
