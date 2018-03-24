@@ -1,0 +1,45 @@
+#	####################################################
+#	СИНТАКСИЧЕСКАЯ РАСКРАСКА ДЛЯ БИБИЛИОТЕКИ:
+#	iarduino_OLED
+#	####################################################
+#	ТИПЫ ДАННЫХ:							   (KEYWORD1)
+	iarduino_OLED	KEYWORD1
+#	####################################################
+#	МЕТОДЫ И ФУНКЦИИ:						   (KEYWORD2)
+	begin	KEYWORD2
+	clrScr	KEYWORD2
+	fillScr	KEYWORD2
+	invScr	KEYWORD2
+	invText	KEYWORD2
+	bgText	KEYWORD2
+	bgImage	KEYWORD2
+	setFont	KEYWORD2
+	getFontWidth	KEYWORD2
+	getFontHeight	KEYWORD2
+	setCoding	KEYWORD2
+	setCursor	KEYWORD2
+	setCursorShift	KEYWORD2
+	print	KEYWORD2
+	drawImage	KEYWORD2
+	getImageWidth	KEYWORD2
+	getImageHeight	KEYWORD2
+	drawPixel	KEYWORD2
+	getPixel	KEYWORD2
+	drawLine	KEYWORD2
+	drawRect	KEYWORD2
+	drawCircle	KEYWORD2
+	autoUpdate	KEYWORD2
+	update	KEYWORD2
+	numX	KEYWORD2
+	numY	KEYWORD2
+#	####################################################
+#	КОНСТАНТЫ:								   (LITERAL1)
+	OLED_T	LITERAL1
+	OLED_B	LITERAL1
+	OLED_L	LITERAL1
+	OLED_C	LITERAL1
+	OLED_R	LITERAL1
+	OLED_N	LITERAL1
+	TXT_UTF8	LITERAL1
+	TXT_CP866	LITERAL1
+	TXT_WIN1251	LITERAL1

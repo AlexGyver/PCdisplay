@@ -69,7 +69,7 @@ LiquidCrystal_I2C lcd(0x3f, 20, 4);
 
 #define printByte(args)  write(args);
 #define TEMPERATURE_PRECISION 9
-// настройка даьчтков
+// настройка датчтков
 OneWire oneWire(SENSOR_PIN);
 DallasTemperature sensors(&oneWire);
 DeviceAddress Thermometer1, Thermometer2;
