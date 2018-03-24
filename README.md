@@ -35,7 +35,7 @@
 - **Поддержка двух типов дисплеев!** Подробности ниже
 ![DISPLAYS](https://github.com/AlexGyver/PCdisplay/blob/master/schemes%26PCBs/displays.jpg)
 - Поддержка OLED дисплея 128x64
-![DISPLAYS](https://github.com/AlexGyver/PCdisplay/blob/master/schemes%26PCBs/oled128x64.JPG)
+![DISPLAYS](https://github.com/AlexGyver/PCdisplay/blob/master/schemes%26PCBs/oled128x64.jpg)
 
 <a id="chapter-1"></a>
 ## Папки
