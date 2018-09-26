@@ -37,7 +37,7 @@ byte speedMIN = 10, speedMAX = 90, tempMIN = 30, tempMAX = 70;
 #define ERROR_DUTY 90       // скорость вентиляторов при потере связи
 #define ERROR_BACKLIGHT 0   // 0 - гасить подсветку при потере сигнала, 1 - не гасить
 #define ERROR_UPTIME 1      // 1 - сбрасывать uptime при потере связи, 0 - нет
-#define TimeoutTEMPSet 1    // 1 - показывать температуру при  потере связи. 0 - нет
+#define ERROR_TEMP 1    	// 1 - показывать температуру при  потере связи. 0 - нет
 // ------------------------ НАСТРОЙКИ ----------------------------
 
 // ----------------------- ПИНЫ ---------------------------
@@ -569,7 +569,7 @@ void timeoutTick() {
      lcd.clear();
      reDraw_flag = 0;}
     } 
-     if(TimeoutTEMPSet)
+     if(ERROR_TEMP)
     {
       lcd.setCursor(0, 0);
       lcd.print("TMP1:");
