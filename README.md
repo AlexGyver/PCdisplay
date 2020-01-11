@@ -63,30 +63,35 @@
 
 <a id="chapter-3"></a>
 ## Материалы и компоненты
-* Arduino NANO http://ali.pub/20o35g  http://ali.pub/20o36t
-* Дисплей 2004 синий с драйвером http://ali.pub/20o3dt  http://ali.pub/20o3el
-* Дисплей 1602 синий с драйвером http://ali.pub/21wqmn http://ali.pub/21wqla
-* Драйвер дисплея отдельно http://ali.pub/21wqos
+* Arduino NANO 328p – искать
+* https://ali.ski/tI7blh
+* https://ali.ski/O4yTxb
+* https://ali.ski/6_rFIS
+* https://ali.ski/gb92E-
+* Дисплей 2004 синий с драйвером https://ali.ski/PV06d
+* Дисплей 1602 синий с драйвером https://ali.ski/ozktDV
+* Драйвер дисплея отдельно https://ali.ski/Z5Zdk
 * Дисплеи 1602 БЕЗ ДРАЙВЕРА (купить отдельно):
-  - Синий фон, белые буквы http://ali.pub/21wr11
-  - Зелёный фон, чёрные буквы http://ali.pub/21wqv7  
-  - Чёрный фон, рыжие буквы http://ali.pub/21wr27
-  - Чёрный фон, белые буквы http://ali.pub/21wr3y
-  - Серый фон, чёрные буквы http://ali.pub/21wrhr
-* Провод http://ali.pub/20oa1k  http://ali.pub/20oa3w
-* Датчик температуры http://ali.pub/20o3fk  http://ali.pub/20o3gc
-* Лента светодиодная http://ali.pub/20o51w  http://ali.pub/20o53u
-* Макетная плата http://ali.pub/20o3nj  http://ali.pub/20o3nx
-* Клеммники винтовые http://ali.pub/20o3ty
-* 10 МОСФЕТов http://ali.pub/20o1yh
-* 100 Ом http://ali.pub/20o33b
-* 10 кОм http://ali.pub/20o334
+* Синий фон, белые буквы https://ali.ski/4iErg
+* Чёрный фон, рыжие буквы https://ali.ski/9TyOco
+* Чёрный фон, белые буквы https://ali.ski/WcR0oM
+* Серый фон, чёрные буквы https://ali.ski/lOBzk
+* Провод https://ali.ski/2Uelh
+* Датчик температуры
+* https://ali.ski/HDPqdz
+* https://ali.ski/5oK7K
+* Лента светодиодная https://ali.ski/t3tYO5
+* Макетная плата https://ali.ski/p_atD
+* Клеммники винтовые https://ali.ski/iFpdOo
+* 10 МОСФЕТов https://ali.ski/Jb_sz
+* 100 Ом https://ali.ski/Pajn-
+* 10 кОм https://ali.ski/Pajn-
 * Кнопки ищите на радиорынке, у китайцев можно 500 штук только купить
-* Или тут смотрите http://alexgyver.ru/electronics/
-* Или такие http://ali.pub/20o4vo
-* Корпус http://ali.pub/20ocky  http://ali.pub/20ocpm
-
+* Или тут смотрите https://alexgyver.ru/electronics/
+* Или такие https://ali.ski/5TkvI
+* Корпус https://ali.ski/b94br https://ali.ski/ihC7-u
 РАССЫПУХА В РОССИИ
+
 * Мосфет https://www.chipdip.ru/product/irf3205
 * Или вот такой https://www.chipdip.ru/product/irfz24n
 * 100 Ом https://www.chipdip.ru/product0/47324
