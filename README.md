@@ -64,32 +64,32 @@
 <a id="chapter-3"></a>
 ## Материалы и компоненты
 * Arduino NANO 328p – искать
-* https://ali.ski/tI7blh
-* https://ali.ski/O4yTxb
-* https://ali.ski/6_rFIS
-* https://ali.ski/gb92E-
-* Дисплей 2004 синий с драйвером https://ali.ski/PV06d
-* Дисплей 1602 синий с драйвером https://ali.ski/ozktDV
-* Драйвер дисплея отдельно https://ali.ski/Z5Zdk
+* https://ali.ski/jLEx0
+* https://ali.ski/9uVOe
+* https://ali.ski/T_erQM
+* https://ali.ski/4XIdAH
+* Дисплей 2004 синий с драйвером https://ali.ski/Xe9La5
+* Дисплей 1602 синий с драйвером https://ali.ski/jPj9PO
+* Драйвер дисплея отдельно https://ali.ski/Nf_Mcg
 * Дисплеи 1602 БЕЗ ДРАЙВЕРА (купить отдельно):
-* Синий фон, белые буквы https://ali.ski/4iErg
-* Чёрный фон, рыжие буквы https://ali.ski/9TyOco
-* Чёрный фон, белые буквы https://ali.ski/WcR0oM
-* Серый фон, чёрные буквы https://ali.ski/lOBzk
-* Провод https://ali.ski/2Uelh
+* Синий фон, белые буквы https://ali.ski/KU2GR
+* Чёрный фон, рыжие буквы https://ali.ski/qpVrHn
+* Чёрный фон, белые буквы https://ali.ski/vcFpF
+* Серый фон, чёрные буквы https://ali.ski/ITdB98
+* Провод https://ali.ski/S2sPx_
 * Датчик температуры
-* https://ali.ski/HDPqdz
-* https://ali.ski/5oK7K
-* Лента светодиодная https://ali.ski/t3tYO5
-* Макетная плата https://ali.ski/p_atD
-* Клеммники винтовые https://ali.ski/iFpdOo
-* 10 МОСФЕТов https://ali.ski/Jb_sz
-* 100 Ом https://ali.ski/Pajn-
-* 10 кОм https://ali.ski/Pajn-
+* https://ali.ski/J6z88d
+* https://ali.ski/RQHuvQ
+* Лента светодиодная https://ali.ski/6CsQN
+* Макетная плата https://ali.ski/j9EOuu
+* Клеммники винтовые https://ali.ski/DX6D99
+* 10 МОСФЕТов https://ali.ski/HshY9c
+* 100 Ом https://ali.ski/uC8-pE
+* 10 кОм https://ali.ski/uC8-pE
 * Кнопки ищите на радиорынке, у китайцев можно 500 штук только купить
 * Или тут смотрите https://alexgyver.ru/electronics/
-* Или такие https://ali.ski/5TkvI
-* Корпус https://ali.ski/b94br https://ali.ski/ihC7-u
+* Или такие https://ali.ski/rPKjs7
+* Корпус https://ali.ski/joq0OK https://ali.ski/Vl0kaR
 РАССЫПУХА В РОССИИ
 
 * Мосфет https://www.chipdip.ru/product/irf3205
