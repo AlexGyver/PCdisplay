@@ -1,3 +1,5 @@
+OHW-CoffeLake-Plus - версия от Krypt0nC0R3. Добавлена поддержка CoffeLake и выше
+
 Libre Hardware Monitor - это проект, основанный на заброшенном Open Hardware Monitor. 
 В Libre Hardware Monitor добавлено всё то, что было добавлено в OHM для отправки данных в последовательный порт, отличие лишь в том, что Libre поддерживает больше оборудование (новые Райзены и Тредрипперы, а так же NVME ssd). 
 
